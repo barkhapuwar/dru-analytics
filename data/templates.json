@@ -1,0 +1,402 @@
+{
+  "061b2c48-16a1-48c5-9ad5-97d0ebdaa8a1": {
+    "name": "dru_default_v1",
+    "signal": null,
+    "tone": null
+  },
+  "0a41f757-5ab3-434c-8a21-63be4ccb3f7e": {
+    "name": "prod_dru_historically_great_v2",
+    "signal": "historically_great",
+    "tone": "v2"
+  },
+  "0abd47d9-1eee-47e0-9323-737a573b583a": {
+    "name": "prod_dru_significantly_up_v1",
+    "signal": "significantly_up",
+    "tone": "v1"
+  },
+  "0b209fa7-b1c6-495c-bb38-f263ffc03a60": {
+    "name": "dru_orders_delta_down_v0",
+    "signal": null,
+    "tone": null
+  },
+  "0be94e69-0138-4e74-94a3-e94279277bff": {
+    "name": "prod_dru_significantly_up_v2",
+    "signal": "significantly_up",
+    "tone": "v2"
+  },
+  "18e4b5e7-7e43-455d-85c8-88d61a174216": {
+    "name": "dru_growth_driver_v1",
+    "signal": null,
+    "tone": null
+  },
+  "1c66d727-0184-45eb-8bcb-4334b351a116": {
+    "name": "dru_loyalty_v1",
+    "signal": null,
+    "tone": null
+  },
+  "1db85f77-bcb4-4538-83d6-479c2db98d1c": {
+    "name": "prod_dru_auto_campaign_v2",
+    "signal": "auto_campaign",
+    "tone": "v2"
+  },
+  "20742c2a-0976-42e0-a717-4f30252330c8": {
+    "name": "prod_negative_feedback_alert",
+    "signal": null,
+    "tone": null
+  },
+  "23cea23d-50fd-4eb0-8d23-068c8e96e420": {
+    "name": "prod_dru_orders_delta_up_v1",
+    "signal": "orders_delta_up",
+    "tone": "v1"
+  },
+  "2a11fd58-7771-4449-b14b-56e25aca8998": {
+    "name": "dru_historically_great_v0",
+    "signal": null,
+    "tone": null
+  },
+  "2b28fecd-c0d8-43d3-8ec1-21c2a42aa3c6": {
+    "name": "dru_loyalty_v2",
+    "signal": null,
+    "tone": null
+  },
+  "2bd282cc-beea-4644-b992-7b992cca84ae": {
+    "name": "drop_dru_significantly_down_v2",
+    "signal": null,
+    "tone": null
+  },
+  "2e3e164c-d165-46ad-9ee9-f5951c6ad267": {
+    "name": "dru_orders_delta_down_v1",
+    "signal": null,
+    "tone": null
+  },
+  "2fa5c55d-05e2-4e50-b2eb-cefa8bb16007": {
+    "name": "prod_dru_orders_delta_down_v2",
+    "signal": "orders_delta_down",
+    "tone": "v2"
+  },
+  "350522a9-5cc8-41b4-982d-3e777ec36ca9": {
+    "name": "dru_orders_delta_up_v1",
+    "signal": null,
+    "tone": null
+  },
+  "3e129c0a-7a4e-4078-8e0f-6f2ab52a8316": {
+    "name": "prod_dru_campaign_v1",
+    "signal": "campaign",
+    "tone": "v1"
+  },
+  "435ab376-a4f7-4bf3-918b-42e382383cdc": {
+    "name": "dru_orders_delta_up_v0",
+    "signal": null,
+    "tone": null
+  },
+  "47844b7b-3392-4455-8e21-8d2bba61501d": {
+    "name": "prod_dru_aov_v1",
+    "signal": "aov",
+    "tone": "v1"
+  },
+  "4ee583f0-10f6-45cd-b3ef-1f1359c36d35": {
+    "name": "dru_auto_campaign_v0",
+    "signal": null,
+    "tone": null
+  },
+  "51556853-9b21-4e23-9c9c-cbb423af6a17": {
+    "name": "prod_dru_growth_driver_v0",
+    "signal": "growth_driver",
+    "tone": "v0"
+  },
+  "54639e66-40ab-44fa-b91f-dc5df3ce851a": {
+    "name": "dru_campaign_v0",
+    "signal": null,
+    "tone": null
+  },
+  "5ccb8897-a82b-49e5-b546-3be5ed0a826f": {
+    "name": "dru_aov_v2",
+    "signal": null,
+    "tone": null
+  },
+  "5ef5bcc7-e6ed-4613-ae53-b1450127e1d3": {
+    "name": "dru_significantly_up_v0",
+    "signal": null,
+    "tone": null
+  },
+  "60fc26f5-6dff-4dca-b4ce-595974c2aeb8": {
+    "name": "dru_orders_delta_up_v2",
+    "signal": null,
+    "tone": null
+  },
+  "62677dde-bd74-4693-8833-e470881545b1": {
+    "name": "prod_dru_auto_campaign_v0",
+    "signal": "auto_campaign",
+    "tone": "v0"
+  },
+  "635d4554-4d59-4ceb-aea8-c3316a8d9df5": {
+    "name": "prod_dru_growth_driver_v1",
+    "signal": "growth_driver",
+    "tone": "v1"
+  },
+  "6387fc24-d530-4117-9fe2-5b364b1d9e55": {
+    "name": "dru_auto_campaign_v2",
+    "signal": null,
+    "tone": null
+  },
+  "65a1d121-9352-45cd-ba1d-8d78cacc6f4e": {
+    "name": "prod_dru_customer_capture_v0",
+    "signal": "customer_capture",
+    "tone": "v0"
+  },
+  "67b7954b-3d8f-4bdd-baa2-87ec1ad393c0": {
+    "name": "prod_dru_aov_v2",
+    "signal": "aov",
+    "tone": "v2"
+  },
+  "68e349ed-32ec-4504-af4b-889de79a5a39": {
+    "name": "dru_significantly_up_v1",
+    "signal": null,
+    "tone": null
+  },
+  "6aafcd4b-6a13-4829-a057-90abaeb42442": {
+    "name": "dru_significantly_up_v2",
+    "signal": null,
+    "tone": null
+  },
+  "6c398c3b-7e59-4cfa-8e03-8b32d34531c4": {
+    "name": "dru_default_v2",
+    "signal": null,
+    "tone": null
+  },
+  "6e0daecc-73d4-430b-910b-b3ffc4ccfb1b": {
+    "name": "dru_growth_driver_v2",
+    "signal": null,
+    "tone": null
+  },
+  "6f8ff99c-8190-4f4d-b9c3-40bc68658792": {
+    "name": "negative_feedback_alert",
+    "signal": null,
+    "tone": null
+  },
+  "708e48c8-adcb-4d25-bea6-75689b58daa9": {
+    "name": "prod_dru_auto_campaign_v1",
+    "signal": "auto_campaign",
+    "tone": "v1"
+  },
+  "7249fce9-0930-4e09-8608-785488260939": {
+    "name": "prod_dru_customer_capture_v1",
+    "signal": "customer_capture",
+    "tone": "v1"
+  },
+  "7276c5cb-012f-4fe1-b25e-23a103df8b5c": {
+    "name": "prod_dru_significantly_down_v2",
+    "signal": "significantly_down",
+    "tone": "v2"
+  },
+  "77625f95-6fbe-4ffc-9646-6f44359570ac": {
+    "name": "dru_historically_great_v1",
+    "signal": null,
+    "tone": null
+  },
+  "77ca8b44-90f0-4a28-9fdd-f950b017feb0": {
+    "name": "prod_dru_campaign_v2",
+    "signal": "campaign",
+    "tone": "v2"
+  },
+  "78c27eff-1ee8-4559-afca-dcc98faceb53": {
+    "name": "low_credits_alert",
+    "signal": null,
+    "tone": null
+  },
+  "79ddf2be-c50e-4a6c-84c0-673ccd9c2cd1": {
+    "name": "dru_growth_driver_v0",
+    "signal": null,
+    "tone": null
+  },
+  "7c3f51c6-cea4-4d5a-909f-7246c944eb7e": {
+    "name": "dru_orders_delta_down_v2",
+    "signal": null,
+    "tone": null
+  },
+  "823e152d-a94d-4e52-9c83-a4df15c74b9c": {
+    "name": "prod_dru_loyalty_v1",
+    "signal": "loyalty",
+    "tone": "v1"
+  },
+  "83bd4876-095f-40e5-9a32-ed998c1c6e71": {
+    "name": "dru_aov_v1",
+    "signal": null,
+    "tone": null
+  },
+  "8ca16ad0-281a-4059-8e37-58a57556f9dc": {
+    "name": "prod_dru_orders_delta_up_v2",
+    "signal": "orders_delta_up",
+    "tone": "v2"
+  },
+  "8d97038d-3911-4e8c-bc9a-5e42640b5a60": {
+    "name": "prod_dru_campaign_v0",
+    "signal": "campaign",
+    "tone": "v0"
+  },
+  "8dee643b-a6d0-4547-8658-2925cc49f5a2": {
+    "name": "dru_campaign_v2",
+    "signal": null,
+    "tone": null
+  },
+  "8e30c211-4e8e-40b5-a58b-c69222db9ade": {
+    "name": "prod_dru_historically_great_v0",
+    "signal": "historically_great",
+    "tone": "v0"
+  },
+  "914d4058-ea05-4aa6-85a4-71796fce5dd9": {
+    "name": "prod_dru_default_v2",
+    "signal": "default",
+    "tone": "v2"
+  },
+  "97da83df-f875-45c8-8f91-a353bede705e": {
+    "name": "prod_dru_orders_delta_up_v0",
+    "signal": "orders_delta_up",
+    "tone": "v0"
+  },
+  "97f1e723-ed3d-40f7-b525-f808c9e57b1f": {
+    "name": "prod_dru_default_v1",
+    "signal": "default",
+    "tone": "v1"
+  },
+  "9e674461-c970-4190-9916-4088520ecbf1": {
+    "name": "dru_customer_capture_v0",
+    "signal": null,
+    "tone": null
+  },
+  "a40e3177-5d4d-4590-bcd1-f9853fee4d95": {
+    "name": "prod_dru_significantly_up_v0",
+    "signal": "significantly_up",
+    "tone": "v0"
+  },
+  "a944b993-8578-46ed-8066-896b752f51b8": {
+    "name": "prod_low_credits_alert",
+    "signal": null,
+    "tone": null
+  },
+  "aeb72c6e-72f4-4df1-82e4-d2725ef8ecaf": {
+    "name": "prod_dru_default_v0",
+    "signal": "default",
+    "tone": "v0"
+  },
+  "b30ecb65-c713-4757-af9e-2b0622c87284": {
+    "name": "dru_historically_great_v2",
+    "signal": null,
+    "tone": null
+  },
+  "b3322ad2-0647-4bfa-ad77-35cf6ccaf436": {
+    "name": "dru_auto_campaign_v1",
+    "signal": null,
+    "tone": null
+  },
+  "b3bb3ed4-b370-4882-a5a7-5608bbe4c02b": {
+    "name": "dru_default_v0",
+    "signal": null,
+    "tone": null
+  },
+  "b40328a2-d094-481e-81c4-fcf9ff21e695": {
+    "name": "dru_loyalty_v0",
+    "signal": null,
+    "tone": null
+  },
+  "b8b699f3-f761-4355-b21d-1b97c6d668dd": {
+    "name": "whatsapp_two_way_chat_new_message",
+    "signal": null,
+    "tone": null
+  },
+  "bf7c0189-b4cf-421c-b6a1-03510d775ff7": {
+    "name": "prod_dru_loyalty_v2",
+    "signal": "loyalty",
+    "tone": "v2"
+  },
+  "c3939353-e1c9-4ca6-a0b0-eba4c7f6deb0": {
+    "name": "prod_dru_loyalty_v0",
+    "signal": "loyalty",
+    "tone": "v0"
+  },
+  "c81e30dd-86b8-4423-ba42-f0999904e171": {
+    "name": "whatsapp_new_message",
+    "signal": null,
+    "tone": null
+  },
+  "cd36e341-b55d-4cb8-9283-8b75ebe191cd": {
+    "name": "prod_dru_historically_great_v1",
+    "signal": "historically_great",
+    "tone": "v1"
+  },
+  "cec8458d-af1e-4f64-8900-e51e07594e1f": {
+    "name": "prod_dru_aov_v0",
+    "signal": "aov",
+    "tone": "v0"
+  },
+  "d42a67ba-bce6-4c31-a38c-c80548f51ff9": {
+    "name": "prod_dru_orders_delta_down_v0",
+    "signal": "orders_delta_down",
+    "tone": "v0"
+  },
+  "d6c40513-28ed-4efc-9153-b521cacd1975": {
+    "name": "prod_dru_orders_delta_down_v1",
+    "signal": "orders_delta_down",
+    "tone": "v1"
+  },
+  "d6e4421c-cbc2-4ab1-b0c5-0b6ff5071e9c": {
+    "name": "dru_aov_v0",
+    "signal": null,
+    "tone": null
+  },
+  "dce43e6f-7379-446c-abad-f4d82361a984": {
+    "name": "prod_dru_customer_capture_v2",
+    "signal": "customer_capture",
+    "tone": "v2"
+  },
+  "dd41c5b3-9471-45b3-85b2-3d332836bf4b": {
+    "name": "dru_significantly_down_v0",
+    "signal": null,
+    "tone": null
+  },
+  "dfde2b36-507f-4327-918d-65a707017e9a": {
+    "name": "prod_whatsapp_two_way_chat_new_message",
+    "signal": null,
+    "tone": null
+  },
+  "dff1d76b-200c-48a3-a03b-e8c4adf85cf1": {
+    "name": "prod_dru_growth_driver_v2",
+    "signal": "growth_driver",
+    "tone": "v2"
+  },
+  "e5ee3725-1603-4d00-b836-12d5197261ae": {
+    "name": "prod_dru_significantly_down_v1",
+    "signal": "significantly_down",
+    "tone": "v1"
+  },
+  "e9566504-a301-4e40-a8a6-b565686563e0": {
+    "name": "dru_customer_capture_v1",
+    "signal": null,
+    "tone": null
+  },
+  "eb48295d-4283-4875-985c-3d42652a4c94": {
+    "name": "prod_dru_significantly_down_v0",
+    "signal": "significantly_down",
+    "tone": "v0"
+  },
+  "ec4d615d-d4f4-4fc8-8a3c-f2fde42b8b40": {
+    "name": "dru_significantly_down_v1",
+    "signal": null,
+    "tone": null
+  },
+  "f2d0b19e-db38-4a75-a05a-2cbdeed916be": {
+    "name": "dru_campaign_v1",
+    "signal": null,
+    "tone": null
+  },
+  "f556f84d-396b-4a1b-8129-b5d3e04f90c3": {
+    "name": "dru_significantly_down_v2",
+    "signal": null,
+    "tone": null
+  },
+  "f5a102a2-79ff-4f1d-97d5-21355cfa0f32": {
+    "name": "dru_customer_capture_v2",
+    "signal": null,
+    "tone": null
+  }
+}

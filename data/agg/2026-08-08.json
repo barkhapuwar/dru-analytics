@@ -1,0 +1,167 @@
+{
+  "date": "2026-08-08",
+  "fetched_at": "2026-08-18T13:07:39+05:30",
+  "stable": true,
+  "totals": {
+    "sends": 1472,
+    "brands": 1403,
+    "clicks": 105,
+    "ctr": 7.13,
+    "sum_successful": 1939,
+    "sum_received": 1603
+  },
+  "by_signal": {
+    "growth_driver": {
+      "sends": 297,
+      "clicks": 21,
+      "ctr": 7.07
+    },
+    "significantly_down": {
+      "sends": 264,
+      "clicks": 20,
+      "ctr": 7.58
+    },
+    "historically_great": {
+      "sends": 260,
+      "clicks": 17,
+      "ctr": 6.54
+    },
+    "significantly_up": {
+      "sends": 204,
+      "clicks": 20,
+      "ctr": 9.8
+    },
+    "loyalty": {
+      "sends": 194,
+      "clicks": 10,
+      "ctr": 5.15
+    },
+    "aov": {
+      "sends": 108,
+      "clicks": 3,
+      "ctr": 2.78
+    },
+    "customer_capture": {
+      "sends": 68,
+      "clicks": 5,
+      "ctr": 7.35
+    },
+    "default": {
+      "sends": 30,
+      "clicks": 1,
+      "ctr": 3.33
+    },
+    "auto_campaign": {
+      "sends": 27,
+      "clicks": 4,
+      "ctr": 14.81
+    },
+    "campaign": {
+      "sends": 16,
+      "clicks": 4,
+      "ctr": 25.0
+    },
+    "orders_delta_down": {
+      "sends": 2,
+      "clicks": 0,
+      "ctr": 0.0
+    },
+    "orders_delta_up": {
+      "sends": 2,
+      "clicks": 0,
+      "ctr": 0.0
+    }
+  },
+  "by_template": {
+    "prod_dru_growth_driver_v1": {
+      "sends": 297,
+      "clicks": 21,
+      "ctr": 7.07
+    },
+    "prod_dru_significantly_down_v1": {
+      "sends": 264,
+      "clicks": 20,
+      "ctr": 7.58
+    },
+    "prod_dru_historically_great_v1": {
+      "sends": 258,
+      "clicks": 17,
+      "ctr": 6.59
+    },
+    "prod_dru_significantly_up_v1": {
+      "sends": 202,
+      "clicks": 20,
+      "ctr": 9.9
+    },
+    "prod_dru_loyalty_v1": {
+      "sends": 194,
+      "clicks": 10,
+      "ctr": 5.15
+    },
+    "prod_dru_aov_v1": {
+      "sends": 108,
+      "clicks": 3,
+      "ctr": 2.78
+    },
+    "prod_dru_customer_capture_v1": {
+      "sends": 68,
+      "clicks": 5,
+      "ctr": 7.35
+    },
+    "prod_dru_default_v1": {
+      "sends": 30,
+      "clicks": 1,
+      "ctr": 3.33
+    },
+    "prod_dru_auto_campaign_v1": {
+      "sends": 27,
+      "clicks": 4,
+      "ctr": 14.81
+    },
+    "prod_dru_campaign_v1": {
+      "sends": 16,
+      "clicks": 4,
+      "ctr": 25.0
+    },
+    "prod_dru_orders_delta_down_v1": {
+      "sends": 2,
+      "clicks": 0,
+      "ctr": 0.0
+    },
+    "prod_dru_orders_delta_up_v1": {
+      "sends": 2,
+      "clicks": 0,
+      "ctr": 0.0
+    },
+    "prod_dru_historically_great_v2": {
+      "sends": 2,
+      "clicks": 0,
+      "ctr": 0.0
+    },
+    "prod_dru_significantly_up_v2": {
+      "sends": 2,
+      "clicks": 0,
+      "ctr": 0.0
+    }
+  },
+  "by_tone": {
+    "v1": {
+      "sends": 1468,
+      "clicks": 105,
+      "ctr": 7.15
+    },
+    "v2": {
+      "sends": 4,
+      "clicks": 0,
+      "ctr": 0.0
+    }
+  },
+  "quality": {
+    "unparsed_templates": 0,
+    "missing_external_id": 0,
+    "brands_with_multiple_sends": 40,
+    "max_sends_to_one_brand": 29,
+    "received_gt_successful": 26,
+    "converted_gt_received": 1
+  }
+}

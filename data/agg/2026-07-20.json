@@ -1,0 +1,117 @@
+{
+  "date": "2026-07-20",
+  "fetched_at": "2026-08-18T12:29:18+05:30",
+  "stable": true,
+  "totals": {
+    "sends": 44,
+    "brands": 13,
+    "clicks": 2,
+    "ctr": 4.55,
+    "sum_successful": 45,
+    "sum_received": 40
+  },
+  "by_signal": {
+    "historically_great": {
+      "sends": 15,
+      "clicks": 0,
+      "ctr": 0.0
+    },
+    "significantly_up": {
+      "sends": 13,
+      "clicks": 0,
+      "ctr": 0.0
+    },
+    "growth_driver": {
+      "sends": 6,
+      "clicks": 0,
+      "ctr": 0.0
+    },
+    "significantly_down": {
+      "sends": 6,
+      "clicks": 2,
+      "ctr": 33.33
+    },
+    "loyalty": {
+      "sends": 2,
+      "clicks": 0,
+      "ctr": 0.0
+    },
+    "aov": {
+      "sends": 1,
+      "clicks": 0,
+      "ctr": 0.0
+    },
+    "customer_capture": {
+      "sends": 1,
+      "clicks": 0,
+      "ctr": 0.0
+    }
+  },
+  "by_template": {
+    "prod_dru_historically_great_v1": {
+      "sends": 15,
+      "clicks": 0,
+      "ctr": 0.0
+    },
+    "prod_dru_significantly_up_v1": {
+      "sends": 13,
+      "clicks": 0,
+      "ctr": 0.0
+    },
+    "prod_dru_growth_driver_v1": {
+      "sends": 4,
+      "clicks": 0,
+      "ctr": 0.0
+    },
+    "prod_dru_significantly_down_v1": {
+      "sends": 4,
+      "clicks": 2,
+      "ctr": 50.0
+    },
+    "prod_dru_loyalty_v1": {
+      "sends": 2,
+      "clicks": 0,
+      "ctr": 0.0
+    },
+    "prod_dru_significantly_down_v2": {
+      "sends": 2,
+      "clicks": 0,
+      "ctr": 0.0
+    },
+    "prod_dru_growth_driver_v2": {
+      "sends": 2,
+      "clicks": 0,
+      "ctr": 0.0
+    },
+    "prod_dru_aov_v1": {
+      "sends": 1,
+      "clicks": 0,
+      "ctr": 0.0
+    },
+    "prod_dru_customer_capture_v1": {
+      "sends": 1,
+      "clicks": 0,
+      "ctr": 0.0
+    }
+  },
+  "by_tone": {
+    "v1": {
+      "sends": 40,
+      "clicks": 2,
+      "ctr": 5.0
+    },
+    "v2": {
+      "sends": 4,
+      "clicks": 0,
+      "ctr": 0.0
+    }
+  },
+  "quality": {
+    "unparsed_templates": 0,
+    "missing_external_id": 0,
+    "brands_with_multiple_sends": 2,
+    "max_sends_to_one_brand": 29,
+    "received_gt_successful": 0,
+    "converted_gt_received": 0
+  }
+}

@@ -1,0 +1,51 @@
+name: Fetch DRU data
+
+on:
+  workflow_dispatch:        # run manually from the Actions tab
+  schedule:
+    # 19:30 UTC == 01:00 IST. Deliberately NOT right after the send window:
+    # clicks keep arriving for hours, so the job re-fetches a rolling window
+    # (below) rather than trusting a single fresh pull.
+    - cron: "30 19 * * *"
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Fetch last 5 days (re-fetches recent days to catch late clicks)
+        env:
+          ONESIGNAL_APP_ID: ${{ secrets.ONESIGNAL_APP_ID }}
+          ONESIGNAL_API_KEY: ${{ secrets.ONESIGNAL_API_KEY }}
+        run: python scripts/fetch_dru.py --days 5
+
+      - name: Fetch missing brand emails from OneSignal
+        env:
+          ONESIGNAL_APP_ID: ${{ secrets.ONESIGNAL_APP_ID }}
+          ONESIGNAL_API_KEY: ${{ secrets.ONESIGNAL_API_KEY }}
+        run: python scripts/fetch_missing_emails.py
+
+      - name: Fetch brand identities from Amplitude
+        env:
+          AMPLITUDE_API_KEY: ${{ secrets.AMPLITUDE_API_KEY }}
+          AMPLITUDE_SECRET_KEY: ${{ secrets.AMPLITUDE_SECRET_KEY }}
+        run: python scripts/fetch_amplitude.py --days 7
+
+      - name: Resolve brand names
+        run: python scripts/fetch_brands.py
+
+      - name: Rebuild dashboard
+        run: python scripts/build_dashboard.py
+
+      - name: Commit refreshed data
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data dashboard.html
+          git diff --staged --quiet || git commit -m "data: refresh $(date -u +%Y-%m-%d)"
+          git push

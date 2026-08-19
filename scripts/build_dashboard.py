@@ -1,0 +1,1317 @@
+#!/usr/bin/env python3
+"""
+Build a self-contained dashboard.html from data/raw/*.json.
+
+Unlike the previous build (which only embedded day-level rollups), this reads
+every per-notification record so the dashboard can filter by period and drill
+into a single brand's send pattern client-side, with no rebuild needed per view.
+
+The data is embedded directly in the HTML, so the file works by double-clicking it
+(no web server) and contains no API key. Chrome blocks file:// pages from fetching
+sibling files, which is why the data is inlined rather than loaded.
+"""
+
+import datetime
+import glob
+import json
+import os
+
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+RAW_DIR = os.path.join(ROOT, "data", "raw")
+BRAND_NAMES_FILE = os.path.join(ROOT, "data", "brand_names.json")
+OUT = os.path.join(ROOT, "dashboard.html")
+
+# Top 8 signals by historical send volume, pinned to the 8 validated categorical
+# hues in this fixed order. Pinned rather than re-ranked on every build: color
+# must follow the entity, not its current rank, or a signal's line repaints
+# every time send volume shuffles the leaderboard. Any signal not in this list
+# (currently auto_campaign, campaign, orders_delta_up, orders_delta_down — each
+# under 300 total sends vs. 700+ for the smallest signal here) folds into a
+# single "Other" bucket rather than generating a 9th/10th/11th/12th hue.
+SIGNAL_COLOR_ORDER = [
+    "growth_driver",
+    "historically_great",
+    "significantly_down",
+    "significantly_up",
+    "aov",
+    "loyalty",
+    "customer_capture",
+    "default",
+]
+
+SIGNAL_LABELS = {
+    "growth_driver": "Growth driver",
+    "historically_great": "Historically great",
+    "significantly_down": "Significantly down",
+    "significantly_up": "Significantly up",
+    "aov": "AOV",
+    "loyalty": "Loyalty",
+    "customer_capture": "Customer capture",
+    "default": "Default",
+    "auto_campaign": "Auto campaign",
+    "campaign": "Campaign",
+    "orders_delta_up": "Orders up",
+    "orders_delta_down": "Orders down",
+}
+
+
+def load_brand_names():
+    """external_id -> (name, email), from data/brand_names.json (written by
+    scripts/fetch_brands.py). Missing file just means every brand shows as
+    unmapped ("—") rather than failing the build. Accepts both the richer
+    {"id": {"name":..., "email":...}} shape and a plain {"id": "Name"} map."""
+    if not os.path.exists(BRAND_NAMES_FILE):
+        return {}, {}
+    with open(BRAND_NAMES_FILE) as f:
+        raw = json.load(f)
+    names, emails = {}, {}
+    for eid, v in raw.items():
+        if isinstance(v, dict):
+            if v.get("name"):
+                names[eid] = v["name"]
+            if v.get("email"):
+                emails[eid] = v["email"]
+        elif v:
+            names[eid] = v
+    return names, emails
+
+
+def load_all():
+    brand_names, brand_emails = load_brand_names()
+    files = sorted(glob.glob(os.path.join(RAW_DIR, "*.json")))
+    if not files:
+        raise SystemExit("no data in data/raw/ — run scripts/fetch_dru.py first")
+
+    dates, unstable = [], []
+    brand_set, signal_set = set(), set()
+    rows = []  # (date, brand, signal, clicked)
+
+    for f in files:
+        d = json.load(open(f))
+        date = d["date"]
+        dates.append(date)
+        if not d.get("stable", True):
+            unstable.append(date)
+        for n in d["notifications"]:
+            b = n.get("external_id")
+            s = n.get("signal")
+            if not b or not s:
+                continue
+            brand_set.add(b)
+            signal_set.add(s)
+            rows.append((date, b, s, 1 if n.get("clicked") else 0))
+
+    dates = sorted(set(dates))
+    brands = sorted(brand_set)
+    signals = sorted(signal_set)
+    date_idx = {d: i for i, d in enumerate(dates)}
+    brand_idx = {b: i for i, b in enumerate(brands)}
+    signal_idx = {s: i for i, s in enumerate(signals)}
+
+    notifs = [
+        [date_idx[d], brand_idx[b], signal_idx[s], c] for d, b, s, c in rows
+    ]
+
+    return {
+        "dates": dates,
+        "unstable": sorted(unstable),
+        "brands": brands,
+        "signals": signals,
+        "signalColorOrder": [s for s in SIGNAL_COLOR_ORDER if s in signal_idx],
+        "signalLabels": SIGNAL_LABELS,
+        "brandNames": brand_names,
+        "brandEmails": brand_emails,
+        "notifs": notifs,
+        "generated": datetime.datetime.now().strftime("%Y-%m-%d %H:%M"),
+    }
+
+
+CSS = """
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  color-scheme:light;
+  --surface-1:#ffffff; --page:#f2efe7;
+  --text-primary:#0b0b0b; --text-secondary:#52514e; --text-muted:#6f6d67;
+  --grid:#e6e2d8; --axis:#c3c2b7; --border:rgba(11,11,11,0.10);
+  --series-1:#2a78d6; --series-2:#eb6834; --series-3:#1baf7a; --series-4:#eda100;
+  --series-5:#e87ba4; --series-6:#008300; --series-7:#4a3aa7; --series-8:#e34948;
+  --other:#898781;
+  --good:#0ca30c; --warning:#fab219; --critical:#d03b3b;
+  /* Board palette: #3368A0 / #66A3BF / #C8DFDB / #F2EFE7.
+     Contrast-checked, not eyeballed. #66A3BF carries white text at only
+     2.78:1, so text-on-colour always uses the deep blue or darker. */
+  --brand:#3368a0;
+  --brand-grad-a:#214368; --brand-grad-b:#3368a0;   /* white text: 10.16 / 5.79 */
+  --brand-solid-bg:#3368a0; --brand-solid-fg:#ffffff; /* 5.79 */
+  --brand-ink:#2b5888;                               /* 6.40 cream / 5.27 sage */
+  --brand-tint:#e4eef6; --brand-tint-border:#a9c8dd;
+  /* Sage table header. --text-muted FAILS on it (2.57), so headers use
+     --thead-fg (5.68) instead. */
+  --thead-bg:#c8dfdb; --thead-fg:#52514e;
+  --tip-bg:#eaf2f8; --tip-border:#a9c8dd;
+  --chart-bar:#518bc8;   /* lighter step on the same hue; 3.57 on card.
+                            #66A3BF itself fails the 3:1 graphical floor (2.78) */
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --surface-1:#1a1a19; --page:#0d0d0d;
+    --text-primary:#fff; --text-secondary:#c3c2b7; --text-muted:#898781;
+    --grid:#2c2c2a; --axis:#383835; --border:rgba(255,255,255,0.10);
+    --series-1:#3987e5; --series-2:#d95926; --series-3:#199e70; --series-4:#c98500;
+    --series-5:#d55181; --series-6:#008300; --series-7:#9085e9; --series-8:#e66767;
+    --other:#898781;
+    --brand-solid-bg:#66a3bf; --brand-solid-fg:#0b0b0b;  /* 7.08 */
+    --brand-ink:#8fc0d6;                                  /* 8.86 on surface */
+    --brand-tint:rgba(102,163,191,.16); --brand-tint-border:rgba(102,163,191,.40);
+    --thead-bg:#1e2a33; --thead-fg:#c3c2b7;               /* 8.17 */
+    --tip-bg:#16222b; --tip-border:rgba(102,163,191,.40);
+    --chart-bar:#66a3bf;                                  /* 6.27 on surface */
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --surface-1:#1a1a19; --page:#0d0d0d;
+  --text-primary:#fff; --text-secondary:#c3c2b7; --text-muted:#898781;
+  --grid:#2c2c2a; --axis:#383835; --border:rgba(255,255,255,0.10);
+  --series-1:#3987e5; --series-2:#d95926; --series-3:#199e70; --series-4:#c98500;
+  --series-5:#d55181; --series-6:#008300; --series-7:#9085e9; --series-8:#e66767;
+  --other:#898781;
+  --brand-solid-bg:#66a3bf; --brand-solid-fg:#0b0b0b;
+  --brand-ink:#8fc0d6;
+  --brand-tint:rgba(102,163,191,.16); --brand-tint-border:rgba(102,163,191,.40);
+  --thead-bg:#1e2a33; --thead-fg:#c3c2b7;
+  --tip-bg:#16222b; --tip-border:rgba(102,163,191,.40);
+  --chart-bar:#66a3bf;
+}
+body{background:var(--page);color:var(--text-primary);
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-size:14px;line-height:1.6;
+  padding:32px 24px 64px}
+.wrap{max-width:1180px;margin:0 auto}
+h1{font-size:24px;font-weight:700;letter-spacing:-0.01em;color:#fff}
+.sub{color:rgba(255,255,255,.82);font-size:13px;margin-top:4px}
+.theme-btn{position:absolute;top:20px;right:22px;background:rgba(255,255,255,.16);
+  border:1px solid rgba(255,255,255,.28);border-radius:99px;padding:6px 14px;font-size:12px;
+  font-weight:600;color:#fff;cursor:pointer;font-family:inherit;z-index:60}
+.theme-btn:hover{background:rgba(255,255,255,.26)}
+
+/* ── hero band: the header is its own surface, not part of the page flow ── */
+.hero{position:relative;overflow:hidden;border-radius:16px;margin-bottom:22px;
+  padding:24px 26px 26px;
+  background:linear-gradient(120deg,var(--brand-grad-a) 0%,var(--brand-grad-b) 100%)}
+.hero::after{content:'';position:absolute;top:-90px;right:-60px;width:280px;height:280px;
+  border-radius:50%;background:radial-gradient(circle,rgba(102,163,191,.45),transparent 68%);
+  pointer-events:none}
+.hero-head{margin-bottom:20px}
+.hero-card{position:relative;z-index:1;display:grid;gap:14px 18px;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.kpi{background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.2);
+  border-radius:12px;padding:14px 16px}
+.kpi .label{font-size:10.5px;color:rgba(255,255,255,.78);text-transform:uppercase;
+  letter-spacing:.08em;line-height:1.4;margin-bottom:3px}
+.kpi .value-row{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.kpi .value{font-size:26px;font-weight:700;line-height:1.2;color:#fff}
+.kpi .note{font-size:11px;color:rgba(255,255,255,.66);margin-top:1px}
+.kpi-delta{font-size:11.5px;font-weight:700;white-space:nowrap;cursor:help;
+  padding:2px 7px;border-radius:99px;background:rgba(255,255,255,.16);color:#fff}
+.kpi-delta:empty{display:none}
+
+/* ── filter bar ─────────────────────────────────────────────────────────── */
+.filterbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+.fbtn{background:var(--surface-1);border:1px solid var(--border);border-radius:99px;
+  padding:7px 15px;font-size:12.5px;font-weight:600;color:var(--text-secondary);
+  cursor:pointer;font-family:inherit;transition:all .12s}
+.fbtn:hover{color:var(--brand-ink);border-color:var(--brand-tint-border);background:var(--brand-tint)}
+.fbtn.active{background:var(--brand-solid-bg);color:var(--brand-solid-fg);
+  border-color:var(--brand-solid-bg)}
+.fbtn.active:hover{color:var(--brand-solid-fg);background:var(--brand-solid-bg)}
+.customwrap{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--text-secondary)}
+.customwrap.hidden{display:none}
+.customwrap input[type=date]{font-family:inherit;font-size:12.5px;color:var(--text-primary);
+  background:var(--surface-1);border:1px solid var(--border);border-radius:7px;padding:5px 8px}
+.search-wrap{position:relative;flex:1;min-width:170px;max-width:240px}
+.search-ic{position:absolute;left:12px;top:50%;transform:translateY(-50%) rotate(90deg);
+  font-size:13px;color:var(--text-muted);pointer-events:none}
+.searchbox{width:100%;font-family:inherit;font-size:12.5px;
+  background:var(--surface-1);border:1px solid var(--border);border-radius:99px;
+  padding:7px 14px 7px 30px;color:var(--text-primary)}
+.searchbox::placeholder{color:var(--text-muted)}
+
+.banner{border-radius:10px;padding:10px 14px;margin-bottom:16px;font-size:12.5px;
+  border:1px solid var(--border);background:var(--surface-1);display:flex;gap:9px;align-items:flex-start}
+.banner .dot{width:7px;height:7px;border-radius:50%;margin-top:6px;flex-shrink:0;background:var(--warning)}
+
+.card{background:var(--surface-1);border:1px solid var(--border);border-radius:16px;
+  padding:20px 22px;margin-bottom:20px;overflow:hidden;
+  box-shadow:0 1px 2px rgba(11,11,11,.04),0 1px 8px rgba(11,11,11,.03)}
+.card h2{font-size:15px;font-weight:600;margin-bottom:2px}
+.card .desc{font-size:12px;color:var(--text-muted);margin-bottom:14px}
+.card-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.toggle{background:none;border:1px solid var(--border);border-radius:6px;padding:3px 9px;
+  font-size:11px;color:var(--text-secondary);cursor:pointer;font-family:inherit;white-space:nowrap}
+.toggle:hover{color:var(--text-primary)}
+
+/* ── signal legend / checkboxes ────────────────────────────────────────── */
+.leg-controls{display:flex;align-items:center;gap:6px;margin-bottom:10px;flex-wrap:nowrap;
+  padding-bottom:10px;border-bottom:1px solid var(--border)}
+.leg-link{flex:1;background:var(--page);border:1px solid var(--border);border-radius:99px;
+  padding:5px 12px;font-size:11.5px;font-weight:600;white-space:nowrap;
+  color:var(--text-secondary);cursor:pointer;font-family:inherit;transition:all .12s}
+.leg-link:hover:not(:disabled){color:var(--brand-ink);border-color:var(--brand-tint-border);
+  background:var(--brand-tint)}
+.leg-link:disabled{opacity:.35;cursor:default}
+.leg-row{display:flex;flex-wrap:wrap;gap:6px 8px;margin-bottom:14px}
+.leg-chip{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;
+  color:var(--text-secondary);background:var(--page);border:1px solid var(--border);
+  border-radius:99px;padding:5px 11px 5px 8px;cursor:pointer;user-select:none;transition:opacity .12s}
+.leg-chip input{accent-color:var(--text-primary);width:13px;height:13px;cursor:pointer}
+.leg-chip .sw{width:9px;height:9px;border-radius:2px;flex-shrink:0}
+.leg-chip.off{opacity:.4}
+.leg-note{font-size:11.5px;color:var(--text-muted);margin:-8px 0 14px}
+.leg-row.vertical{flex-direction:column;flex-wrap:nowrap;gap:1px;margin-bottom:0}
+.leg-row.vertical .leg-chip{width:100%;border:none;background:none;border-radius:7px;
+  padding:6px 6px}
+.leg-row.vertical .leg-chip:hover{background:var(--page)}
+
+/* ── signal-filter dropdown (trend chart) ──────────────────────────────── */
+.sig-filter{position:relative;flex-shrink:0}
+.dropdown-btn{display:inline-flex;align-items:center;gap:7px;background:var(--surface-1);
+  border:1px solid var(--border);border-radius:99px;padding:7px 14px;font-size:12.5px;
+  font-weight:600;color:var(--text-secondary);cursor:pointer;font-family:inherit;white-space:nowrap}
+.dropdown-btn:hover{color:var(--brand-ink);border-color:var(--brand-tint-border)}
+.dropdown-btn .dd-chev{font-size:9px;color:var(--text-muted);transition:transform .12s}
+.sig-filter.open .dropdown-btn{color:var(--brand-ink);border-color:var(--brand-tint-border);
+  background:var(--brand-tint)}
+.sig-filter.open .dropdown-btn .dd-chev{transform:rotate(180deg)}
+.dropdown-panel{position:absolute;top:calc(100% + 8px);right:0;width:280px;
+  background:var(--surface-1);border:1px solid var(--border);border-radius:10px;
+  box-shadow:0 8px 28px rgba(11,11,11,.16);padding:12px 14px;z-index:50;
+  max-height:320px;overflow-y:auto}
+.dropdown-panel.hidden{display:none}
+
+svg{display:block;width:100%;height:auto}
+.gridline{stroke:var(--grid);stroke-width:1}
+.axisline{stroke:var(--axis);stroke-width:1}
+.tick{fill:var(--text-muted);font-size:11px;font-variant-numeric:tabular-nums}
+.dlabel{fill:var(--text-secondary);font-size:11px;font-variant-numeric:tabular-nums}
+.catlabel{fill:var(--text-secondary);font-size:12px}
+.hit{fill:transparent;cursor:pointer}
+.empty-note{font-size:12.5px;color:var(--text-muted);padding:24px 4px;text-align:center}
+
+/* ── brand table ────────────────────────────────────────────────────────── */
+table{width:100%;border-collapse:collapse;font-size:12.5px;font-variant-numeric:tabular-nums}
+th{text-align:left;padding:14px 14px;font-size:11px;text-transform:uppercase;
+  letter-spacing:.07em;color:var(--thead-fg);font-weight:700;
+  border-bottom:1px solid var(--brand-tint-border);white-space:nowrap;
+  cursor:pointer;user-select:none;position:sticky;top:0;background:var(--thead-bg);z-index:5}
+th:first-child{border-top-left-radius:10px}
+th:last-child{border-top-right-radius:10px}
+th.sortable:hover{color:var(--brand-ink)}
+th .arrow{color:var(--brand-ink);opacity:1}
+th .arrow{margin-left:3px;opacity:.5}
+td{padding:16px 14px;border-bottom:1px solid var(--grid);color:var(--text-secondary);
+  vertical-align:middle}
+td:first-child{color:var(--text-primary);font-weight:600}
+th.num,td.num{text-align:right}
+.help{display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;
+  border-radius:50%;border:1px solid var(--brand-ink);color:var(--brand-ink);font-size:9px;
+  font-weight:700;margin-left:5px;cursor:help;vertical-align:middle;font-style:normal;
+  text-transform:none;line-height:1}
+.help:hover{background:var(--brand-solid-bg);color:var(--brand-solid-fg);
+  border-color:var(--brand-solid-bg)}
+.pill{display:inline-flex;align-items:center;justify-content:center;min-width:52px;
+  padding:3px 9px;border-radius:99px;font-size:11.5px;font-weight:600;
+  background:var(--page);border:1px solid var(--border);color:var(--text-secondary)}
+.pill.hi{background:rgba(250,178,25,.16);border-color:rgba(250,178,25,.45);color:var(--text-primary)}
+tbody tr.brand-row{cursor:pointer}
+tbody tr.brand-row:hover{background:var(--page)}
+/* Flex lives on an inner wrapper, never on the <td> itself — display:flex on a
+   table cell drops it out of the table's column/border grid, which knocks its
+   bottom border out of alignment with every other cell in the row. */
+.cell-inline{display:flex;align-items:center;gap:7px}
+.chev{display:inline-block;width:9px;height:9px;border-right:1.5px solid var(--text-muted);
+  border-bottom:1.5px solid var(--text-muted);transform:rotate(-45deg);transition:transform .15s;flex-shrink:0}
+tr.expanded .chev{transform:rotate(45deg)}
+.eid{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;color:var(--text-secondary)}
+.muted{color:var(--text-muted);font-weight:500}
+.badges{display:flex;flex-wrap:wrap;gap:5px}
+.badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;
+  color:var(--text-secondary);background:var(--page);border:1px solid var(--border);
+  border-radius:99px;padding:3px 8px}
+.badge .sw{width:7px;height:7px;border-radius:2px;flex-shrink:0}
+.badge.more{cursor:help;color:var(--text-muted)}
+tr.detail-row{display:none}
+tr.detail-row.show{display:table-row}
+/* The open row and its detail panel are one unit: kill the divider between
+   them and carry the same background across both, or the card reads as an
+   unrelated block that happens to sit below the row. */
+tbody tr.brand-row.expanded,tbody tr.brand-row.expanded:hover{background:var(--brand-tint)}
+tbody tr.brand-row.expanded td{border-bottom-color:transparent}
+tbody tr.brand-row.expanded td:first-child{box-shadow:inset 3px 0 0 var(--brand-solid-bg)}
+tbody tr.brand-row.expanded .chev{border-color:var(--brand-ink)}
+tr.detail-row.show td{background:var(--brand-tint);padding:0 16px 16px;
+  border-bottom:1px solid var(--border);box-shadow:inset 3px 0 0 var(--brand-solid-bg)}
+.detail-card{background:var(--surface-1);border:1px solid var(--border);border-radius:10px;
+  padding:16px 18px;box-shadow:0 1px 2px rgba(11,11,11,.04),0 1px 6px rgba(11,11,11,.03)}
+.detail-ident{margin-bottom:12px}
+.ident-name{font-size:15px;font-weight:700;color:var(--text-primary);line-height:1.3}
+.ident-name.muted{color:var(--text-muted);font-weight:600}
+.ident-meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:3px}
+.ident-email{font-size:12px;color:var(--brand-ink);font-weight:600;word-break:break-all}
+.detail-head{display:flex;align-items:center;gap:0;flex-wrap:wrap;margin-bottom:14px;
+  padding-bottom:12px;border-bottom:1px solid var(--border)}
+.stat-chip{display:flex;flex-direction:column;gap:1px;padding:0 16px 0 0;margin-right:16px;
+  border-right:1px solid var(--border)}
+.stat-chip:last-of-type{border-right:none;margin-right:0}
+.stat-chip .v{font-size:17px;font-weight:700;color:var(--text-primary);line-height:1.15}
+.stat-chip .l{font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em}
+.warn-chip{margin-left:auto;display:inline-flex;align-items:center;font-size:11.5px;font-weight:600;
+  color:var(--text-secondary);background:rgba(250,178,25,.16);border:1px solid rgba(250,178,25,.4);
+  border-radius:99px;padding:5px 11px;cursor:default;white-space:nowrap}
+.detail-grid{display:grid;grid-template-columns:1fr 260px;gap:22px}
+@media (max-width:760px){.detail-grid{grid-template-columns:1fr}}
+.detail-h{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--text-muted);
+  font-weight:600;margin-bottom:10px}
+.dotcal-wrap{overflow-x:auto}
+.dotcal-note{font-size:11px;color:var(--text-muted);margin-top:8px}
+.pie-legend{display:flex;flex-direction:column;gap:6px;margin-top:10px;font-size:12px}
+.pie-legend .row{display:flex;align-items:center;gap:7px;color:var(--text-secondary)}
+.pie-legend .sw{width:9px;height:9px;border-radius:2px;flex-shrink:0}
+.pie-legend .n{margin-left:auto;font-variant-numeric:tabular-nums;color:var(--text-muted)}
+
+.tbl-wrap{overflow-x:auto}
+.pagin{display:flex;align-items:center;justify-content:space-between;gap:12px;
+  margin-top:14px;font-size:12px;color:var(--text-muted);flex-wrap:wrap}
+.pagin .btns{display:flex;gap:4px}
+.pagin button{background:var(--surface-1);border:1px solid var(--border);border-radius:6px;
+  padding:4px 10px;font-size:12px;color:var(--text-secondary);cursor:pointer;font-family:inherit}
+.pagin button:disabled{opacity:.35;cursor:default}
+.pagin button:hover:not(:disabled):not(.cur){color:var(--brand-ink);
+  border-color:var(--brand-tint-border);background:var(--brand-tint)}
+.pagin button.cur{background:var(--brand-solid-bg);color:var(--brand-solid-fg);
+  border-color:var(--brand-solid-bg)}
+
+/* Keyboard focus is brand-colored and always visible — the default ring is
+   invisible against several of these custom backgrounds. */
+.fbtn:focus-visible,.leg-link:focus-visible,.dropdown-btn:focus-visible,
+.searchbox:focus-visible,.pagin button:focus-visible,.theme-btn:focus-visible,
+input[type=date]:focus-visible{outline:2px solid var(--brand-solid-bg);outline-offset:2px}
+.searchbox:focus{border-color:var(--brand-tint-border);outline:none}
+
+#tip{position:fixed;pointer-events:none;background:var(--tip-bg);
+  border:1px solid var(--tip-border);border-radius:11px;padding:11px 13px;font-size:12px;
+  box-shadow:0 8px 26px rgba(11,11,11,.18);opacity:0;transition:opacity .1s;z-index:80;
+  color:var(--text-primary);max-width:280px;line-height:1.55}
+#tip .t{font-weight:700;margin-bottom:5px;padding-bottom:5px;
+  border-bottom:1px solid var(--tip-border)}
+#tip .r{color:var(--text-secondary);font-variant-numeric:tabular-nums}
+footer{margin-top:32px;font-size:12px;color:var(--text-muted);line-height:1.7}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;
+  background:var(--grid);padding:1px 5px;border-radius:4px}
+"""
+
+JS_LIB = r"""
+const $=(s,r)=>(r||document).querySelector(s);
+const fmt=n=>n.toLocaleString('en-IN');
+const tip=$('#tip');
+function showTip(e,title,rows){
+  tip.innerHTML='';
+  const t=document.createElement('div');t.className='t';t.textContent=title;tip.appendChild(t);
+  rows.forEach(r=>{const d=document.createElement('div');d.className='r';d.textContent=r;tip.appendChild(d);});
+  tip.style.opacity=1;moveTip(e);
+}
+function moveTip(e){
+  const p=12,w=tip.offsetWidth,h=tip.offsetHeight;
+  let x=e.clientX+p,y=e.clientY+p;
+  if(x+w>innerWidth-8)x=e.clientX-w-p;
+  if(y+h>innerHeight-8)y=e.clientY-h-p;
+  tip.style.left=x+'px';tip.style.top=y+'px';
+}
+function hideTip(){tip.style.opacity=0;}
+const SVG='http://www.w3.org/2000/svg';
+function el(n,a){const e=document.createElementNS(SVG,n);
+  for(const k in a)e.setAttribute(k,a[k]);return e;}
+function txt(s){return document.createTextNode(s);}
+
+function barPath(x,y,w,h,r){
+  r=Math.min(r,w/2,h);
+  return `M${x},${y+h} L${x},${y+r} Q${x},${y} ${x+r},${y} L${x+w-r},${y}
+          Q${x+w},${y} ${x+w},${y+r} L${x+w},${y+h} Z`;
+}
+function niceTicks(max,n){
+  if(max<=0)return[0,1];
+  const raw=max/n,mag=Math.pow(10,Math.floor(Math.log10(raw)));
+  const step=[1,2,2.5,5,10].map(m=>m*mag).find(s=>s>=raw)||10*mag;
+  const out=[];for(let v=0;v<=max-step*.001;v+=step)out.push(v);
+  out.push(out[out.length-1]+step);
+  return out;
+}
+
+/* ── multi-line chart, one series per signal, toggleable via .g-hidden ──── */
+function multiLineChart(node,dates,series,opts){
+  node.innerHTML='';
+  if(!dates.length||!series.length){
+    const d=document.createElement('div');d.className='empty-note';
+    d.textContent='No data for the selected filters.';node.appendChild(d);return;
+  }
+  const W=Math.max(node.clientWidth||0,320),H=opts.h||260,M={t:14,r:12,b:30,l:46};
+  const iw=W-M.l-M.r, ih=H-M.t-M.b;
+  const max=Math.max(1,...series.flatMap(s=>s.values));
+  const ticks=niceTicks(max,4), top=ticks[ticks.length-1]||max;
+  const svg=el('svg',{viewBox:`0 0 ${W} ${H}`});
+  ticks.forEach(t=>{
+    const y=M.t+ih-(t/top)*ih;
+    svg.appendChild(el('line',{x1:M.l,x2:M.l+iw,y1:y,y2:y,class:'gridline'}));
+    const lb=el('text',{x:M.l-8,y:y+4,class:'tick','text-anchor':'end'});
+    lb.textContent=fmt(Math.round(t));svg.appendChild(lb);
+  });
+  const n=dates.length;
+  const xAt=i=>n===1?M.l+iw/2:M.l+(i/(n-1))*iw;
+  const step=Math.max(1,Math.ceil(n/12));
+  dates.forEach((d,i)=>{
+    if(i%step!==0 && i!==n-1)return;
+    const lb=el('text',{x:xAt(i),y:H-10,class:'tick','text-anchor':'middle'});
+    lb.textContent=d.slice(5);svg.appendChild(lb);
+  });
+  series.forEach(s=>{
+    const g=el('g',{class:'series-g',['data-key']:s.key});
+    if(s.hidden)g.setAttribute('style','display:none');
+    const pts=s.values.map((v,i)=>[xAt(i),M.t+ih-(v/top)*ih]);
+    if(n===1){
+      g.appendChild(el('circle',{cx:pts[0][0],cy:pts[0][1],r:5,fill:s.color}));
+    }else{
+      const d=pts.map((p,i)=>(i===0?'M':'L')+p[0]+','+p[1]).join(' ');
+      g.appendChild(el('path',{d,fill:'none',stroke:s.color,'stroke-width':2,
+        'stroke-linejoin':'round','stroke-linecap':'round'}));
+    }
+    svg.appendChild(g);
+  });
+  // crosshair + one tooltip listing every visible series at that x
+  const hit=el('rect',{x:M.l,y:M.t,width:iw,height:ih,class:'hit'});
+  const cross=el('line',{x1:0,x2:0,y1:M.t,y2:M.t+ih,stroke:'var(--axis)','stroke-width':1,style:'display:none'});
+  svg.appendChild(cross);
+  hit.addEventListener('mousemove',e=>{
+    const rect=node.querySelector('svg').getBoundingClientRect();
+    const px=(e.clientX-rect.left)*(W/rect.width);
+    let i=n===1?0:Math.round(((px-M.l)/iw)*(n-1));
+    i=Math.max(0,Math.min(n-1,i));
+    const x=xAt(i);
+    cross.setAttribute('x1',x);cross.setAttribute('x2',x);cross.style.display='block';
+    const rows=series.filter(s=>!s.hidden).map(s=>s.label+': '+fmt(s.values[i]));
+    if(rows.length)showTip(e,dates[i],rows);else hideTip();
+  });
+  hit.addEventListener('mouseleave',()=>{cross.style.display='none';hideTip();});
+  svg.appendChild(hit);
+  svg.appendChild(el('line',{x1:M.l,x2:M.l+iw,y1:M.t+ih,y2:M.t+ih,class:'axisline'}));
+  node.appendChild(svg);
+}
+
+/* ── ranked horizontal bars, one hue (magnitude, not identity) — labels do
+   the identity work, so this scales past 8 categories with no color cap ── */
+function hbarChart(node,data,opts){
+  node.innerHTML='';
+  if(!data.length){
+    const d=document.createElement('div');d.className='empty-note';
+    d.textContent='No data for the selected period.';node.appendChild(d);return;
+  }
+  const W=Math.max(node.clientWidth||0,320), lw=opts.labelW||150,
+        rowH=opts.rowH||28, M={t:6,r:56,b:6,l:lw};
+  const H=M.t+data.length*rowH+M.b;
+  const iw=W-M.l-M.r;
+  const max=Math.max(...data.map(d=>d.v),1);
+  const svg=el('svg',{viewBox:`0 0 ${W} ${H}`});
+  const bh=Math.min(20,rowH-8);
+  data.forEach((d,i)=>{
+    const y=M.t+i*rowH+(rowH-bh)/2, w=(d.v/max)*iw;
+    const cl=el('text',{x:M.l-10,y:y+bh/2+4,class:'catlabel','text-anchor':'end'});
+    cl.textContent=d.label;svg.appendChild(cl);
+    if(w>0)svg.appendChild(el('path',{d:hbarPath(M.l,y,w,bh,4),fill:'var(--chart-bar)'}));
+    const vl=el('text',{x:M.l+w+8,y:y+bh/2+4,class:'dlabel'});
+    vl.textContent=fmt(d.v);svg.appendChild(vl);
+    const hit=el('rect',{x:0,y:M.t+i*rowH,width:W,height:rowH,class:'hit'});
+    hit.addEventListener('mouseenter',e=>showTip(e,d.label,d.rows||['Sends: '+fmt(d.v)]));
+    hit.addEventListener('mousemove',moveTip);
+    hit.addEventListener('mouseleave',hideTip);
+    svg.appendChild(hit);
+  });
+  svg.appendChild(el('line',{x1:M.l,x2:M.l,y1:M.t,y2:M.t+data.length*rowH,class:'axisline'}));
+  node.appendChild(svg);
+}
+function hbarPath(x,y,w,h,r){
+  r=Math.min(r,h/2,w);
+  return `M${x},${y} L${x+w-r},${y} Q${x+w},${y} ${x+w},${y+r}
+          L${x+w},${y+h-r} Q${x+w},${y+h} ${x+w-r},${y+h} L${x},${y+h} Z`;
+}
+
+/* ── per-brand activity grid: one ROW per signal, one COLUMN per date ──────
+   Every signal the brand actually used gets its own labeled row, so identity
+   is carried by position (never by squeezing >8 categories into one hue set),
+   and nothing folds into "Other" here — this is a small, per-brand slice. ── */
+function dotCalendar(node,dates,byDate,colorFor){
+  node.innerHTML='';
+  const sigCount=new Map(), cellMap=new Map(), labelOf=new Map();
+  dates.forEach(d=>{
+    (byDate.get(d)||[]).forEach(e=>{
+      sigCount.set(e.signal,(sigCount.get(e.signal)||0)+1);
+      labelOf.set(e.signal,e.label);
+      const k=d+'|'+e.signal;
+      const c=cellMap.get(k)||{count:0,clicks:0};
+      c.count++; if(e.clicked)c.clicks++;
+      cellMap.set(k,c);
+    });
+  });
+  const sigList=[...sigCount.entries()].sort((a,b)=>b[1]-a[1]).map(([s])=>s);
+  if(!sigList.length){
+    const d=document.createElement('div');d.className='empty-note';
+    d.textContent='No sends in this period.';node.appendChild(d);return;
+  }
+  const labelW=136, cellW=48, rowH=26, M={t:6,l:labelW,b:22,r:10};
+  const W=M.l+dates.length*cellW+M.r, H=M.t+sigList.length*rowH+M.b;
+  // Fixed pixel width, not the usual width:100% — this chart's unit is a
+  // cellW-wide day column, so it must render 1:1 and scroll (.dotcal-wrap
+  // has overflow-x:auto), not stretch to fill the card and blow up every
+  // dot and label past the container's actual width.
+  const svg=el('svg',{viewBox:`0 0 ${W} ${H}`,style:`width:${W}px;max-width:none;height:${H}px`});
+  const gridBottom=M.t+sigList.length*rowH;
+  // Tint the whole column on a day with more than one signal sent — the
+  // per-cell dots already show it, but a reader shouldn't have to spot two
+  // dots in two different rows unaided to notice a duplicate-send day.
+  dates.forEach((d,ci)=>{
+    const dayCount=(byDate.get(d)||[]).length;
+    if(dayCount>1){
+      svg.appendChild(el('rect',{x:M.l+ci*cellW,y:M.t,width:cellW,height:gridBottom-M.t,
+        fill:'var(--warning)',opacity:0.12}));
+    }
+  });
+  sigList.forEach((sig,ri)=>{
+    const y=M.t+ri*rowH+rowH/2;
+    svg.appendChild(el('circle',{cx:14,cy:y,r:4,fill:colorFor(sig)}));
+    const lb=el('text',{x:24,y:y+4,class:'catlabel','text-anchor':'start'});
+    lb.textContent=labelOf.get(sig);svg.appendChild(lb);
+    svg.appendChild(el('line',{x1:M.l,x2:W-M.r,y1:y,y2:y,class:'gridline'}));
+  });
+  dates.forEach((d,ci)=>{
+    const x=M.l+ci*cellW+cellW/2;
+    const dayCount=(byDate.get(d)||[]).length;
+    sigList.forEach((sig,ri)=>{
+      const y=M.t+ri*rowH+rowH/2;
+      const cell=cellMap.get(d+'|'+sig);
+      const hit=el('rect',{x:M.l+ci*cellW,y:M.t+ri*rowH,width:cellW,height:rowH,class:'hit'});
+      if(cell){
+        svg.appendChild(el('circle',{cx:x,cy:y,r:7,fill:colorFor(sig),
+          stroke:'var(--surface-1)','stroke-width':2}));
+        if(cell.clicks>0)svg.appendChild(el('circle',{cx:x,cy:y,r:2.4,fill:'var(--surface-1)'}));
+        hit.addEventListener('mouseenter',e=>showTip(e,d,[
+          'Signal: '+labelOf.get(sig),
+          cell.count>1?('Sends: '+cell.count):'Sent',
+          'Clicked: '+(cell.clicks>0?('yes'+(cell.clicks>1?' ('+cell.clicks+')':'')):'no')]));
+      }else{
+        svg.appendChild(el('circle',{cx:x,cy:y,r:1.8,fill:'var(--axis)'}));
+        hit.addEventListener('mouseenter',e=>showTip(e,d,['No '+labelOf.get(sig)+' sent']));
+      }
+      hit.addEventListener('mousemove',moveTip);
+      hit.addEventListener('mouseleave',hideTip);
+      svg.appendChild(hit);
+    });
+    if(ci%Math.max(1,Math.ceil(dates.length/14))===0 || ci===dates.length-1){
+      const lb=el('text',{x,y:H-6,class:'tick','text-anchor':'middle'});
+      if(dayCount>1)lb.setAttribute('fill','var(--warning)');
+      lb.textContent=d.slice(5);svg.appendChild(lb);
+    }
+  });
+  node.appendChild(svg);
+}
+
+/* ── small pie, capped at 6 wedges (top 5 + Other), 2px surface-color gap ── */
+function pieChart(node,data,legendNode){
+  node.innerHTML='';if(legendNode)legendNode.innerHTML='';
+  const total=data.reduce((s,d)=>s+d.v,0);
+  if(!total){const d=document.createElement('div');d.className='empty-note';
+    d.textContent='No sends.';node.appendChild(d);return;}
+  const size=150,r=62,cx=size/2,cy=size/2;
+  const svg=el('svg',{viewBox:`0 0 ${size} ${size}`,style:'max-width:150px;margin:0 auto'});
+  let a0=-Math.PI/2;
+  data.forEach(d=>{
+    const frac=d.v/total, a1=a0+frac*Math.PI*2;
+    const large=(a1-a0)>Math.PI?1:0;
+    const x0=cx+r*Math.cos(a0), y0=cy+r*Math.sin(a0);
+    const x1=cx+r*Math.cos(a1), y1=cy+r*Math.sin(a1);
+    const path=frac>=0.999
+      ? `M${cx},${cy-r} A${r},${r} 0 1 1 ${cx-0.01},${cy-r} Z`
+      : `M${cx},${cy} L${x0},${y0} A${r},${r} 0 ${large} 1 ${x1},${y1} Z`;
+    const wedge=el('path',{d:path,fill:d.color,stroke:'var(--surface-1)','stroke-width':2});
+    wedge.addEventListener('mouseenter',e=>showTip(e,d.label,
+      [fmt(d.v)+' sends','('+(frac*100).toFixed(1)+'%)']));
+    wedge.addEventListener('mousemove',moveTip);
+    wedge.addEventListener('mouseleave',hideTip);
+    svg.appendChild(wedge);
+    a0=a1;
+  });
+  node.appendChild(svg);
+  if(legendNode){
+    data.forEach(d=>{
+      const row=document.createElement('div');row.className='row';
+      const sw=document.createElement('span');sw.className='sw';sw.style.background=d.color;
+      const lbl=document.createElement('span');lbl.textContent=d.label;
+      const n=document.createElement('span');n.className='n';
+      n.textContent=fmt(d.v)+' · '+(d.v/total*100).toFixed(0)+'%';
+      row.append(sw,lbl,n);legendNode.appendChild(row);
+    });
+  }
+}
+
+function wireToggle(btn,chartEl,tblEl){
+  btn.addEventListener('click',()=>{
+    const showTbl=chartEl.classList.toggle('hidden');
+    tblEl.classList.toggle('hidden',!showTbl);
+    btn.textContent=showTbl?'Chart view':'Table view';
+    hideTip();
+  });
+}
+"""
+
+JS_APP = r"""
+const D=DATA;
+const EXTRA_SIGNALS=D.signals.filter(s=>!D.signalColorOrder.includes(s));
+const SLOT=['var(--series-1)','var(--series-2)','var(--series-3)','var(--series-4)',
+            'var(--series-5)','var(--series-6)','var(--series-7)','var(--series-8)'];
+function prettySignal(s){return D.signalLabels[s]||s;}
+function colorFor(sig){
+  const i=D.signalColorOrder.indexOf(sig);
+  return i>=0?SLOT[i]:'var(--other)';
+}
+function chartKeyFor(sig){return D.signalColorOrder.includes(sig)?sig:'__other__';}
+function brandNameOf(eid){return D.brandNames[eid]||'';}
+function brandEmailOf(eid){return D.brandEmails[eid]||'';}
+
+// notifs -> plain objects once, indices resolved
+const NOTIFS=D.notifs.map(([di,bi,si,c])=>({
+  date:D.dates[di],brand:D.brands[bi],signal:D.signals[si],clicked:!!c}));
+
+$('#sub').innerHTML='';
+$('#sub').append(txt('Data '+D.dates[0]+' to '+D.dates[D.dates.length-1]+' · generated '+D.generated));
+if(D.unstable.length){
+  const b=document.createElement('div');b.className='banner';
+  const dot=document.createElement('span');dot.className='dot';
+  const msg=document.createElement('div');
+  const strong=document.createElement('b');
+  strong.textContent=D.unstable.length+' day(s) not yet settled';
+  msg.append(strong,txt(' ('+D.unstable.join(', ')+'). Clicks keep arriving for a few days after send, so recent CTR is an undercount.'));
+  b.append(dot,msg);$('#banners').appendChild(b);
+}
+
+// ── period state ──────────────────────────────────────────────────────────
+const ANCHOR=D.dates[D.dates.length-1];
+// All date math is UTC-only. Building the date at LOCAL midnight and reading it
+// back with toISOString() (UTC) shifts it a day behind in any timezone ahead of
+// UTC — in IST addDays(d,+1) returned d unchanged, which hung the coverage loop.
+function addDays(dstr,n){const d=new Date(dstr+'T00:00:00Z');d.setUTCDate(d.getUTCDate()+n);
+  return d.toISOString().slice(0,10);}
+function daysBetween(a,b){
+  return Math.round((new Date(b+'T00:00:00Z')-new Date(a+'T00:00:00Z'))/86400000);}
+let periodStart=addDays(ANCHOR,-6), periodEnd=ANCHOR;
+
+function setPreset(p){
+  document.querySelectorAll('.fbtn').forEach(b=>b.classList.toggle('active',b.dataset.p===p));
+  $('#customWrap').classList.toggle('hidden',p!=='custom');
+  $('#singleWrap').classList.toggle('hidden',p!=='single');
+  if(p==='week'){periodStart=addDays(ANCHOR,-6);periodEnd=ANCHOR;render();}
+  else if(p==='month'){periodStart=ANCHOR.slice(0,8)+'01';periodEnd=ANCHOR;render();}
+  else if(p==='custom'){
+    $('#rangeStart').value=periodStart;$('#rangeEnd').value=periodEnd;
+  } else if(p==='single'){
+    $('#singleDate').value=periodEnd;periodStart=periodEnd;render();
+  }
+}
+document.querySelectorAll('.fbtn').forEach(b=>b.addEventListener('click',()=>setPreset(b.dataset.p)));
+[$('#rangeStart'),$('#rangeEnd')].forEach(inp=>inp.addEventListener('change',()=>{
+  if($('#rangeStart').value&&$('#rangeEnd').value){
+    periodStart=$('#rangeStart').value;periodEnd=$('#rangeEnd').value;
+    if(periodStart>periodEnd)[periodStart,periodEnd]=[periodEnd,periodStart];
+    render();
+  }
+}));
+$('#singleDate').addEventListener('change',()=>{
+  periodStart=periodEnd=$('#singleDate').value;render();
+});
+[$('#rangeStart'),$('#rangeEnd'),$('#singleDate')].forEach(inp=>{
+  inp.min=D.dates[0];inp.max=D.dates[D.dates.length-1];
+});
+
+// ── signal checkbox legend ──────────────────────────────────────────────
+const checked=new Set([...D.signalColorOrder,'__other__']);
+function legendKeys(){return [...D.signalColorOrder,...(EXTRA_SIGNALS.length?['__other__']:[])];}
+function buildLegend(){
+  const row=$('#legRow');row.innerHTML='';
+  const items=[...D.signalColorOrder.map(s=>({key:s,label:prettySignal(s),color:colorFor(s)}))];
+  if(EXTRA_SIGNALS.length) items.push({key:'__other__',
+    label:'Other ('+EXTRA_SIGNALS.map(prettySignal).join(', ')+')',color:'var(--other)'});
+  items.forEach(it=>{
+    const lab=document.createElement('label');lab.className='leg-chip';
+    const cb=document.createElement('input');cb.type='checkbox';cb.checked=checked.has(it.key);
+    const sw=document.createElement('span');sw.className='sw';sw.style.background=it.color;
+    const t=document.createElement('span');t.textContent=it.label;
+    lab.append(cb,sw,t);
+    if(!cb.checked)lab.classList.add('off');
+    cb.addEventListener('change',()=>{
+      if(cb.checked)checked.add(it.key);else checked.delete(it.key);
+      lab.classList.toggle('off',!cb.checked);
+      const g=document.querySelector('.series-g[data-key="'+it.key+'"]');
+      if(g)g.style.display=cb.checked?'':'none';
+      updateLegControls();
+      renderTable();
+    });
+    row.appendChild(lab);
+  });
+  updateLegControls();
+}
+function updateLegControls(){
+  const keys=legendKeys();
+  $('#legAllBtn').disabled=checked.size===keys.length;
+  $('#legNoneBtn').disabled=checked.size===0;
+  $('#sigFilterLabel').textContent=checked.size===keys.length
+    ?'All signals':checked.size+' of '+keys.length+' signals';
+}
+function setAllChecked(state){
+  const keys=legendKeys();
+  keys.forEach(k=>state?checked.add(k):checked.delete(k));
+  buildLegend();
+  renderChart();
+  renderTable();
+}
+$('#legAllBtn').addEventListener('click',()=>setAllChecked(true));
+$('#legNoneBtn').addEventListener('click',()=>setAllChecked(false));
+
+// ── signal-filter dropdown open/close ───────────────────────────────────
+const sigFilterEl=$('#sigFilter'), sigFilterPanel=$('#sigFilterPanel');
+$('#sigFilterBtn').addEventListener('click',e=>{
+  e.stopPropagation();
+  const open=sigFilterPanel.classList.toggle('hidden');
+  sigFilterEl.classList.toggle('open',!open);
+});
+document.addEventListener('click',e=>{
+  if(!sigFilterEl.contains(e.target)){
+    sigFilterPanel.classList.add('hidden');
+    sigFilterEl.classList.remove('open');
+  }
+});
+function expandChecked(){
+  const out=new Set();
+  checked.forEach(k=>{
+    if(k==='__other__')EXTRA_SIGNALS.forEach(s=>out.add(s));
+    else out.add(k);
+  });
+  return out;
+}
+
+// ── filtering + aggregation ─────────────────────────────────────────────
+let periodNotifs=[], periodDates=[];
+function recomputePeriod(){
+  periodDates=D.dates.filter(d=>d>=periodStart&&d<=periodEnd);
+  const dset=new Set(periodDates);
+  periodNotifs=NOTIFS.filter(n=>dset.has(n.date));
+}
+
+function computeChartSeries(){
+  const keys=[...D.signalColorOrder,...(EXTRA_SIGNALS.length?['__other__']:[])];
+  const counts=new Map(keys.map(k=>[k,new Array(periodDates.length).fill(0)]));
+  const dpos=new Map(periodDates.map((d,i)=>[d,i]));
+  periodNotifs.forEach(n=>{
+    const k=chartKeyFor(n.signal);
+    counts.get(k)[dpos.get(n.date)]++;
+  });
+  return keys.map(k=>({
+    key:k,
+    label:k==='__other__'?'Other':prettySignal(k),
+    color:k==='__other__'?'var(--other)':colorFor(k),
+    values:counts.get(k),
+    hidden:!checked.has(k),
+  }));
+}
+
+function computeBrandStats(){
+  const by=new Map();
+  const active=expandChecked();
+  periodNotifs.forEach(n=>{
+    let r=by.get(n.brand);
+    if(!r){r={brand:n.brand,sends:0,clicks:0,bySig:new Map(),byDate:new Map(),matches:false};by.set(n.brand,r);}
+    r.sends++; if(n.clicked)r.clicks++;
+    r.bySig.set(n.signal,(r.bySig.get(n.signal)||0)+1);
+    if(!r.byDate.has(n.date))r.byDate.set(n.date,[]);
+    r.byDate.get(n.date).push({signal:n.signal,label:prettySignal(n.signal),clicked:n.clicked});
+    if(active.has(n.signal))r.matches=true;
+  });
+  return [...by.values()].filter(r=>r.matches);
+}
+
+// ── state: sort, search, page, expanded ─────────────────────────────────
+let sortKey='sends', sortDir=-1, page=1, expandedBrand=null;
+const PAGE_SIZE=50;
+
+function topSignals(bySig,n){
+  return [...bySig.entries()].sort((a,b)=>b[1]-a[1]).slice(0,n);
+}
+
+function renderChart(){
+  multiLineChart($('#sigChart'),periodDates,computeChartSeries(),{h:260});
+}
+
+function renderSigRank(){
+  const agg=new Map();
+  periodNotifs.forEach(n=>{
+    const a=agg.get(n.signal)||{sends:0,clicks:0};
+    a.sends++; if(n.clicked)a.clicks++;
+    agg.set(n.signal,a);
+  });
+  const data=[...agg.entries()].sort((a,b)=>b[1].sends-a[1].sends).map(([sig,a])=>({
+    label:prettySignal(sig),v:a.sends,
+    rows:['Sends: '+fmt(a.sends),'Clicks: '+fmt(a.clicks),
+      'CTR: '+(a.sends?(a.clicks/a.sends*100).toFixed(2):'0.00')+'%'],
+  }));
+  hbarChart($('#sigRank'),data,{labelW:150,rowH:26});
+}
+
+function renderTable(){
+  let rows=computeBrandStats();
+  const qId=$('#search').value.trim().toLowerCase();
+  const qName=$('#searchBrand').value.trim().toLowerCase();
+  if(qId)rows=rows.filter(r=>r.brand.toLowerCase().includes(qId));
+  if(qName)rows=rows.filter(r=>(brandNameOf(r.brand)+' '+brandEmailOf(r.brand))
+    .toLowerCase().includes(qName));
+  rows.forEach(r=>{
+    r.ctr=r.sends?r.clicks/r.sends*100:0;
+    const top=topSignals(r.bySig,1);
+    r.topShare=top.length?top[0][1]/r.sends*100:0;
+  });
+  rows.sort((a,b)=>sortDir*((a[sortKey]??0)-(b[sortKey]??0)) || a.brand.localeCompare(b.brand));
+
+  $('#rowCount').textContent=fmt(rows.length)+' brand'+(rows.length===1?'':'s');
+  const totalPages=Math.max(1,Math.ceil(rows.length/PAGE_SIZE));
+  page=Math.min(page,totalPages);
+  const pageRows=rows.slice((page-1)*PAGE_SIZE,page*PAGE_SIZE);
+
+  const tbody=$('#tbody');tbody.innerHTML='';
+  if(!pageRows.length){
+    const tr=document.createElement('tr');const td=document.createElement('td');
+    td.colSpan=6;td.className='empty-note';td.textContent='No brands match the current filters.';
+    tr.appendChild(td);tbody.appendChild(tr);
+  }
+  pageRows.forEach((r,ri)=>{
+    const tr=document.createElement('tr');tr.className='brand-row';
+    const tdBrand=document.createElement('td');
+    const brandInner=document.createElement('div');brandInner.className='cell-inline';
+    const chev=document.createElement('span');chev.className='chev';
+    const bn=brandNameOf(r.brand);
+    const bnSpan=document.createElement('span');
+    bnSpan.textContent=bn||'—';
+    if(!bn)bnSpan.className='muted';
+    brandInner.append(chev,bnSpan);tdBrand.appendChild(brandInner);
+
+    const tdB=document.createElement('td');
+    const eid=document.createElement('span');eid.className='eid';eid.textContent=r.brand;
+    tdB.appendChild(eid);
+
+    const tdSends=document.createElement('td');tdSends.className='num';tdSends.textContent=fmt(r.sends);
+    const tdCtr=document.createElement('td');tdCtr.className='num';
+    const ctrPill=document.createElement('span');ctrPill.className='pill';
+    ctrPill.textContent=r.ctr.toFixed(1)+'%';tdCtr.appendChild(ctrPill);
+    const tdShare=document.createElement('td');tdShare.className='num';
+    const sharePill=document.createElement('span');
+    sharePill.className='pill'+(r.topShare>=70?' hi':'');
+    sharePill.textContent=r.topShare.toFixed(0)+'%';tdShare.appendChild(sharePill);
+
+    // Two badges, then a "+N" chip — three full badges per row was the bulk of
+    // the visual noise, and the overflow detail is one hover away.
+    const tdSig=document.createElement('td');const badges=document.createElement('div');badges.className='badges';
+    const allSigs=topSignals(r.bySig,99);
+    allSigs.slice(0,2).forEach(([sig,c])=>{
+      const b=document.createElement('span');b.className='badge';
+      const sw=document.createElement('span');sw.className='sw';sw.style.background=colorFor(sig);
+      const t=document.createElement('span');t.textContent=prettySignal(sig)+' ×'+c;
+      b.append(sw,t);badges.appendChild(b);
+    });
+    if(allSigs.length>2){
+      const rest=allSigs.slice(2);
+      const more=document.createElement('span');more.className='badge more';
+      more.textContent='+'+rest.length;
+      more.addEventListener('mouseenter',e=>showTip(e,'Other signals',
+        rest.map(([sig,c])=>prettySignal(sig)+' ×'+c)));
+      more.addEventListener('mousemove',moveTip);
+      more.addEventListener('mouseleave',hideTip);
+      badges.appendChild(more);
+    }
+    tdSig.appendChild(badges);
+
+    tr.append(tdBrand,tdB,tdSends,tdCtr,tdShare,tdSig);
+    tbody.appendChild(tr);
+
+    const detail=document.createElement('tr');detail.className='detail-row';
+    const dtd=document.createElement('td');dtd.colSpan=6;
+    detail.appendChild(dtd);
+    tbody.appendChild(detail);
+
+    const open=r.brand===expandedBrand;
+    if(open){tr.classList.add('expanded');detail.classList.add('show');buildDetail(dtd,r);}
+
+    tr.addEventListener('click',()=>{
+      expandedBrand=(expandedBrand===r.brand)?null:r.brand;
+      renderTable();
+    });
+  });
+  renderPagination(totalPages);
+}
+
+function buildDetail(node,r){
+  node.innerHTML='';
+  const card=document.createElement('div');card.className='detail-card';
+
+  // Identity lives in the card, not in a table column — an email column would
+  // widen every row for a value you only need once you've drilled in.
+  const ident=document.createElement('div');ident.className='detail-ident';
+  const nm=document.createElement('div');nm.className='ident-name';
+  nm.textContent=brandNameOf(r.brand)||'Unmapped brand';
+  if(!brandNameOf(r.brand))nm.classList.add('muted');
+  const meta=document.createElement('div');meta.className='ident-meta';
+  const em=brandEmailOf(r.brand);
+  if(em){
+    const a=document.createElement('span');a.className='ident-email';a.textContent=em;
+    meta.appendChild(a);
+  }
+  const idSpan=document.createElement('span');idSpan.className='eid';idSpan.textContent=r.brand;
+  meta.appendChild(idSpan);
+  ident.append(nm,meta);card.appendChild(ident);
+
+  // Compact header: key stats as chips, plus a hover-only warning for the
+  // duplicate-send case instead of a paragraph eating card space up front.
+  const head=document.createElement('div');head.className='detail-head';
+  [['Sends',fmt(r.sends)],['CTR',r.ctr.toFixed(1)+'%'],['Repeats',r.topShare.toFixed(0)+'%']]
+    .forEach(([label,val])=>{
+      const chip=document.createElement('div');chip.className='stat-chip';
+      const v=document.createElement('span');v.className='v';v.textContent=val;
+      const l=document.createElement('span');l.className='l';l.textContent=label;
+      chip.append(v,l);head.appendChild(chip);
+    });
+  // Spec is one DRU push per brand per day. Most days hold to that, but some
+  // brands get several signals the same day — flag it here instead of letting
+  // a crowded day read as a rendering glitch.
+  const multiDays=[...r.byDate.values()].filter(list=>list.length>1);
+  if(multiDays.length){
+    const maxDay=Math.max(...multiDays.map(l=>l.length));
+    const warn=document.createElement('span');warn.className='warn-chip';
+    warn.textContent='⚠ '+multiDays.length+'/'+r.byDate.size+' days multi-signal';
+    warn.addEventListener('mouseenter',e=>showTip(e,'Duplicate sends',[
+      'Spec is one Daily Round-up push per brand per day.',
+      multiDays.length+' of '+r.byDate.size+' day(s) here sent more than one'+
+        (maxDay>2?' (up to '+maxDay+' in a single day)':''),
+      'Data-quality issue upstream, not a rendering artifact.',
+    ]));
+    warn.addEventListener('mousemove',moveTip);
+    warn.addEventListener('mouseleave',hideTip);
+    head.appendChild(warn);
+  }
+  card.appendChild(head);
+
+  const grid=document.createElement('div');grid.className='detail-grid';
+
+  const left=document.createElement('div');
+  const lh=document.createElement('div');lh.className='detail-h';
+  lh.textContent='Which signal, which day';
+  left.appendChild(lh);
+  const calWrap=document.createElement('div');calWrap.className='dotcal-wrap';
+  const calSvg=document.createElement('div');calWrap.appendChild(calSvg);
+  left.appendChild(calWrap);
+  const calNote=document.createElement('div');calNote.className='dotcal-note';
+  calNote.textContent='A hollow dot marks a click. Amber column = more than one signal that day.';
+  left.appendChild(calNote);
+
+  const right=document.createElement('div');
+  const rh=document.createElement('div');rh.className='detail-h';rh.textContent='Signal mix';
+  const pieHost=document.createElement('div');
+  const pieLegend=document.createElement('div');pieLegend.className='pie-legend';
+  right.append(rh,pieHost,pieLegend);
+
+  grid.append(left,right);
+  card.appendChild(grid);
+  node.appendChild(card);
+
+  dotCalendar(calSvg,periodDates,r.byDate,colorFor);
+
+  const top=topSignals(r.bySig,5);
+  const restCount=[...r.bySig.values()].reduce((s,v)=>s+v,0)-top.reduce((s,[,v])=>s+v,0);
+  const pieData=top.map(([sig,v])=>({label:prettySignal(sig),v,color:colorFor(sig)}));
+  if(restCount>0)pieData.push({label:'Other',v:restCount,color:'var(--other)'});
+  pieChart(pieHost,pieData,pieLegend);
+}
+
+function renderPagination(totalPages){
+  const bar=$('#pagin');bar.innerHTML='';
+  const info=document.createElement('div');info.textContent='Page '+page+' of '+totalPages;
+  const btns=document.createElement('div');btns.className='btns';
+  function mkBtn(label,p,disabled,cur){
+    const b=document.createElement('button');b.textContent=label;
+    if(disabled)b.disabled=true;if(cur)b.classList.add('cur');
+    b.addEventListener('click',()=>{page=p;renderTable();});
+    return b;
+  }
+  btns.appendChild(mkBtn('‹',Math.max(1,page-1),page===1,false));
+  const span=3;
+  let lo=Math.max(1,page-span),hi=Math.min(totalPages,page+span);
+  if(lo>1)btns.appendChild(mkBtn('1',1,false,page===1));
+  if(lo>2){const d=document.createElement('span');d.textContent='…';d.style.padding='0 4px';btns.appendChild(d);}
+  for(let p=lo;p<=hi;p++)btns.appendChild(mkBtn(String(p),p,false,p===page));
+  if(hi<totalPages-1){const d=document.createElement('span');d.textContent='…';d.style.padding='0 4px';btns.appendChild(d);}
+  if(hi<totalPages)btns.appendChild(mkBtn(String(totalPages),totalPages,false,page===totalPages));
+  btns.appendChild(mkBtn('›',Math.min(totalPages,page+1),page===totalPages,false));
+  bar.append(info,btns);
+}
+
+document.querySelectorAll('th.sortable').forEach(th=>{
+  th.addEventListener('click',()=>{
+    const k=th.dataset.key;
+    if(sortKey===k)sortDir*=-1;else{sortKey=k;sortDir=-1;}
+    document.querySelectorAll('th.sortable .arrow').forEach(a=>a.textContent='');
+    th.querySelector('.arrow').textContent=sortDir===-1?'↓':'↑';
+    page=1;renderTable();
+  });
+});
+
+// Header help: explain "Repeats" on hover. Click must not reach the <th> or it
+// would toggle the sort as a side effect of reading the definition.
+const repeatsHelp=$('#repeatsHelp');
+repeatsHelp.addEventListener('mouseenter',e=>showTip(e,'Repeats',[
+  'The top signal’s share of that brand’s sends in this period.',
+  '100% = every push was the same signal.',
+  'Highlighted at 70%+ — the brand is getting a near-identical push most days.',
+]));
+repeatsHelp.addEventListener('mousemove',moveTip);
+repeatsHelp.addEventListener('mouseleave',hideTip);
+repeatsHelp.addEventListener('click',e=>e.stopPropagation());
+
+let searchTimer;
+[$('#search'),$('#searchBrand')].forEach(inp=>inp.addEventListener('input',()=>{
+  clearTimeout(searchTimer);
+  searchTimer=setTimeout(()=>{page=1;renderTable();},150);
+}));
+
+// ── KPIs, with a vs-prior-period delta on each tile ─────────────────────
+function statsFor(dates){
+  const dset=new Set(dates);
+  const rows=NOTIFS.filter(n=>dset.has(n.date));
+  const sends=rows.length, clicks=rows.filter(n=>n.clicked).length,
+    brands=new Set(rows.map(n=>n.brand)).size;
+  return {sends,clicks,brands,ctr:sends?clicks/sends*100:0};
+}
+const DATE_SET=new Set(D.dates);
+// Every calendar day in [start,end], and how many of them the dataset actually
+// holds. A window is only comparable when it is FULLY covered: comparing a
+// 17-day period against a prior window the data only half-covers reported
+// "+96%" growth that was really just four missing days plus the pilot ramp.
+function coverage(start,end){
+  const all=[];
+  // Hard bound: a non-advancing date helper must never be able to freeze the tab.
+  for(let d=start,guard=0;d<=end&&guard<4000;d=addDays(d,1),guard++)all.push(d);
+  const have=all.filter(d=>DATE_SET.has(d));
+  return {all,have,full:all.length>0&&have.length===all.length};
+}
+function prevRange(){
+  const days=daysBetween(periodStart,periodEnd)+1;
+  return {start:addDays(periodStart,-days),end:addDays(periodStart,-1),days};
+}
+// isPoints=true compares as an absolute-point delta (for CTR%); otherwise a
+// relative % change. Rendered only when both windows are fully covered —
+// otherwise the tile stays blank rather than showing an inflated number.
+function applyDelta(id,curV,prevV,comparable,isPoints,windowLabel){
+  const node=$('#'+id);
+  node.onmouseenter=node.onmousemove=node.onmouseleave=null;
+  if(!comparable){node.textContent='';node.className='kpi-delta';return;}
+  let diff,label;
+  if(isPoints){
+    diff=curV-prevV;
+    label=(diff>0?'+':'')+diff.toFixed(1)+'pp';
+  }else if(prevV===0){
+    if(curV===0){node.textContent='';node.className='kpi-delta';return;}
+    diff=1;label='new';
+  }else{
+    diff=(curV-prevV)/prevV*100;
+    label=(diff>0?'+':'')+diff.toFixed(1)+'%';
+  }
+  const dir=diff>0?'up':diff<0?'down':'flat';
+  node.className='kpi-delta '+dir;
+  node.textContent=(dir==='up'?'↑ ':dir==='down'?'↓ ':'')+label;
+  node.onmouseenter=e=>showTip(e,'Compared with',[windowLabel,
+    'Same length as the selected period, ending the day before it starts.']);
+  node.onmousemove=moveTip;
+  node.onmouseleave=hideTip;
+}
+function renderKpis(){
+  const cur=statsFor(periodDates);
+  const pr=prevRange();
+  const curCov=coverage(periodStart,periodEnd), prevCov=coverage(pr.start,pr.end);
+  const comparable=curCov.full&&prevCov.full;
+  const prev=statsFor(prevCov.have);
+  const windowLabel=pr.start+' → '+pr.end;
+  $('#kSends').textContent=fmt(cur.sends);
+  $('#kBrands').textContent=fmt(cur.brands);
+  $('#kClicks').textContent=fmt(cur.clicks);
+  $('#kCtr').textContent=cur.ctr.toFixed(2)+'%';
+  applyDelta('kSendsDelta',cur.sends,prev.sends,comparable,false,windowLabel);
+  applyDelta('kBrandsDelta',cur.brands,prev.brands,comparable,false,windowLabel);
+  applyDelta('kClicksDelta',cur.clicks,prev.clicks,comparable,false,windowLabel);
+  applyDelta('kCtrDelta',cur.ctr,prev.ctr,comparable,true,windowLabel);
+}
+
+function render(){
+  recomputePeriod();
+  buildLegend();
+  renderKpis();
+  renderSigRank();
+  renderChart();
+  page=1;
+  renderTable();
+}
+
+setPreset('week');
+
+addEventListener('resize',()=>{clearTimeout(window._rt);
+  window._rt=setTimeout(()=>{renderSigRank();renderChart();if(expandedBrand){
+    const r=computeBrandStats().find(x=>x.brand===expandedBrand);
+    if(r){const dtd=document.querySelector('tr.detail-row.show td');if(dtd)buildDetail(dtd,r);}
+  }},150);});
+
+const btn=$('#themeBtn');
+const setT=t=>{document.documentElement.setAttribute('data-theme',t);
+  btn.textContent=t==='dark'?'Light':'Dark';setTimeout(render,20);};
+setT('light');
+btn.addEventListener('click',()=>setT(
+  document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark'));
+"""
+
+
+def build(payload):
+    head = (
+        '<!doctype html>\n<html lang="en"><head><meta charset="utf-8">\n'
+        '<meta name="viewport" content="width=device-width,initial-scale=1">\n'
+        "<title>Daily Round-up — Notification Tracking</title>\n"
+        "<style>" + CSS + "</style></head><body>\n"
+        '<div class="wrap">\n'
+        '<div class="hero">\n'
+        '  <button class="theme-btn" id="themeBtn">Dark</button>\n'
+        '  <div class="hero-head">\n'
+        "    <h1>Daily Round-up — Notification Tracking</h1>\n"
+        '    <div class="sub" id="sub"></div>\n'
+        "  </div>\n"
+        '  <div class="hero-card">\n'
+        '    <div class="kpi"><div class="label">Notifications sent</div>'
+        '<div class="value-row"><span class="value" id="kSends"></span>'
+        '<span class="kpi-delta" id="kSendsDelta"></span></div>'
+        '<div class="note">selected period</div></div>\n'
+        '    <div class="kpi"><div class="label">Brands reached</div>'
+        '<div class="value-row"><span class="value" id="kBrands"></span>'
+        '<span class="kpi-delta" id="kBrandsDelta"></span></div>'
+        '<div class="note">selected period</div></div>\n'
+        '    <div class="kpi"><div class="label">Clicks</div>'
+        '<div class="value-row"><span class="value" id="kClicks"></span>'
+        '<span class="kpi-delta" id="kClicksDelta"></span></div>'
+        '<div class="note">unique brand opens</div></div>\n'
+        '    <div class="kpi"><div class="label">Click rate</div>'
+        '<div class="value-row"><span class="value" id="kCtr"></span>'
+        '<span class="kpi-delta" id="kCtrDelta"></span></div>'
+        '<div class="note">clicks ÷ sends</div></div>\n'
+        "  </div>\n"
+        "</div>\n"
+        '<div id="banners"></div>\n'
+        '<div class="filterbar card">\n'
+        '  <button class="fbtn" data-p="week">This week</button>\n'
+        '  <button class="fbtn" data-p="month">This month</button>\n'
+        '  <button class="fbtn" data-p="custom">Custom range</button>\n'
+        '  <button class="fbtn" data-p="single">Single date</button>\n'
+        '  <div class="customwrap hidden" id="customWrap">\n'
+        '    <input type="date" id="rangeStart"> <span>to</span> <input type="date" id="rangeEnd">\n'
+        "  </div>\n"
+        '  <div class="customwrap hidden" id="singleWrap">\n'
+        '    <input type="date" id="singleDate">\n'
+        "  </div>\n"
+        '  <div class="search-wrap"><span class="search-ic">⌕</span>'
+        '<input class="searchbox" id="searchBrand" placeholder="Search brand or email…"></div>\n'
+        '  <div class="search-wrap"><span class="search-ic">⌕</span>'
+        '<input class="searchbox" id="search" placeholder="Search external ID…"></div>\n'
+        "</div>\n"
+        '<div class="card">\n'
+        '  <div class="card-head"><div>\n'
+        "    <h2>Top signals — ranked</h2>\n"
+        '    <div class="desc">Every signal, most-sent first, totalled over the selected period.</div>\n'
+        "  </div></div>\n"
+        '  <div id="sigRank"></div>\n'
+        "</div>\n"
+        '<div class="card">\n'
+        '  <div class="card-head">\n'
+        "    <div>\n"
+        "      <h2>Top signals — daily trend</h2>\n"
+        '      <div class="desc">Notifications sent per day, by signal, over the selected period. '
+        "Also filters the brand table below.</div>\n"
+        "    </div>\n"
+        '    <div class="sig-filter" id="sigFilter">\n'
+        '      <button class="dropdown-btn" id="sigFilterBtn" type="button">\n'
+        '        <span id="sigFilterLabel"></span><span class="dd-chev">▾</span>\n'
+        "      </button>\n"
+        '      <div class="dropdown-panel hidden" id="sigFilterPanel">\n'
+        '        <div class="leg-controls">\n'
+        '          <button class="leg-link" id="legAllBtn" type="button">Select all</button>\n'
+        '          <button class="leg-link" id="legNoneBtn" type="button">Deselect all</button>\n'
+        "        </div>\n"
+        '        <div class="leg-row vertical" id="legRow"></div>\n'
+        "      </div>\n"
+        "    </div>\n"
+        "  </div>\n"
+        '  <div id="sigChart"></div>\n'
+        "</div>\n"
+        '<div class="card">\n'
+        '  <div class="card-head"><div>\n'
+        "    <h2>Brands</h2>\n"
+        '    <div class="desc">Click any row for its send calendar and signal mix.</div>\n'
+        "  </div><div id=\"rowCount\" style=\"font-size:12px;color:var(--text-muted);white-space:nowrap\"></div></div>\n"
+        '  <div class="tbl-wrap"><table>\n'
+        "    <thead><tr>\n"
+        "      <th>Brand</th>\n"
+        "      <th>External ID</th>\n"
+        '      <th class="num sortable" data-key="sends">Sends<span class="arrow"> ↓</span></th>\n'
+        '      <th class="num sortable" data-key="ctr">CTR<span class="arrow"></span></th>\n'
+        '      <th class="num sortable" data-key="topShare">Repeats'
+        '<span class="help" id="repeatsHelp">i</span><span class="arrow"></span></th>\n'
+        "      <th>Top signals</th>\n"
+        "    </tr></thead>\n"
+        '    <tbody id="tbody"></tbody>\n'
+        "  </table></div>\n"
+        '  <div class="pagin" id="pagin"></div>\n'
+        "</div>\n"
+        "<footer>\n"
+        "  Generated by <code>scripts/build_dashboard.py</code> from <code>data/raw/*.json</code>. "
+        "Re-run <code>scripts/fetch_dru.py</code> to refresh.<br>"
+        "CTR is brand-level: one row = one brand-send, clicked = <code>converted &gt; 0</code>. "
+        "“Other” groups signals outside the top 8 by volume "
+        "(auto_campaign, campaign, orders_delta_up, orders_delta_down) to keep the chart's colors "
+        "distinguishable — see the legend for the full breakdown.\n"
+        "</footer>\n"
+        "</div>\n"
+        '<div id="tip"></div>\n'
+    )
+    script = (
+        "<script>const DATA=" + json.dumps(payload) + ";</script>\n"
+        "<script>" + JS_LIB + "\n" + JS_APP + "</script>\n"
+        "</body></html>"
+    )
+    return head + script
+
+
+def main():
+    payload = load_all()
+    with open(OUT, "w") as f:
+        f.write(build(payload))
+    print(
+        f"wrote {OUT}  ({len(payload['dates'])} days, "
+        f"{len(payload['notifs']):,} notifications, {len(payload['brands']):,} brands)"
+    )
+
+
+if __name__ == "__main__":
+    main()
