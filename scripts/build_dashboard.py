@@ -1192,6 +1192,9 @@ def build(payload):
         '<!doctype html>\n<html lang="en"><head><meta charset="utf-8">\n'
         '<meta name="viewport" content="width=device-width,initial-scale=1">\n'
         "<title>Daily Round-up — Notification Tracking</title>\n"
+        "<link rel=\"icon\" href=\"data:image/svg+xml,"
+        "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>"
+        "<text y='.9em' font-size='90'>%F0%9F%94%94</text></svg>\">\n"
         "<style>" + CSS + "</style></head><body>\n"
         '<div class="wrap">\n'
         '<div class="hero">\n'
