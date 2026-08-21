@@ -1,0 +1,15 @@
+# Only dashboard.html needs to reach the public URL - it is fully
+# self-contained (every record is embedded in the page itself), so the
+# pipeline's inputs and outputs never have to be uploaded at all.
+#
+# Without this, Vercel serves the repo root as-is and these become
+# downloadable by anyone with the URL: data/raw/*.json (every notification
+# record), data/brand_emails.json and data/brand_names.json (real addresses
+# for the full brand roster). That is exactly what happens on the current
+# Netlify deploy - see README/HANDOFF before removing any line here.
+data/
+scripts/
+.github/
+*.md
+_redirects
+.env*
