@@ -1267,7 +1267,6 @@ def build(payload):
         '  <button class="fbtn" data-p="month">This month</button>\n'
         '  <button class="fbtn" data-p="custom">Custom range</button>\n'
         '  <button class="fbtn" data-p="single">Single date</button>\n'
-        '  <button class="fbtn" id="notifOffBtn" type="button">Notifications off</button>\n'
         '  <div class="customwrap hidden" id="customWrap">\n'
         '    <input type="date" id="rangeStart"> <span>to</span> <input type="date" id="rangeEnd">\n'
         "  </div>\n"
@@ -1276,6 +1275,7 @@ def build(payload):
         "  </div>\n"
         '  <div class="search-wrap" style="max-width:340px"><span class="search-ic">⌕</span>'
         '<input class="searchbox" id="search" placeholder="Search brand, email, or external ID…"></div>\n'
+        '  <button class="fbtn" id="notifOffBtn" type="button" style="margin-left:auto">Notifications off</button>\n'
         "</div>\n"
         '<div class="card">\n'
         '  <div class="card-head"><div>\n'
