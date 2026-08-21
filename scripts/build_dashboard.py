@@ -328,6 +328,15 @@ th.num,td.num{text-align:right}
   padding:3px 9px;border-radius:99px;font-size:11.5px;font-weight:600;
   background:var(--page);border:1px solid var(--border);color:var(--text-secondary)}
 .pill.hi{background:rgba(250,178,25,.16);border-color:rgba(250,178,25,.45);color:var(--text-primary)}
+.cat-filters{display:flex;gap:8px;margin-top:8px}
+.cat-filters.hidden{display:none}
+.cap{font-family:inherit;cursor:pointer;display:inline-flex;align-items:center;
+  padding:4px 12px;border-radius:99px;font-size:11.5px;font-weight:600;
+  background:var(--page);border:1px solid var(--border);color:var(--text-secondary);
+  transition:all .12s}
+.cap:hover{color:var(--brand-ink);border-color:var(--brand-tint-border);background:var(--brand-tint)}
+.cap.active{background:var(--brand-solid-bg);color:var(--brand-solid-fg);border-color:var(--brand-solid-bg)}
+.cap.active:hover{color:var(--brand-solid-fg);background:var(--brand-solid-bg)}
 tbody tr.brand-row{cursor:pointer}
 tbody tr.brand-row:hover{background:var(--page)}
 /* Flex lives on an inner wrapper, never on the <td> itself — display:flex on a
@@ -755,6 +764,7 @@ function computeStaleBrands(){
 const {ids:STALE_BRANDS,category:STALE_CATEGORY}=computeStaleBrands();
 const STALE_SET=new Set(STALE_BRANDS);
 let notifOffActive=false;
+let categoryFilter=new Set(['never','quiet']);
 
 // "Notifications off" shows lifetime data regardless of period - picking any
 // period afterward (preset button, custom range, or single date) needs to
@@ -763,6 +773,7 @@ let notifOffActive=false;
 function exitNotifOff(){
   notifOffActive=false;
   $('#notifOffBtn').classList.remove('active');
+  $('#catFilters').classList.add('hidden');
 }
 
 function setPreset(p){
@@ -894,8 +905,10 @@ function computeBrandStats(){
   // there's no notif to derive one from.
   if(notifOffActive){
     STALE_BRANDS.forEach(brand=>{
+      const cat=STALE_CATEGORY.get(brand);
+      if(!categoryFilter.has(cat))return;
       by.set(brand,{brand,sends:0,clicks:0,bySig:new Map(),byDate:new Map(),matches:true,
-        category:STALE_CATEGORY.get(brand)});
+        category:cat});
     });
     NOTIFS.forEach(n=>{
       const r=by.get(n.brand);
@@ -1215,7 +1228,23 @@ notifOffBtn.textContent='Notifications off ('+fmt(STALE_BRANDS.length)+')';
 notifOffBtn.addEventListener('click',()=>{
   notifOffActive=!notifOffActive;
   notifOffBtn.classList.toggle('active',notifOffActive);
+  $('#catFilters').classList.toggle('hidden',!notifOffActive);
   page=1;renderTable();
+});
+
+const CAT_COUNT={
+  never:STALE_BRANDS.filter(b=>STALE_CATEGORY.get(b)==='never').length,
+  quiet:STALE_BRANDS.filter(b=>STALE_CATEGORY.get(b)==='quiet').length,
+};
+document.querySelectorAll('#catFilters .cap').forEach(btn=>{
+  const cat=btn.dataset.cat;
+  btn.textContent=(cat==='never'?'Never turned on':'Off 15+ days')+' ('+fmt(CAT_COUNT[cat])+')';
+  btn.classList.toggle('active',categoryFilter.has(cat));
+  btn.addEventListener('click',()=>{
+    if(categoryFilter.has(cat))categoryFilter.delete(cat);else categoryFilter.add(cat);
+    btn.classList.toggle('active',categoryFilter.has(cat));
+    page=1;renderTable();
+  });
 });
 
 // ── KPIs, with a vs-prior-period delta on each tile ─────────────────────
@@ -1397,6 +1426,10 @@ def build(payload):
         '  <div class="card-head"><div>\n'
         "    <h2>Brands</h2>\n"
         '    <div class="desc" id="brandsDesc">Click any row for its send calendar and signal mix.</div>\n'
+        '    <div class="cat-filters hidden" id="catFilters">\n'
+        '      <button class="cap" data-cat="never" type="button">Never turned on</button>\n'
+        '      <button class="cap" data-cat="quiet" type="button">Off 15+ days</button>\n'
+        "    </div>\n"
         "  </div><div id=\"rowCount\" style=\"font-size:12px;color:var(--text-muted);white-space:nowrap\"></div></div>\n"
         '  <div class="tbl-wrap"><table>\n'
         "    <thead><tr>\n"
