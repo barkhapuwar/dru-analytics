@@ -70,6 +70,22 @@ def external_ids():
     return ids
 
 
+def brand_tab_contact_ids(brand_rows):
+    """Every contact_reelo_id across every brand-tab row - the full roster of
+    real (growth-plan) brands Reelo has on file, not just ones a DRU send has
+    ever gone out to. A brand whose push notifications are off from day one
+    never gets a send queued at all (see fetch_missing_emails.py's docstring),
+    so it's invisible to external_ids() above no matter how long we wait -
+    this is the only way to know it exists."""
+    ids = set()
+    for r in brand_rows:
+        for cid in (r.get("contact_reelo_ids") or "").split(","):
+            cid = cid.strip()
+            if cid:
+                ids.add(cid)
+    return ids
+
+
 def fetch_tab(sheet_id, gid, want):
     """Rows of one tab as dicts. These tabs open with a banner row ("MySQL
     Import / Last updated ..."), so the header row is found by content rather
@@ -102,8 +118,8 @@ def main():
     ap.add_argument("--brand-gid", default=os.environ.get("BRAND_BRAND_GID", BRAND_GID))
     args = ap.parse_args()
 
-    ids = external_ids()
-    log(f"{len(ids)} external_ids in data/raw/")
+    raw_ids = external_ids()
+    log(f"{len(raw_ids)} external_ids in data/raw/ (ever sent a DRU)")
     log("reading sheet")
 
     resolved = {}  # ext -> {"name","email"}
@@ -111,6 +127,19 @@ def main():
     # 1. contact tab — one row per contact, the most direct match
     contact_rows = fetch_tab(args.sheet_id, args.contact_gid,
                              ["contact_id", "email", "name"])
+
+    # 2. brand tab — contact_reelo_ids is a comma-separated list per brand.
+    #    Fetched before the id universe is finalized: it's also the source of
+    #    every growth-plan brand's contact ids, sent a DRU before or not - a
+    #    brand with notifications off from day one never gets a send queued,
+    #    so it would otherwise never appear anywhere in this pipeline.
+    brand_rows = fetch_tab(args.sheet_id, args.brand_gid,
+                           ["reelo_id", "name", "email", "contact_reelo_ids"])
+    roster_ids = brand_tab_contact_ids(brand_rows)
+    ids = raw_ids | roster_ids
+    log(f"  +{len(ids) - len(raw_ids)} more from the brand tab's full roster "
+        f"(never sent a DRU) — {len(ids)} total")
+
     for r in contact_rows:
         cid = (r.get("contact_id") or "").strip()
         if cid in ids and cid not in resolved:
@@ -118,10 +147,8 @@ def main():
                              "email": (r.get("email") or "").strip().lower()}
     log(f"  matched {len(resolved)} from the contact tab")
 
-    # 2. brand tab — contact_reelo_ids is a comma-separated list per brand
     before = len(resolved)
-    for r in fetch_tab(args.sheet_id, args.brand_gid,
-                       ["reelo_id", "name", "email", "contact_reelo_ids"]):
+    for r in brand_rows:
         cids = [c.strip() for c in (r.get("contact_reelo_ids") or "").split(",") if c.strip()]
         for cid in cids:
             if cid in ids and cid not in resolved:

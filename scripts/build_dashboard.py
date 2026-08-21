@@ -83,7 +83,12 @@ def load_all():
         raise SystemExit("no data in data/raw/ — run scripts/fetch_dru.py first")
 
     dates, unstable = [], []
-    brand_set, signal_set = set(), set()
+    # brand_names.json now covers every growth-plan brand on file (see
+    # fetch_brands.py), not just ones with send history - seeding brand_set
+    # from it means a brand whose notifications have been off since day one
+    # (never gets a send queued at all) still shows up and is searchable,
+    # just with zero notifs.
+    brand_set, signal_set = set(brand_names.keys()), set()
     rows = []  # (date, brand, signal, clicked)
 
     for f in files:
@@ -711,17 +716,22 @@ function daysBetween(a,b){
   return Math.round((new Date(b+'T00:00:00Z')-new Date(a+'T00:00:00Z'))/86400000);}
 let periodStart=addDays(ANCHOR,-6), periodEnd=ANCHOR;
 
-// ── brands with 0 sends in the trailing 15 days despite prior history ──────
-// Global, not period-filtered: a brand going quiet needs to stay findable
-// under the "Notifications off" toggle regardless of which period the rest
-// of the page is showing.
+// ── brands with 0 sends in the trailing 15 days, or none ever ──────────────
+// Global, not period-filtered: a brand going quiet (or never starting) needs
+// to stay findable under the "Notifications off" toggle regardless of which
+// period the rest of the page is showing. D.brands now covers every
+// growth-plan brand on file (see fetch_brands.py's brand-tab roster), not
+// just ones with send history, so this also catches brands whose push was
+// off from day one - those never get a send queued at all, so they'd have
+// zero rows in NOTIFS forever, not just for the last 15 days.
 const STALE_WINDOW_DAYS=15;
 function computeStaleBrands(){
-  if(D.dates.length<STALE_WINDOW_DAYS)return [];
   const cutoff=addDays(ANCHOR,-(STALE_WINDOW_DAYS-1));
-  // If the pipeline itself sent nothing on the latest day, going quiet isn't
-  // a per-brand signal - don't flag anyone.
-  if(!NOTIFS.some(n=>n.date===ANCHOR))return [];
+  // If the pipeline itself sent nothing on the latest day, "went quiet"
+  // isn't a per-brand signal - don't flag anyone on that basis. Brands with
+  // zero sends ever are unaffected by this guard: that fact doesn't depend
+  // on today's fetch succeeding.
+  const pipelineHealthy=D.dates.length>=STALE_WINDOW_DAYS&&NOTIFS.some(n=>n.date===ANCHOR);
   const by=new Map();
   NOTIFS.forEach(n=>{
     let r=by.get(n.brand);
@@ -730,7 +740,11 @@ function computeStaleBrands(){
     if(n.date>=cutoff)r.recent++;
   });
   const out=[];
-  by.forEach((r,brand)=>{if(r.recent===0&&r.first<cutoff)out.push(brand);});
+  D.brands.forEach(brand=>{
+    const r=by.get(brand);
+    if(!r){out.push(brand);return;} // never sent, ever
+    if(pipelineHealthy&&r.recent===0&&r.first<cutoff)out.push(brand);
+  });
   return out;
 }
 const STALE_BRANDS=computeStaleBrands();
@@ -857,19 +871,33 @@ function computeChartSeries(){
 
 function computeBrandStats(){
   const by=new Map();
-  const active=expandChecked();
   // "Notifications off" shows lifetime data for flagged brands (they have
-  // nothing in any recent period by definition), everything else stays
-  // scoped to the selected period as usual.
-  const source=notifOffActive?NOTIFS.filter(n=>STALE_SET.has(n.brand)):periodNotifs;
-  source.forEach(n=>{
+  // nothing in any recent period by definition) - seeded up front so a
+  // brand with literally zero sends ever still gets a (blank) row, since
+  // there's no notif to derive one from.
+  if(notifOffActive){
+    STALE_BRANDS.forEach(brand=>{
+      by.set(brand,{brand,sends:0,clicks:0,bySig:new Map(),byDate:new Map(),matches:true});
+    });
+    NOTIFS.forEach(n=>{
+      const r=by.get(n.brand);
+      if(!r)return;
+      r.sends++; if(n.clicked)r.clicks++;
+      r.bySig.set(n.signal,(r.bySig.get(n.signal)||0)+1);
+      if(!r.byDate.has(n.date))r.byDate.set(n.date,[]);
+      r.byDate.get(n.date).push({signal:n.signal,label:prettySignal(n.signal),clicked:n.clicked});
+    });
+    return [...by.values()];
+  }
+  const active=expandChecked();
+  periodNotifs.forEach(n=>{
     let r=by.get(n.brand);
     if(!r){r={brand:n.brand,sends:0,clicks:0,bySig:new Map(),byDate:new Map(),matches:false};by.set(n.brand,r);}
     r.sends++; if(n.clicked)r.clicks++;
     r.bySig.set(n.signal,(r.bySig.get(n.signal)||0)+1);
     if(!r.byDate.has(n.date))r.byDate.set(n.date,[]);
     r.byDate.get(n.date).push({signal:n.signal,label:prettySignal(n.signal),clicked:n.clicked});
-    if(notifOffActive||active.has(n.signal))r.matches=true;
+    if(active.has(n.signal))r.matches=true;
   });
   return [...by.values()].filter(r=>r.matches);
 }
@@ -903,7 +931,7 @@ function renderSigRank(){
 
 function renderTable(){
   $('#brandsDesc').textContent=notifOffActive
-    ?'Lifetime data for brands with 0 sends in the last 15 days — ignores the period filter above.'
+    ?'Brands with 0 sends in the last 15 days, or none ever — lifetime data, ignores the period filter above.'
     :'Click any row for its send calendar and signal mix.';
   let rows=computeBrandStats();
   const q=$('#search').value.trim().toLowerCase();
