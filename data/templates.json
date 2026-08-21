@@ -29,6 +29,11 @@
     "signal": null,
     "tone": null
   },
+  "1baaabdf-4791-406b-8d03-9469adc24b4c": {
+    "name": "wa_bot_ttt",
+    "signal": null,
+    "tone": null
+  },
   "1c66d727-0184-45eb-8bcb-4334b351a116": {
     "name": "dru_loyalty_v1",
     "signal": null,
@@ -243,6 +248,11 @@
     "name": "prod_dru_historically_great_v0",
     "signal": "historically_great",
     "tone": "v0"
+  },
+  "8f415c12-13c8-4be0-b967-aa22a3d7a63b": {
+    "name": "prod_wa_bot_ttt",
+    "signal": null,
+    "tone": null
   },
   "914d4058-ea05-4aa6-85a4-71796fce5dd9": {
     "name": "prod_dru_default_v2",
