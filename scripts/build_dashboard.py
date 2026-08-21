@@ -711,6 +711,32 @@ function daysBetween(a,b){
   return Math.round((new Date(b+'T00:00:00Z')-new Date(a+'T00:00:00Z'))/86400000);}
 let periodStart=addDays(ANCHOR,-6), periodEnd=ANCHOR;
 
+// ── brands with 0 sends in the trailing 15 days despite prior history ──────
+// Global, not period-filtered: a brand going quiet needs to stay findable
+// under the "Notifications off" toggle regardless of which period the rest
+// of the page is showing.
+const STALE_WINDOW_DAYS=15;
+function computeStaleBrands(){
+  if(D.dates.length<STALE_WINDOW_DAYS)return [];
+  const cutoff=addDays(ANCHOR,-(STALE_WINDOW_DAYS-1));
+  // If the pipeline itself sent nothing on the latest day, going quiet isn't
+  // a per-brand signal - don't flag anyone.
+  if(!NOTIFS.some(n=>n.date===ANCHOR))return [];
+  const by=new Map();
+  NOTIFS.forEach(n=>{
+    let r=by.get(n.brand);
+    if(!r){r={first:n.date,recent:0};by.set(n.brand,r);}
+    if(n.date<r.first)r.first=n.date;
+    if(n.date>=cutoff)r.recent++;
+  });
+  const out=[];
+  by.forEach((r,brand)=>{if(r.recent===0&&r.first<cutoff)out.push(brand);});
+  return out;
+}
+const STALE_BRANDS=computeStaleBrands();
+const STALE_SET=new Set(STALE_BRANDS);
+let notifOffActive=false;
+
 function setPreset(p){
   document.querySelectorAll('.fbtn').forEach(b=>b.classList.toggle('active',b.dataset.p===p));
   $('#customWrap').classList.toggle('hidden',p!=='custom');
@@ -832,14 +858,18 @@ function computeChartSeries(){
 function computeBrandStats(){
   const by=new Map();
   const active=expandChecked();
-  periodNotifs.forEach(n=>{
+  // "Notifications off" shows lifetime data for flagged brands (they have
+  // nothing in any recent period by definition), everything else stays
+  // scoped to the selected period as usual.
+  const source=notifOffActive?NOTIFS.filter(n=>STALE_SET.has(n.brand)):periodNotifs;
+  source.forEach(n=>{
     let r=by.get(n.brand);
     if(!r){r={brand:n.brand,sends:0,clicks:0,bySig:new Map(),byDate:new Map(),matches:false};by.set(n.brand,r);}
     r.sends++; if(n.clicked)r.clicks++;
     r.bySig.set(n.signal,(r.bySig.get(n.signal)||0)+1);
     if(!r.byDate.has(n.date))r.byDate.set(n.date,[]);
     r.byDate.get(n.date).push({signal:n.signal,label:prettySignal(n.signal),clicked:n.clicked});
-    if(active.has(n.signal))r.matches=true;
+    if(notifOffActive||active.has(n.signal))r.matches=true;
   });
   return [...by.values()].filter(r=>r.matches);
 }
@@ -872,12 +902,13 @@ function renderSigRank(){
 }
 
 function renderTable(){
+  $('#brandsDesc').textContent=notifOffActive
+    ?'Lifetime data for brands with 0 sends in the last 15 days — ignores the period filter above.'
+    :'Click any row for its send calendar and signal mix.';
   let rows=computeBrandStats();
-  const qId=$('#search').value.trim().toLowerCase();
-  const qName=$('#searchBrand').value.trim().toLowerCase();
-  if(qId)rows=rows.filter(r=>r.brand.toLowerCase().includes(qId));
-  if(qName)rows=rows.filter(r=>(brandNameOf(r.brand)+' '+brandEmailOf(r.brand))
-    .toLowerCase().includes(qName));
+  const q=$('#search').value.trim().toLowerCase();
+  if(q)rows=rows.filter(r=>(r.brand+' '+brandNameOf(r.brand)+' '+brandEmailOf(r.brand))
+    .toLowerCase().includes(q));
   rows.forEach(r=>{
     r.ctr=r.sends?r.clicks/r.sends*100:0;
     const top=topSignals(r.bySig,1);
@@ -1034,7 +1065,7 @@ function buildDetail(node,r){
   card.appendChild(grid);
   node.appendChild(card);
 
-  dotCalendar(calSvg,periodDates,r.byDate,colorFor);
+  dotCalendar(calSvg,notifOffActive?D.dates:periodDates,r.byDate,colorFor);
 
   const top=topSignals(r.bySig,5);
   const restCount=[...r.bySig.values()].reduce((s,v)=>s+v,0)-top.reduce((s,[,v])=>s+v,0);
@@ -1088,10 +1119,18 @@ repeatsHelp.addEventListener('mouseleave',hideTip);
 repeatsHelp.addEventListener('click',e=>e.stopPropagation());
 
 let searchTimer;
-[$('#search'),$('#searchBrand')].forEach(inp=>inp.addEventListener('input',()=>{
+$('#search').addEventListener('input',()=>{
   clearTimeout(searchTimer);
   searchTimer=setTimeout(()=>{page=1;renderTable();},150);
-}));
+});
+
+const notifOffBtn=$('#notifOffBtn');
+notifOffBtn.textContent='Notifications off ('+fmt(STALE_BRANDS.length)+')';
+notifOffBtn.addEventListener('click',()=>{
+  notifOffActive=!notifOffActive;
+  notifOffBtn.classList.toggle('active',notifOffActive);
+  page=1;renderTable();
+});
 
 // ── KPIs, with a vs-prior-period delta on each tile ─────────────────────
 function statsFor(dates){
@@ -1228,16 +1267,15 @@ def build(payload):
         '  <button class="fbtn" data-p="month">This month</button>\n'
         '  <button class="fbtn" data-p="custom">Custom range</button>\n'
         '  <button class="fbtn" data-p="single">Single date</button>\n'
+        '  <button class="fbtn" id="notifOffBtn" type="button">Notifications off</button>\n'
         '  <div class="customwrap hidden" id="customWrap">\n'
         '    <input type="date" id="rangeStart"> <span>to</span> <input type="date" id="rangeEnd">\n'
         "  </div>\n"
         '  <div class="customwrap hidden" id="singleWrap">\n'
         '    <input type="date" id="singleDate">\n'
         "  </div>\n"
-        '  <div class="search-wrap"><span class="search-ic">⌕</span>'
-        '<input class="searchbox" id="searchBrand" placeholder="Search brand or email…"></div>\n'
-        '  <div class="search-wrap"><span class="search-ic">⌕</span>'
-        '<input class="searchbox" id="search" placeholder="Search external ID…"></div>\n'
+        '  <div class="search-wrap" style="max-width:340px"><span class="search-ic">⌕</span>'
+        '<input class="searchbox" id="search" placeholder="Search brand, email, or external ID…"></div>\n'
         "</div>\n"
         '<div class="card">\n'
         '  <div class="card-head"><div>\n'
@@ -1271,7 +1309,7 @@ def build(payload):
         '<div class="card">\n'
         '  <div class="card-head"><div>\n'
         "    <h2>Brands</h2>\n"
-        '    <div class="desc">Click any row for its send calendar and signal mix.</div>\n'
+        '    <div class="desc" id="brandsDesc">Click any row for its send calendar and signal mix.</div>\n'
         "  </div><div id=\"rowCount\" style=\"font-size:12px;color:var(--text-muted);white-space:nowrap\"></div></div>\n"
         '  <div class="tbl-wrap"><table>\n'
         "    <thead><tr>\n"
