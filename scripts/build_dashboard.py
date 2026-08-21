@@ -942,10 +942,15 @@ function renderSigRank(){
 }
 
 function renderTable(){
-  $('#brandsDesc').textContent=notifOffActive
-    ?'Brands with 0 sends in the last 15 days, or none ever — lifetime data, ignores the period filter above.'
-    :'Click any row for its send calendar and signal mix.';
   let rows=computeBrandStats();
+  if(notifOffActive){
+    const multiCount=rows.filter(r=>[...r.byDate.values()].some(list=>list.length>1)).length;
+    $('#brandsDesc').textContent='Brands with 0 sends in the last 15 days, or none ever — lifetime data, '
+      +'ignores the period filter above. '+fmt(multiCount)+' of these had a day with more than one '
+      +'notification while active.';
+  }else{
+    $('#brandsDesc').textContent='Click any row for its send calendar and signal mix.';
+  }
   const q=$('#search').value.trim().toLowerCase();
   if(q)rows=rows.filter(r=>(r.brand+' '+brandNameOf(r.brand)+' '+brandEmailOf(r.brand))
     .toLowerCase().includes(q));
@@ -1010,6 +1015,25 @@ function renderTable(){
       more.addEventListener('mousemove',moveTip);
       more.addEventListener('mouseleave',hideTip);
       badges.appendChild(more);
+    }
+    // "Notifications off" shows lifetime data, so this is the one place a
+    // brand's whole multi-signal-day history is visible without expanding
+    // every row by hand.
+    if(notifOffActive){
+      const multiDays=[...r.byDate.values()].filter(list=>list.length>1);
+      if(multiDays.length){
+        const maxDay=Math.max(...multiDays.map(l=>l.length));
+        const warn=document.createElement('span');warn.className='warn-chip';
+        warn.textContent='⚠ '+multiDays.length+'/'+r.byDate.size+' days >1/day';
+        warn.addEventListener('mouseenter',e=>showTip(e,'Duplicate sends',[
+          'Spec is one Daily Round-up push per brand per day.',
+          multiDays.length+' of '+r.byDate.size+' active day(s) here sent more than one'+
+            (maxDay>2?' (up to '+maxDay+' in a single day)':''),
+        ]));
+        warn.addEventListener('mousemove',moveTip);
+        warn.addEventListener('mouseleave',hideTip);
+        badges.appendChild(warn);
+      }
     }
     tdSig.appendChild(badges);
 
