@@ -1152,6 +1152,15 @@ $('#search').addEventListener('input',()=>{
   searchTimer=setTimeout(()=>{page=1;renderTable();},150);
 });
 
+const notifOffHelp=$('#notifOffHelp');
+notifOffHelp.addEventListener('mouseenter',e=>showTip(e,'Notifications off',[
+  'Brand had sends before, but zero in the last 15 days — OR —',
+  'brand has had zero sends since it was added to the roster.',
+  'Lifetime data, ignores the period filter above.',
+]));
+notifOffHelp.addEventListener('mousemove',moveTip);
+notifOffHelp.addEventListener('mouseleave',hideTip);
+
 const notifOffBtn=$('#notifOffBtn');
 notifOffBtn.textContent='Notifications off ('+fmt(STALE_BRANDS.length)+')';
 notifOffBtn.addEventListener('click',()=>{
@@ -1304,6 +1313,7 @@ def build(payload):
         '  <div class="search-wrap" style="max-width:340px"><span class="search-ic">⌕</span>'
         '<input class="searchbox" id="search" placeholder="Search brand, email, or external ID…"></div>\n'
         '  <button class="fbtn" id="notifOffBtn" type="button" style="margin-left:auto">Notifications off</button>\n'
+        '  <span class="help" id="notifOffHelp">i</span>\n'
         "</div>\n"
         '<div class="card">\n'
         '  <div class="card-head"><div>\n'
