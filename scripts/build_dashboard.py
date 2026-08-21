@@ -725,6 +725,9 @@ let periodStart=addDays(ANCHOR,-6), periodEnd=ANCHOR;
 // off from day one - those never get a send queued at all, so they'd have
 // zero rows in NOTIFS forever, not just for the last 15 days.
 const STALE_WINDOW_DAYS=15;
+// category: 'never' (zero sends ever) or 'quiet' (sent before, zero in the
+// trailing window) - kept alongside the flat id list so the table can label
+// which of the two each flagged brand is, not just that it's flagged.
 function computeStaleBrands(){
   const cutoff=addDays(ANCHOR,-(STALE_WINDOW_DAYS-1));
   // If the pipeline itself sent nothing on the latest day, "went quiet"
@@ -739,15 +742,17 @@ function computeStaleBrands(){
     if(n.date<r.first)r.first=n.date;
     if(n.date>=cutoff)r.recent++;
   });
-  const out=[];
+  const out=[], category=new Map();
   D.brands.forEach(brand=>{
     const r=by.get(brand);
-    if(!r){out.push(brand);return;} // never sent, ever
-    if(pipelineHealthy&&r.recent===0&&r.first<cutoff)out.push(brand);
+    if(!r){out.push(brand);category.set(brand,'never');return;}
+    if(pipelineHealthy&&r.recent===0&&r.first<cutoff){
+      out.push(brand);category.set(brand,'quiet');
+    }
   });
-  return out;
+  return {ids:out,category};
 }
-const STALE_BRANDS=computeStaleBrands();
+const {ids:STALE_BRANDS,category:STALE_CATEGORY}=computeStaleBrands();
 const STALE_SET=new Set(STALE_BRANDS);
 let notifOffActive=false;
 
@@ -889,7 +894,8 @@ function computeBrandStats(){
   // there's no notif to derive one from.
   if(notifOffActive){
     STALE_BRANDS.forEach(brand=>{
-      by.set(brand,{brand,sends:0,clicks:0,bySig:new Map(),byDate:new Map(),matches:true});
+      by.set(brand,{brand,sends:0,clicks:0,bySig:new Map(),byDate:new Map(),matches:true,
+        category:STALE_CATEGORY.get(brand)});
     });
     NOTIFS.forEach(n=>{
       const r=by.get(n.brand);
@@ -981,7 +987,14 @@ function renderTable(){
     const bnSpan=document.createElement('span');
     bnSpan.textContent=bn||'—';
     if(!bn)bnSpan.className='muted';
-    brandInner.append(chev,bnSpan);tdBrand.appendChild(brandInner);
+    brandInner.append(chev,bnSpan);
+    if(r.category){
+      const cap=document.createElement('span');
+      cap.className='pill'+(r.category==='quiet'?' hi':'');
+      cap.textContent=r.category==='quiet'?'Off 15+ days':'Never turned on';
+      brandInner.appendChild(cap);
+    }
+    tdBrand.appendChild(brandInner);
 
     const tdB=document.createElement('td');
     const eid=document.createElement('span');eid.className='eid';eid.textContent=r.brand;
