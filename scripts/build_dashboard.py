@@ -711,6 +711,53 @@ function daysBetween(a,b){
   return Math.round((new Date(b+'T00:00:00Z')-new Date(a+'T00:00:00Z'))/86400000);}
 let periodStart=addDays(ANCHOR,-6), periodEnd=ANCHOR;
 
+// ── brands with 0 sends in the trailing 15 days despite prior history ──────
+// Global (not period-filtered): a brand going quiet only shows up here once its
+// silence has lasted 15+ days, regardless of which period the user is viewing.
+const STALE_WINDOW_DAYS=15;
+function computeStaleBrands(){
+  if(D.dates.length<STALE_WINDOW_DAYS)return []; // not enough history to judge yet
+  const cutoff=addDays(ANCHOR,-(STALE_WINDOW_DAYS-1));
+  // If the pipeline itself produced nothing on the latest day, brands going
+  // quiet isn't a per-brand signal - don't flag anyone.
+  if(!NOTIFS.some(n=>n.date===ANCHOR))return [];
+  const by=new Map();
+  NOTIFS.forEach(n=>{
+    let r=by.get(n.brand);
+    if(!r){r={first:n.date,last:n.date,recent:0};by.set(n.brand,r);}
+    if(n.date<r.first)r.first=n.date;
+    if(n.date>r.last)r.last=n.date;
+    if(n.date>=cutoff)r.recent++;
+  });
+  const out=[];
+  by.forEach((r,brand)=>{
+    if(r.recent===0&&r.first<cutoff)
+      out.push({brand,last:r.last,daysSince:daysBetween(r.last,ANCHOR)});
+  });
+  out.sort((a,b)=>b.daysSince-a.daysSince);
+  return out;
+}
+const STALE_BRANDS=computeStaleBrands();
+function renderStale(){
+  $('#kStale').textContent=fmt(STALE_BRANDS.length);
+  const card=$('#staleCard'), tbody=$('#staleTbody');
+  if(!STALE_BRANDS.length){card.style.display='none';return;}
+  card.style.display='';
+  tbody.innerHTML='';
+  STALE_BRANDS.forEach(r=>{
+    const tr=document.createElement('tr');
+    const name=brandNameOf(r.brand);
+    const tdName=document.createElement('td');tdName.textContent=name||'—';
+    const tdId=document.createElement('td');tdId.textContent=r.brand;
+    const tdLast=document.createElement('td');tdLast.className='num';tdLast.textContent=r.last;
+    const tdDays=document.createElement('td');tdDays.className='num';
+    const pill=document.createElement('span');pill.className='pill'+(r.daysSince>=30?' hi':'');
+    pill.textContent=r.daysSince+'d';tdDays.appendChild(pill);
+    tr.append(tdName,tdId,tdLast,tdDays);
+    tbody.appendChild(tr);
+  });
+}
+
 function setPreset(p){
   document.querySelectorAll('.fbtn').forEach(b=>b.classList.toggle('active',b.dataset.p===p));
   $('#customWrap').classList.toggle('hidden',p!=='custom');
@@ -1164,6 +1211,7 @@ function render(){
   recomputePeriod();
   buildLegend();
   renderKpis();
+  renderStale();
   renderSigRank();
   renderChart();
   page=1;
@@ -1220,6 +1268,9 @@ def build(payload):
         '<div class="value-row"><span class="value" id="kCtr"></span>'
         '<span class="kpi-delta" id="kCtrDelta"></span></div>'
         '<div class="note">clicks ÷ sends</div></div>\n'
+        '    <div class="kpi"><div class="label">Not receiving</div>'
+        '<div class="value-row"><span class="value" id="kStale"></span></div>'
+        '<div class="note">0 sends in last 15 days</div></div>\n'
         "  </div>\n"
         "</div>\n"
         '<div id="banners"></div>\n'
@@ -1268,6 +1319,23 @@ def build(payload):
         "  </div>\n"
         '  <div id="sigChart"></div>\n'
         "</div>\n"
+        '<div class="card" id="staleCard">\n'
+        '  <div class="card-head"><div>\n'
+        "    <h2>Not receiving notifications</h2>\n"
+        '    <div class="desc">Brands that sent Daily Round-up pushes before but have had zero in the '
+        "last 15 days, while other brands kept receiving them normally — usually means the brand has "
+        "disabled notifications or opted out, not a pipeline issue.</div>\n"
+        "  </div></div>\n"
+        '  <div class="tbl-wrap"><table>\n'
+        "    <thead><tr>\n"
+        "      <th>Brand</th>\n"
+        "      <th>External ID</th>\n"
+        '      <th class="num">Last sent</th>\n'
+        '      <th class="num">Days since</th>\n'
+        "    </tr></thead>\n"
+        '    <tbody id="staleTbody"></tbody>\n'
+        "  </table></div>\n"
+        "</div>\n"
         '<div class="card">\n'
         '  <div class="card-head"><div>\n'
         "    <h2>Brands</h2>\n"
@@ -1293,7 +1361,11 @@ def build(payload):
         "CTR is brand-level: one row = one brand-send, clicked = <code>converted &gt; 0</code>. "
         "“Other” groups signals outside the top 8 by volume "
         "(auto_campaign, campaign, orders_delta_up, orders_delta_down) to keep the chart's colors "
-        "distinguishable — see the legend for the full breakdown.\n"
+        "distinguishable — see the legend for the full breakdown.<br>"
+        "“Not receiving” is a heuristic, not a confirmed status: a brand with at least one send "
+        "before the trailing 15-day window and zero sends inside it, while the pipeline itself kept "
+        "sending to others. Usually means the brand disabled notifications or uninstalled, but can "
+        "also mean they were dropped from targeting for an unrelated reason.\n"
         "</footer>\n"
         "</div>\n"
         '<div id="tip"></div>\n'
