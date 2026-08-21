@@ -751,7 +751,17 @@ const STALE_BRANDS=computeStaleBrands();
 const STALE_SET=new Set(STALE_BRANDS);
 let notifOffActive=false;
 
+// "Notifications off" shows lifetime data regardless of period - picking any
+// period afterward (preset button, custom range, or single date) needs to
+// exit that mode, or the table silently keeps ignoring the newly-selected
+// period even after its button stops looking active.
+function exitNotifOff(){
+  notifOffActive=false;
+  $('#notifOffBtn').classList.remove('active');
+}
+
 function setPreset(p){
+  exitNotifOff();
   document.querySelectorAll('.fbtn').forEach(b=>b.classList.toggle('active',b.dataset.p===p));
   $('#customWrap').classList.toggle('hidden',p!=='custom');
   $('#singleWrap').classList.toggle('hidden',p!=='single');
@@ -763,15 +773,17 @@ function setPreset(p){
     $('#singleDate').value=periodEnd;periodStart=periodEnd;render();
   }
 }
-document.querySelectorAll('.fbtn').forEach(b=>b.addEventListener('click',()=>setPreset(b.dataset.p)));
+document.querySelectorAll('.fbtn[data-p]').forEach(b=>b.addEventListener('click',()=>setPreset(b.dataset.p)));
 [$('#rangeStart'),$('#rangeEnd')].forEach(inp=>inp.addEventListener('change',()=>{
   if($('#rangeStart').value&&$('#rangeEnd').value){
+    exitNotifOff();
     periodStart=$('#rangeStart').value;periodEnd=$('#rangeEnd').value;
     if(periodStart>periodEnd)[periodStart,periodEnd]=[periodEnd,periodStart];
     render();
   }
 }));
 $('#singleDate').addEventListener('change',()=>{
+  exitNotifOff();
   periodStart=periodEnd=$('#singleDate').value;render();
 });
 [$('#rangeStart'),$('#rangeEnd'),$('#singleDate')].forEach(inp=>{
