@@ -328,10 +328,14 @@ th.num,td.num{text-align:right}
   padding:3px 9px;border-radius:99px;font-size:11.5px;font-weight:600;
   background:var(--page);border:1px solid var(--border);color:var(--text-secondary)}
 .pill.hi{background:rgba(250,178,25,.16);border-color:rgba(250,178,25,.45);color:var(--text-primary)}
-.cat-filters{display:flex;gap:8px;margin-top:8px}
+/* Top gap comes from .desc's own margin-bottom (they collapse to the larger
+   of the two, so a margin-top here would be swallowed); the bottom margin is
+   this row's alone and is what keeps the table off the capsules. */
+.cat-filters{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 16px}
 .cat-filters.hidden{display:none}
 .cap{font-family:inherit;cursor:pointer;display:inline-flex;align-items:center;
-  padding:4px 12px;border-radius:99px;font-size:11.5px;font-weight:600;
+  padding:6px 14px;border-radius:99px;font-size:12px;font-weight:600;line-height:1.4;
+  white-space:nowrap;
   background:var(--page);border:1px solid var(--border);color:var(--text-secondary);
   transition:all .12s}
 .cap:hover{color:var(--brand-ink);border-color:var(--brand-tint-border);background:var(--brand-tint)}
@@ -1000,14 +1004,7 @@ function renderTable(){
     const bnSpan=document.createElement('span');
     bnSpan.textContent=bn||'—';
     if(!bn)bnSpan.className='muted';
-    brandInner.append(chev,bnSpan);
-    if(r.category){
-      const cap=document.createElement('span');
-      cap.className='pill'+(r.category==='quiet'?' hi':'');
-      cap.textContent=r.category==='quiet'?'Off 15+ days':'Never turned on';
-      brandInner.appendChild(cap);
-    }
-    tdBrand.appendChild(brandInner);
+    brandInner.append(chev,bnSpan);tdBrand.appendChild(brandInner);
 
     const tdB=document.createElement('td');
     const eid=document.createElement('span');eid.className='eid';eid.textContent=r.brand;
