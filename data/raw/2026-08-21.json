@@ -1,6 +1,6 @@
 {
   "date": "2026-08-21",
-  "fetched_at": "2026-08-22T01:19:21+05:30",
+  "fetched_at": "2026-08-23T01:16:04+05:30",
   "stable": false,
   "notifications": [
     {
@@ -11249,7 +11249,7 @@
       "tone": "v2",
       "external_id": "6a15941bb3a1b7dc22952964",
       "successful": 2,
-      "received": 1,
+      "received": 2,
       "converted": 0,
       "clicked": false
     },
@@ -13469,7 +13469,7 @@
       "tone": "v2",
       "external_id": "6a312c77a017c0a2b510a137",
       "successful": 1,
-      "received": 0,
+      "received": 1,
       "converted": 0,
       "clicked": false
     },
@@ -13544,7 +13544,7 @@
       "tone": "v2",
       "external_id": "6a2fab0ab515deb09aa0b75f",
       "successful": 1,
-      "received": 0,
+      "received": 1,
       "converted": 0,
       "clicked": false
     },
@@ -14579,7 +14579,7 @@
       "tone": "v2",
       "external_id": "6a1d774c24d49045f1debe4f",
       "successful": 2,
-      "received": 1,
+      "received": 2,
       "converted": 0,
       "clicked": false
     },
@@ -14610,8 +14610,8 @@
       "external_id": "640ebdbf8a70344d68ac7ec0",
       "successful": 3,
       "received": 3,
-      "converted": 0,
-      "clicked": false
+      "converted": 1,
+      "clicked": true
     },
     {
       "id": "0c3189dc-983d-4bcc-90f3-c37bd8e99f0b",
@@ -18359,7 +18359,7 @@
       "tone": "v2",
       "external_id": "6a265d0b5510395289b4d98f",
       "successful": 1,
-      "received": 1,
+      "received": 2,
       "converted": 0,
       "clicked": false
     },
@@ -18404,7 +18404,7 @@
       "tone": "v2",
       "external_id": "6a265d0b5510395289b4d98f",
       "successful": 1,
-      "received": 0,
+      "received": 1,
       "converted": 0,
       "clicked": false
     },
@@ -18434,7 +18434,7 @@
       "tone": "v2",
       "external_id": "6a265d0b5510395289b4d98f",
       "successful": 1,
-      "received": 0,
+      "received": 1,
       "converted": 0,
       "clicked": false
     },
@@ -18449,7 +18449,7 @@
       "tone": "v2",
       "external_id": "6a265d0b5510395289b4d98f",
       "successful": 1,
-      "received": 0,
+      "received": 1,
       "converted": 0,
       "clicked": false
     },

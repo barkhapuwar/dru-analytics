@@ -1,7 +1,7 @@
 {
   "date": "2026-08-19",
-  "fetched_at": "2026-08-22T01:17:34+05:30",
-  "stable": false,
+  "fetched_at": "2026-08-23T01:14:20+05:30",
+  "stable": true,
   "notifications": [
     {
       "id": "ba9cd836-5eab-4b55-b678-a2cd5e4ea76b",
@@ -16484,7 +16484,7 @@
       "tone": "v0",
       "external_id": "6a195bc0b6099dd182060fde",
       "successful": 3,
-      "received": 2,
+      "received": 3,
       "converted": 0,
       "clicked": false
     },

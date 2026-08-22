@@ -1,12 +1,12 @@
 {
   "days_covered": [
-    "2026-08-15",
     "2026-08-16",
     "2026-08-17",
     "2026-08-18",
     "2026-08-19",
     "2026-08-20",
-    "2026-08-21"
+    "2026-08-21",
+    "2026-08-22"
   ],
   "emails": {
     "06dinesh@gmail.com": [
@@ -363,6 +363,9 @@
     ],
     "admin@home360stores.com": [
       "Home 360"
+    ],
+    "admin@hoteljiva.com": [
+      "JIVA"
     ],
     "admin@jimisburger.in": [
       "JIMIS BURGER"
@@ -1399,6 +1402,9 @@
     "bennestreet@gmail.com": [
       "Benne Street"
     ],
+    "bennevadodara@gmail.com": [
+      "dvg benne dosa vadodara"
+    ],
     "bercos.rohini2009@gmail.com": [
       "Bercos"
     ],
@@ -1541,6 +1547,9 @@
     ],
     "black63noida@gmail.com": [
       "Noidawery"
+    ],
+    "blast.cuttack@gmail.com": [
+      "Blast"
     ],
     "blastacakery@gmail.com": [
       "Blastacakery"
@@ -4802,6 +4811,9 @@
     "kshitij@jamieoliverrestaurants.in": [
       "Jamie Oliver Restaurant India"
     ],
+    "kulbir.brar31@gmail.com": [
+      "Sub 91"
+    ],
     "kuldeepnice@gmail.com": [
       "OM JEE SWEETS"
     ],
@@ -7793,6 +7805,9 @@
     "sandysingh020781@gmail.com": [
       "JYOTI EXPRESS KITCHEN"
     ],
+    "saneeshks@gokuloottupura.com": [
+      "Gokul Oottupura Panampilly"
+    ],
     "sangamuid@gmail.com": [
       "ABCD Food Court"
     ],
@@ -8455,6 +8470,9 @@
     ],
     "sopariwalatheglobal@gmail.com": [
       "Sopariwalas"
+    ],
+    "sorvest.mayasmanor@gmail.com": [
+      "Sorvest Lounge"
     ],
     "soulbysierra@gmail.com": [
       "Soul by Sierra"
@@ -9950,5 +9968,5 @@
       "Zorko Gwalior"
     ]
   },
-  "generated_at": "2026-08-22T01:20:20+05:30"
+  "generated_at": "2026-08-23T01:18:05+05:30"
 }
