@@ -89,7 +89,7 @@ def load_all():
     # (never gets a send queued at all) still shows up and is searchable,
     # just with zero notifs.
     brand_set, signal_set = set(brand_names.keys()), set()
-    rows = []  # (date, brand, signal, clicked)
+    rows = []  # (date, brand, signal, clicked, received)
 
     for f in files:
         d = json.load(open(f))
@@ -104,7 +104,12 @@ def load_all():
                 continue
             brand_set.add(b)
             signal_set.add(s)
-            rows.append((date, b, s, 1 if n.get("clicked") else 0))
+            # "received" is OneSignal's Confirmed Delivery (device-side receipt),
+            # distinct from "successful" (push service accepted it) - every row
+            # here is already a successful send, this just flags whether it's
+            # also confirmed to have actually landed on the device.
+            rows.append((date, b, s, 1 if n.get("clicked") else 0,
+                        1 if (n.get("received") or 0) > 0 else 0))
 
     dates = sorted(set(dates))
     brands = sorted(brand_set)
@@ -114,7 +119,7 @@ def load_all():
     signal_idx = {s: i for i, s in enumerate(signals)}
 
     notifs = [
-        [date_idx[d], brand_idx[b], signal_idx[s], c] for d, b, s, c in rows
+        [date_idx[d], brand_idx[b], signal_idx[s], c, rv] for d, b, s, c, rv in rows
     ]
 
     return {
@@ -318,6 +323,10 @@ td{padding:16px 14px;border-bottom:1px solid var(--grid);color:var(--text-second
   vertical-align:middle}
 td:first-child{color:var(--text-primary);font-weight:600}
 th.num,td.num{text-align:right}
+/* Auto table layout still respects max-width as a hint - this is the column
+   that can most afford to give space back to the new Received column, since
+   its badges already wrap onto extra lines instead of overflowing. */
+th.sig-col,td.sig-col{max-width:230px}
 .help{display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;
   border-radius:50%;border:1px solid var(--brand-ink);color:var(--brand-ink);font-size:9px;
   font-weight:700;margin-left:5px;cursor:help;vertical-align:middle;font-style:normal;
@@ -573,8 +582,8 @@ function dotCalendar(node,dates,byDate,colorFor){
       sigCount.set(e.signal,(sigCount.get(e.signal)||0)+1);
       labelOf.set(e.signal,e.label);
       const k=d+'|'+e.signal;
-      const c=cellMap.get(k)||{count:0,clicks:0};
-      c.count++; if(e.clicked)c.clicks++;
+      const c=cellMap.get(k)||{count:0,clicks:0,received:0};
+      c.count++; if(e.clicked)c.clicks++; if(e.received)c.received++;
       cellMap.set(k,c);
     });
   });
@@ -616,12 +625,17 @@ function dotCalendar(node,dates,byDate,colorFor){
       const cell=cellMap.get(d+'|'+sig);
       const hit=el('rect',{x:M.l+ci*cellW,y:M.t+ri*rowH,width:cellW,height:rowH,class:'hit'});
       if(cell){
+        // Amber ring instead of the usual white one flags a dot where at
+        // least one send here never confirmed delivery - the exact question
+        // a multi-signal day raises: were both actually received, or just sent?
+        const notAllReceived=cell.received<cell.count;
         svg.appendChild(el('circle',{cx:x,cy:y,r:7,fill:colorFor(sig),
-          stroke:'var(--surface-1)','stroke-width':2}));
+          stroke:notAllReceived?'var(--warning)':'var(--surface-1)','stroke-width':2}));
         if(cell.clicks>0)svg.appendChild(el('circle',{cx:x,cy:y,r:2.4,fill:'var(--surface-1)'}));
         hit.addEventListener('mouseenter',e=>showTip(e,d,[
           'Signal: '+labelOf.get(sig),
           cell.count>1?('Sends: '+cell.count):'Sent',
+          'Received: '+(cell.count>1?(cell.received+' of '+cell.count):(cell.received?'yes':'no')),
           'Clicked: '+(cell.clicks>0?('yes'+(cell.clicks>1?' ('+cell.clicks+')':'')):'no')]));
       }else{
         svg.appendChild(el('circle',{cx:x,cy:y,r:1.8,fill:'var(--axis)'}));
@@ -703,8 +717,8 @@ function brandNameOf(eid){return D.brandNames[eid]||'';}
 function brandEmailOf(eid){return D.brandEmails[eid]||'';}
 
 // notifs -> plain objects once, indices resolved
-const NOTIFS=D.notifs.map(([di,bi,si,c])=>({
-  date:D.dates[di],brand:D.brands[bi],signal:D.signals[si],clicked:!!c}));
+const NOTIFS=D.notifs.map(([di,bi,si,c,rv])=>({
+  date:D.dates[di],brand:D.brands[bi],signal:D.signals[si],clicked:!!c,received:!!rv}));
 
 $('#sub').innerHTML='';
 $('#sub').append(txt('Data '+D.dates[0]+' to '+D.dates[D.dates.length-1]+' · generated '+D.generated));
@@ -911,27 +925,29 @@ function computeBrandStats(){
     STALE_BRANDS.forEach(brand=>{
       const cat=STALE_CATEGORY.get(brand);
       if(!categoryFilter.has(cat))return;
-      by.set(brand,{brand,sends:0,clicks:0,bySig:new Map(),byDate:new Map(),matches:true,
+      by.set(brand,{brand,sends:0,clicks:0,received:0,bySig:new Map(),byDate:new Map(),matches:true,
         category:cat});
     });
     NOTIFS.forEach(n=>{
       const r=by.get(n.brand);
       if(!r)return;
-      r.sends++; if(n.clicked)r.clicks++;
+      r.sends++; if(n.clicked)r.clicks++; if(n.received)r.received++;
       r.bySig.set(n.signal,(r.bySig.get(n.signal)||0)+1);
       if(!r.byDate.has(n.date))r.byDate.set(n.date,[]);
-      r.byDate.get(n.date).push({signal:n.signal,label:prettySignal(n.signal),clicked:n.clicked});
+      r.byDate.get(n.date).push({signal:n.signal,label:prettySignal(n.signal),
+        clicked:n.clicked,received:n.received});
     });
     return [...by.values()];
   }
   const active=expandChecked();
   periodNotifs.forEach(n=>{
     let r=by.get(n.brand);
-    if(!r){r={brand:n.brand,sends:0,clicks:0,bySig:new Map(),byDate:new Map(),matches:false};by.set(n.brand,r);}
-    r.sends++; if(n.clicked)r.clicks++;
+    if(!r){r={brand:n.brand,sends:0,clicks:0,received:0,bySig:new Map(),byDate:new Map(),matches:false};by.set(n.brand,r);}
+    r.sends++; if(n.clicked)r.clicks++; if(n.received)r.received++;
     r.bySig.set(n.signal,(r.bySig.get(n.signal)||0)+1);
     if(!r.byDate.has(n.date))r.byDate.set(n.date,[]);
-    r.byDate.get(n.date).push({signal:n.signal,label:prettySignal(n.signal),clicked:n.clicked});
+    r.byDate.get(n.date).push({signal:n.signal,label:prettySignal(n.signal),
+      clicked:n.clicked,received:n.received});
     if(active.has(n.signal))r.matches=true;
   });
   return [...by.values()].filter(r=>r.matches);
@@ -979,6 +995,7 @@ function renderTable(){
     .toLowerCase().includes(q));
   rows.forEach(r=>{
     r.ctr=r.sends?r.clicks/r.sends*100:0;
+    r.receivedRate=r.sends?r.received/r.sends*100:0;
     const top=topSignals(r.bySig,1);
     r.topShare=top.length?top[0][1]/r.sends*100:0;
   });
@@ -992,7 +1009,7 @@ function renderTable(){
   const tbody=$('#tbody');tbody.innerHTML='';
   if(!pageRows.length){
     const tr=document.createElement('tr');const td=document.createElement('td');
-    td.colSpan=6;td.className='empty-note';td.textContent='No brands match the current filters.';
+    td.colSpan=7;td.className='empty-note';td.textContent='No brands match the current filters.';
     tr.appendChild(td);tbody.appendChild(tr);
   }
   pageRows.forEach((r,ri)=>{
@@ -1011,6 +1028,13 @@ function renderTable(){
     tdB.appendChild(eid);
 
     const tdSends=document.createElement('td');tdSends.className='num';tdSends.textContent=fmt(r.sends);
+    // Confirmed Delivery undercounts even genuine deliveries (offline devices,
+    // OS-level restrictions) - highlighted only when it's meaningfully low,
+    // not treated as a hard failure signal on its own.
+    const tdRecv=document.createElement('td');tdRecv.className='num';
+    const recvPill=document.createElement('span');
+    recvPill.className='pill'+(r.sends&&r.receivedRate<80?' hi':'');
+    recvPill.textContent=fmt(r.received);tdRecv.appendChild(recvPill);
     const tdCtr=document.createElement('td');tdCtr.className='num';
     const ctrPill=document.createElement('span');ctrPill.className='pill';
     ctrPill.textContent=r.ctr.toFixed(1)+'%';tdCtr.appendChild(ctrPill);
@@ -1021,7 +1045,8 @@ function renderTable(){
 
     // Two badges, then a "+N" chip — three full badges per row was the bulk of
     // the visual noise, and the overflow detail is one hover away.
-    const tdSig=document.createElement('td');const badges=document.createElement('div');badges.className='badges';
+    const tdSig=document.createElement('td');tdSig.className='sig-col';
+    const badges=document.createElement('div');badges.className='badges';
     const allSigs=topSignals(r.bySig,99);
     allSigs.slice(0,2).forEach(([sig,c])=>{
       const b=document.createElement('span');b.className='badge';
@@ -1060,11 +1085,11 @@ function renderTable(){
     }
     tdSig.appendChild(badges);
 
-    tr.append(tdBrand,tdB,tdSends,tdCtr,tdShare,tdSig);
+    tr.append(tdBrand,tdB,tdSends,tdRecv,tdCtr,tdShare,tdSig);
     tbody.appendChild(tr);
 
     const detail=document.createElement('tr');detail.className='detail-row';
-    const dtd=document.createElement('td');dtd.colSpan=6;
+    const dtd=document.createElement('td');dtd.colSpan=7;
     detail.appendChild(dtd);
     tbody.appendChild(detail);
 
@@ -1102,7 +1127,8 @@ function buildDetail(node,r){
   // Compact header: key stats as chips, plus a hover-only warning for the
   // duplicate-send case instead of a paragraph eating card space up front.
   const head=document.createElement('div');head.className='detail-head';
-  [['Sends',fmt(r.sends)],['CTR',r.ctr.toFixed(1)+'%'],['Repeats',r.topShare.toFixed(0)+'%']]
+  [['Sends',fmt(r.sends)],['Received',fmt(r.received)],['CTR',r.ctr.toFixed(1)+'%'],
+    ['Repeats',r.topShare.toFixed(0)+'%']]
     .forEach(([label,val])=>{
       const chip=document.createElement('div');chip.className='stat-chip';
       const v=document.createElement('span');v.className='v';v.textContent=val;
@@ -1139,7 +1165,8 @@ function buildDetail(node,r){
   const calSvg=document.createElement('div');calWrap.appendChild(calSvg);
   left.appendChild(calWrap);
   const calNote=document.createElement('div');calNote.className='dotcal-note';
-  calNote.textContent='A hollow dot marks a click. Amber column = more than one signal that day.';
+  calNote.textContent='Hollow center = clicked. Amber ring = not all sends here confirmed delivery. '
+    +'Amber column = more than one signal that day.';
   left.appendChild(calNote);
 
   const right=document.createElement('div');
@@ -1192,6 +1219,18 @@ document.querySelectorAll('th.sortable').forEach(th=>{
     page=1;renderTable();
   });
 });
+
+const receivedHelp=$('#receivedHelp');
+receivedHelp.addEventListener('mouseenter',e=>showTip(e,'Received',[
+  'OneSignal’s Confirmed Delivery — a receipt sent back by the device',
+  'once the push actually lands, not just accepted by the push service.',
+  'Undercounts even genuine deliveries (offline devices, OS-level',
+  'restrictions), so a gap from Sends isn’t proof of a failed send.',
+  'Highlighted when under 80% of Sends.',
+]));
+receivedHelp.addEventListener('mousemove',moveTip);
+receivedHelp.addEventListener('mouseleave',hideTip);
+receivedHelp.addEventListener('click',e=>e.stopPropagation());
 
 // Header help: explain "Repeats" on hover. Click must not reach the <th> or it
 // would toggle the sort as a side effect of reading the definition.
@@ -1433,10 +1472,12 @@ def build(payload):
         "      <th>Brand</th>\n"
         "      <th>External ID</th>\n"
         '      <th class="num sortable" data-key="sends">Sends<span class="arrow"> ↓</span></th>\n'
+        '      <th class="num sortable" data-key="received">Received'
+        '<span class="help" id="receivedHelp">i</span><span class="arrow"></span></th>\n'
         '      <th class="num sortable" data-key="ctr">CTR<span class="arrow"></span></th>\n'
         '      <th class="num sortable" data-key="topShare">Repeats'
         '<span class="help" id="repeatsHelp">i</span><span class="arrow"></span></th>\n'
-        "      <th>Top signals</th>\n"
+        '      <th class="sig-col">Top signals</th>\n'
         "    </tr></thead>\n"
         '    <tbody id="tbody"></tbody>\n'
         "  </table></div>\n"
