@@ -1,12 +1,12 @@
 {
   "days_covered": [
-    "2026-08-19",
     "2026-08-20",
     "2026-08-21",
     "2026-08-22",
     "2026-08-23",
     "2026-08-24",
-    "2026-08-25"
+    "2026-08-25",
+    "2026-08-26"
   ],
   "emails": {
     "06dinesh@gmail.com": [
@@ -285,7 +285,8 @@
       "Fire Bowl Chinese"
     ],
     "addakitchen01@gmail.com": [
-      "Adda Kitchen"
+      "Adda Kitchen",
+      "Adda Kitchens"
     ],
     "adele.de.fontbrune@gmail.com": [
       "The Farmers Store"
@@ -1070,6 +1071,9 @@
     "arun.aanandhan@ombc.in": [
       "Old Madras Baking Company"
     ],
+    "arun.sahoo375@yahoo.com": [
+      "Anand HotelandRestaurants"
+    ],
     "arun@muddesarr.com": [
       "Mudde Saar"
     ],
@@ -1434,6 +1438,7 @@
       "Benne Street"
     ],
     "bennevadodara@gmail.com": [
+      "DVG Benne Dosa Vadodara",
       "dvg benne dosa vadodara"
     ],
     "bercos.rohini2009@gmail.com": [
@@ -2489,6 +2494,9 @@
     ],
     "dev@reelo.io": [
       "Handi"
+    ],
+    "devalmaheshwari25@gmail.com": [
+      "Maheshwari Bhoj"
     ],
     "devangchavda5255@gmail.com": [
       "The Heritage Palace"
@@ -4119,7 +4127,8 @@
       "Straight Salon"
     ],
     "info@tbbagency.com": [
-      "Latcha Matcha"
+      "Latcha Matcha",
+      "Latcha Matcha Hyderabad"
     ],
     "info@teatings.com": [
       "Teatings"
@@ -4159,6 +4168,9 @@
     ],
     "inippskaaramspalani@gmail.com": [
       "Inipps and Kaarams"
+    ],
+    "inkhospitality25@gmail.com": [
+      "Quiq"
     ],
     "inspiration.saket@gmail.com": [
       "The Traders Cafe"
@@ -4339,7 +4351,8 @@
       "Jays Boulangerie"
     ],
     "jayantnayak199@gmail.com": [
-      "Nature park"
+      "Nature park",
+      "The Nature park"
     ],
     "jayaprakash.h@spagofoods.com": [
       "Magnolia Bakery"
@@ -4470,6 +4483,21 @@
     ],
     "juuyi36@gmail.com": [
       "Koknaai"
+    ],
+    "k'sanytimeiwc@kalpdrumhospitality.in": [
+      "Ks"
+    ],
+    "k'scharcoalmumbai@kalpdrumhospitality.in": [
+      "Ks"
+    ],
+    "k'scharcoalpiplod@kalpdrumhospitality.in": [
+      "Ks"
+    ],
+    "k'sverandahahmedabad@kalpdrumhospitality.in": [
+      "Ks"
+    ],
+    "k'sverandahbaroda@kalpdrumhospitality.in": [
+      "Ks"
     ],
     "k.agarkar@gmail.com": [
       "Tatva Restaurant and Cafe"
@@ -5681,6 +5709,9 @@
     ],
     "mohammed.imran@reelo.org": [
       "Brands"
+    ],
+    "mohammed.kasim@reelo.io": [
+      "Follow 72"
     ],
     "mohammedshaikh9525@gmail.com": [
       "Terra Rossa"
@@ -7663,6 +7694,9 @@
     "s.vaidya@honeyanddough.in": [
       "Honey and Dough"
     ],
+    "saahilkarmally98@gmail.com": [
+      "Venn"
+    ],
     "saahilspathan@gmail.com": [
       "Karim s Hinjewadi"
     ],
@@ -8487,6 +8521,9 @@
     ],
     "singla_manoj@yahoo.com": [
       "Smart services"
+    ],
+    "sipndsnacks@gmail.com": [
+      "Tea Pea Cafe"
     ],
     "sittirazel@gmail.com": [
       "Manis Cafe"
@@ -9558,6 +9595,9 @@
     "tykkharadi.rmh@gmail.com": [
       "TYK TYK"
     ],
+    "uae2@mailsac.com": [
+      "UAE"
+    ],
     "uday@nitrogrill.com": [
       "Nitro Grill"
     ],
@@ -9808,6 +9848,9 @@
       "Eden Courtyard",
       "Eden Hospitality"
     ],
+    "vinaykamal@yahoo.com": [
+      "Moksha The Social Club"
+    ],
     "vinaytamhane155@gmail.com": [
       "Slice Factory"
     ],
@@ -10004,6 +10047,9 @@
     "wsp.spectrum@gmail.com": [
       "Spectrum Udaipur"
     ],
+    "x_marketingops@keenmustard.in": [
+      "Heyou"
+    ],
     "xerodegreesco@gmail.com": [
       "Xero Degrees"
     ],
@@ -10126,5 +10172,5 @@
       "Zorko Gwalior"
     ]
   },
-  "generated_at": "2026-08-26T01:31:33+05:30"
+  "generated_at": "2026-08-27T03:58:06+05:30"
 }
