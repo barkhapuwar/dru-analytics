@@ -1,24 +1,30 @@
 #!/usr/bin/env python3
 """
-Current-state numbers for the top of the Growth -> DRU funnel.
+One dated snapshot of the Growth -> DRU adoption funnel, written per run to
+data/funnel/YYYY-MM-DD.json.
 
-Two of the six funnel stages have no history anywhere we can reach:
+Every stage is measured the same way — "as of the snapshot date" — so the
+dashboard never has to explain why one number has months of history and
+another doesn't. There is no backfill: the trend starts the day this first
+runs and fills in one point per day.
 
-  1. Growth businesses     ops Google Sheet (brand tab) — a live roster, no "as of" column
-  3. Notifications enabled  OneSignal — only the current subscription state is exposed
-
-So those two are written here as a single "as of today" snapshot and shown on
-the dashboard as reference lines. The other four stages (has/uses app, received,
-tapped, opened DRU) are recomputed for any date range client-side from
-data/amplitude_funnel.json + data/raw/*.json.
+  1. Growth businesses     ops Google Sheet (brand tab) — current roster
+  2. Have the app          OneSignal — Growth contact with an iOS/Android push sub
+  3. Notifications enabled  OneSignal — of those, notifications not disabled
+  4. Received a DRU         data/raw/*.json — trailing 30 days
+  5. Tapped a DRU           data/raw/*.json — trailing 30 days
+  6. Opened the DRU screen  Amplitude — DailyRoundupStoryView, plan=growth, 30d
 
 Run:
     set -a && source .env && set +a
     python3 scripts/fetch_funnel.py
 """
 
+import base64
 import csv
 import datetime
+import glob
+import gzip
 import io
 import json
 import os
@@ -26,25 +32,30 @@ import re
 import sys
 import time
 import urllib.error
+import urllib.parse
 import urllib.request
 
 IST = datetime.timezone(datetime.timedelta(hours=5, minutes=30))
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RAW_DIR = os.path.join(ROOT, "data", "raw")
-OUT = os.path.join(ROOT, "data", "funnel_state.json")
+OUT_DIR = os.path.join(ROOT, "data", "funnel")
 
+AMP_REGION = "https://amplitude.com"
 OS_API = "https://onesignal.com/api/v1"
 SHEET_ID = os.environ.get("BRAND_SHEET_ID", "11IVtAw8CemAi1C9zP4rdonnmBVWf11Rc1-HVbFACDUM")
 BRAND_GID = os.environ.get("BRAND_BRAND_GID", "1306646119")
 
+WINDOW_DAYS = 30
 HEX24 = re.compile(r"^[0-9a-f]{24}$")
 APP_DEVICE_TYPES = {"0", "1"}  # OneSignal device_type: 0 iOS, 1 Android
+MOBILE_PLATFORMS = ["mobile-app-ios", "mobile-app-android"]
 
 
 def log(msg):
     print(f"[{datetime.datetime.now(IST):%H:%M:%S}] {msg}", flush=True)
 
 
+# ── 1. Growth roster (ops sheet) ────────────────────────────────────────────
 def fetch_growth_roster():
     url = (f"https://docs.google.com/spreadsheets/d/{SHEET_ID}"
            f"/export?format=csv&gid={BRAND_GID}")
@@ -77,7 +88,6 @@ def fetch_growth_roster():
 
 
 def all_time_dru_recipients():
-    import glob
     ids = set()
     for f in glob.glob(os.path.join(RAW_DIR, "*.json")):
         try:
@@ -89,6 +99,7 @@ def all_time_dru_recipients():
     return ids
 
 
+# ── 2 + 3. OneSignal (current subscription state) ───────────────────────────
 def onesignal_rows():
     app_id = os.environ["ONESIGNAL_APP_ID"]
     api_key = os.environ["ONESIGNAL_API_KEY"]
@@ -99,7 +110,6 @@ def onesignal_rows():
     with urllib.request.urlopen(req, timeout=60) as resp:
         csv_url = json.load(resp)["csv_file_url"]
     log(f"  export queued: {csv_url.rsplit('/', 1)[-1]}")
-    import gzip
     for attempt in range(30):
         time.sleep(10)
         try:
@@ -115,7 +125,7 @@ def onesignal_rows():
     sys.exit("onesignal: export never became ready")
 
 
-def growth_enabled(rows, growth_ids):
+def growth_app_and_enabled(rows, growth_ids):
     hdr = rows[0]
     col = {n: i for i, n in enumerate(hdr)}
     dt_i, nt_i, ext_i = col.get("device_type"), col.get("notification_types"), col.get("external_id")
@@ -137,36 +147,140 @@ def growth_enabled(rows, growth_ids):
         invalid = inv_i is not None and len(r) > inv_i and r[inv_i].strip() == "t"
         if nt > 0 and not invalid:
             enabled.add(ext)
-    return len(enabled), len(with_app)
+    return len(with_app), len(enabled)
+
+
+# ── 4 + 5. DRU delivery / clicks (trailing window) ──────────────────────────
+def dru_window(end_date):
+    start = end_date - datetime.timedelta(days=WINDOW_DAYS - 1)
+    received, tapped = set(), set()
+    for f in sorted(glob.glob(os.path.join(RAW_DIR, "*.json"))):
+        d = json.load(open(f))
+        day = datetime.date.fromisoformat(d["date"])
+        if day < start or day > end_date:
+            continue
+        for n in d["notifications"]:
+            e = n.get("external_id")
+            if not e:
+                continue
+            if (n.get("received") or 0) > 0:
+                received.add(e)
+            if n.get("clicked"):
+                tapped.add(e)
+    return len(received), len(tapped)
+
+
+def latest_dru_day():
+    days = []
+    for f in glob.glob(os.path.join(RAW_DIR, "*.json")):
+        try:
+            days.append(json.load(open(f))["date"])
+        except Exception:  # noqa: BLE001
+            pass
+    if not days:
+        sys.exit("no data/raw/*.json — run scripts/fetch_dru.py first")
+    return datetime.date.fromisoformat(max(days))
+
+
+# ── 6. Amplitude (trailing-window unique users) ─────────────────────────────
+def amp_uniques(event, start, end, *, platforms=None):
+    api_key = os.environ["AMPLITUDE_API_KEY"]
+    secret = os.environ["AMPLITUDE_SECRET_KEY"]
+    auth = base64.b64encode(f"{api_key}:{secret}".encode()).decode()
+    e = {"event_type": event}
+    if platforms:
+        e["filters"] = [{"subprop_type": "event", "subprop_key": "platform",
+                         "subprop_op": "is", "subprop_value": platforms}]
+    params = {
+        "e": json.dumps(e), "m": "uniques", "i": "1",
+        "start": start.strftime("%Y%m%d"), "end": end.strftime("%Y%m%d"),
+        "s": json.dumps([{"prop": "gp:plan", "op": "is", "values": ["growth"]}]),
+    }
+    url = f"{AMP_REGION}/api/2/events/segmentation?{urllib.parse.urlencode(params)}"
+    delay = 5
+    for _ in range(4):
+        try:
+            req = urllib.request.Request(url, headers={"Authorization": f"Basic {auth}"})
+            with urllib.request.urlopen(req, timeout=180) as resp:
+                d = json.load(resp)
+            collapsed = d.get("data", {}).get("seriesCollapsed") or [[{"value": 0}]]
+            return int(collapsed[0][0].get("value", 0))
+        except urllib.error.HTTPError as ex:
+            if ex.code < 500:
+                sys.exit(f"amplitude HTTP {ex.code}: {ex.read()[:300]}")
+            time.sleep(delay)
+            delay = min(delay * 2, 60)
+    sys.exit("amplitude: gave up after retries")
 
 
 def main():
-    for k in ("ONESIGNAL_APP_ID", "ONESIGNAL_API_KEY"):
+    for k in ("AMPLITUDE_API_KEY", "AMPLITUDE_SECRET_KEY",
+              "ONESIGNAL_APP_ID", "ONESIGNAL_API_KEY"):
         if not os.environ.get(k):
             sys.exit(f"{k} must be set in the environment")
 
-    log("ops sheet — Growth roster")
+    today = datetime.datetime.now(IST).date()
+    end = latest_dru_day()
+    start = end - datetime.timedelta(days=WINDOW_DAYS - 1)
+    log(f"snapshot {today} · DRU/Amplitude window {start} .. {end}")
+
+    log("1  ops sheet — Growth roster")
     brand_count, plans, sheet_ids = fetch_growth_roster()
     growth_ids = sheet_ids | all_time_dru_recipients()
-    log(f"  {brand_count} Growth businesses")
+    log(f"   {brand_count} Growth businesses")
 
-    log("OneSignal — subscription export")
+    log("2  OneSignal — subscription export")
     rows = onesignal_rows()
-    enabled, has_app = growth_enabled(rows, growth_ids)
-    log(f"  notifications enabled {enabled} · app device on record {has_app}")
+    has_app, notif_on = growth_app_and_enabled(rows, growth_ids)
+    log(f"   have app {has_app} · notifications enabled {notif_on}")
 
-    out = {
-        "as_of": datetime.datetime.now(IST).isoformat(timespec="seconds"),
-        "growth_businesses": brand_count,
-        "notifications_enabled": enabled,
-        "onesignal_has_app_device": has_app,
+    log("3  DRU delivery / clicks (30d)")
+    received, tapped = dru_window(end)
+    log(f"   received {received} · tapped {tapped}")
+
+    log("4  Amplitude (30d unique users)")
+    opened = amp_uniques("DailyRoundupStoryView", start, end, platforms=MOBILE_PLATFORMS)
+    active = amp_uniques("_active", start, end, platforms=MOBILE_PLATFORMS)
+    log(f"   opened DRU {opened} · active in app {active}")
+
+    snapshot = {
+        "date": today.isoformat(),
+        "generated_at": datetime.datetime.now(IST).isoformat(timespec="seconds"),
+        "dru_window": {"start": start.isoformat(), "end": end.isoformat(),
+                       "days": WINDOW_DAYS},
+        "steps": [
+            {"key": "growth", "label": "Growth businesses", "unit": "businesses",
+             "value": brand_count, "source": "Ops roster sheet (current count)"},
+            {"key": "with_app", "label": "Have the app", "unit": "businesses",
+             "value": has_app,
+             "source": "OneSignal — Growth contact with an iOS/Android push subscription on record",
+             "secondary": {"label": "active in the app (30d)", "value": active,
+                           "unit": "app users",
+                           "source": "Amplitude — mobile-app event, plan = growth (last 30 days)"}},
+            {"key": "notif_on", "label": "Notifications enabled", "unit": "businesses",
+             "value": notif_on,
+             "source": "OneSignal — of the app installs, notifications not disabled"},
+            {"key": "received", "label": "Received a DRU", "unit": "businesses",
+             "value": received,
+             "source": "OneSignal Confirmed Delivery, prod_dru_* push, last 30 days"},
+            {"key": "tapped", "label": "Tapped a DRU", "unit": "businesses",
+             "value": tapped,
+             "source": "OneSignal click, prod_dru_* push, last 30 days"},
+            {"key": "opened", "label": "Opened the DRU screen", "unit": "app users",
+             "value": opened,
+             "source": "Amplitude DailyRoundupStoryView (app), plan = growth, last 30 days"},
+        ],
         "plan_breakdown": plans,
     }
-    tmp = OUT + ".tmp"
+    os.makedirs(OUT_DIR, exist_ok=True)
+    out = os.path.join(OUT_DIR, f"{today.isoformat()}.json")
+    tmp = out + ".tmp"
     with open(tmp, "w") as f:
-        json.dump(out, f, indent=2, sort_keys=True)
-    os.replace(tmp, OUT)
-    log(f"wrote {OUT}")
+        json.dump(snapshot, f, indent=2, sort_keys=True)
+    os.replace(tmp, out)
+    log(f"wrote {out}")
+    for s in snapshot["steps"]:
+        log(f"   {s['label']:<24} {s['value']:>6,}  ({s['unit']})")
 
 
 if __name__ == "__main__":

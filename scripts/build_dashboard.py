@@ -18,8 +18,7 @@ import os
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RAW_DIR = os.path.join(ROOT, "data", "raw")
-FUNNEL_STATE_FILE = os.path.join(ROOT, "data", "funnel_state.json")
-AMPLITUDE_FUNNEL_FILE = os.path.join(ROOT, "data", "amplitude_funnel.json")
+FUNNEL_DIR = os.path.join(ROOT, "data", "funnel")
 BRAND_NAMES_FILE = os.path.join(ROOT, "data", "brand_names.json")
 OUT = os.path.join(ROOT, "dashboard.html")
 
@@ -79,54 +78,20 @@ def load_brand_names():
 
 
 def load_funnel():
-    """Everything the Growth -> DRU funnel tab needs to recompute itself for
-    any date range, client-side:
-
-      state  — the two stages with no history (Growth roster count, current
-               notifications-enabled count), from scripts/fetch_funnel.py
-      amp    — per-day Amplitude id sets for "uses the app" and "opened DRU",
-               from scripts/fetch_amplitude_funnel.py; ids are remapped to
-               opaque 0..N indices here so no raw Amplitude id ships
-
-    (DRU received / tapped are already recomputable from the `notifs` payload.)
-    A missing file just narrows what the tab can show, never fails the build."""
-    state = {}
-    if os.path.exists(FUNNEL_STATE_FILE):
+    """All data/funnel/*.json snapshots, oldest first. Each is one day's
+    Growth -> DRU funnel, every stage measured "as of that date" — no
+    backfill, so the history simply starts whenever scripts/fetch_funnel.py
+    first ran. A missing dir just shows an empty-state on the tab."""
+    snaps = []
+    for f in sorted(glob.glob(os.path.join(FUNNEL_DIR, "*.json"))):
         try:
-            state = json.load(open(FUNNEL_STATE_FILE))
+            s = json.load(open(f))
+            if s.get("steps"):
+                snaps.append(s)
         except (json.JSONDecodeError, OSError):
-            state = {}
-
-    amp_dates, app_days, dru_days = [], [], []
-    if os.path.exists(AMPLITUDE_FUNNEL_FILE):
-        try:
-            raw = json.load(open(AMPLITUDE_FUNNEL_FILE)).get("days", {})
-        except (json.JSONDecodeError, OSError):
-            raw = {}
-        remap, nxt = {}, 0
-        for day in sorted(raw):
-            rec = raw[day] or {}
-            amp_dates.append(day)
-            row_app, row_dru = [], []
-            for uid in rec.get("app", []):
-                if uid not in remap:
-                    remap[uid] = nxt
-                    nxt += 1
-                row_app.append(remap[uid])
-            for uid in rec.get("dru", []):
-                if uid not in remap:
-                    remap[uid] = nxt
-                    nxt += 1
-                row_dru.append(remap[uid])
-            app_days.append(sorted(row_app))
-            dru_days.append(sorted(row_dru))
-
-    return {
-        "state": state,
-        "ampDates": amp_dates,
-        "app": app_days,
-        "dru": dru_days,
-    }
+            continue
+    snaps.sort(key=lambda s: s.get("date", ""))
+    return {"snapshots": snaps, "latest": snaps[-1] if snaps else None}
 
 
 def load_all():
@@ -1572,31 +1537,20 @@ FUNNEL_VIEW = (
     '    <div class="hero-card fnl-kpis" id="fnlKpis"></div>\n'
     "  </div>\n"
     '  <div id="fnlBanners"></div>\n'
-    '  <div class="filterbar card">\n'
-    '    <button class="fbtn" data-fp="week">This week</button>\n'
-    '    <button class="fbtn" data-fp="month">This month</button>\n'
-    '    <button class="fbtn" data-fp="custom">Custom range</button>\n'
-    '    <button class="fbtn" data-fp="single">Single date</button>\n'
-    '    <div class="customwrap hidden" id="fCustomWrap">\n'
-    '      <input type="date" id="fRangeStart"> <span>to</span> <input type="date" id="fRangeEnd">\n'
-    "    </div>\n"
-    '    <div class="customwrap hidden" id="fSingleWrap">\n'
-    '      <input type="date" id="fSingleDate">\n'
-    "    </div>\n"
-    "  </div>\n"
     '  <div class="card">\n'
     '    <div class="card-head"><div>\n'
     '      <h2>The funnel <span class="help" id="fnlHelp">i</span></h2>\n'
     '      <div class="desc">Where Growth businesses get to on the path from having the app to '
-    "reading their Daily Round-up. The DRU stages move with the date filter; the first three are current state.</div>\n"
+    "reading their Daily Round-up. Every stage is measured as of the snapshot date; the DRU stages "
+    "(4&ndash;6) look back 30 days.</div>\n"
     "    </div></div>\n"
     '    <div class="fnl-steps" id="fnlSteps"></div>\n'
     "  </div>\n"
     '  <div class="card">\n'
     '    <div class="card-head"><div>\n'
-    "      <h2>Daily trend</h2>\n"
-    '      <div class="desc">Each milestone per day across the selected period &mdash; '
-    "the count of businesses (or app users) reaching that stage on that day.</div>\n"
+    "      <h2>Trend since tracking started</h2>\n"
+    '      <div class="desc">One point per daily snapshot. No backfill &mdash; this line starts '
+    "the day the funnel job first ran and fills in going forward.</div>\n"
     "    </div></div>\n"
     '    <div id="fnlTrend"></div>\n'
     '    <div class="leg-row" id="fnlTrendLeg" style="margin-top:12px"></div>\n'
@@ -1620,96 +1574,30 @@ FUNNEL_VIEW = (
 
 
 JS_FUNNEL = r"""
-const FN=DATA.funnel||{state:{},ampDates:[],app:[],dru:[]};
-const FSTATE=FN.state||{};
-// per-day id-index arrays (opaque ints, remapped at build time)
-const FAPP=FN.app||[], FDRU=FN.dru||[], FADATES=FN.ampDates||[];
-const FAPOS=new Map(FADATES.map((d,i)=>[d,i]));
-
-// DRU received / tapped per day, brand-level, straight off the notif payload
-const FDRU_BY_DAY=new Map();      // date -> {recv:Set, tap:Set}
-NOTIFS.forEach(n=>{
-  let r=FDRU_BY_DAY.get(n.date);
-  if(!r){r={recv:new Set(),tap:new Set()};FDRU_BY_DAY.set(n.date,r);}
-  if(n.received)r.recv.add(n.brand);
-  if(n.clicked)r.tap.add(n.brand);
-});
-
-// The tab is anchored to the DRU data range (same as the notification tab):
-// Amplitude often runs a day or two ahead of the settled DRU send log, and a
-// window that reached past the last DRU day would show stages 4/5 cratering to
-// zero for want of data. Amplitude days beyond FANCHOR sit unused until the DRU
-// fetch catches up and FANCHOR advances.
-const FALL_DATES=[...new Set([...FADATES,...D.dates])].sort()
-  .filter(d=>d>=D.dates[0]&&d<=D.dates[D.dates.length-1]);
-const FANCHOR=D.dates[D.dates.length-1];
-const FMIN=D.dates[0];
-
-let fStart=FANCHOR.slice(0,8)+'01', fEnd=FANCHOR;
-
-function fWindowDates(){return FALL_DATES.filter(d=>d>=fStart&&d<=fEnd);}
-
-function unionCount(rows,dates){
-  const s=new Set();
-  dates.forEach(d=>{const i=FAPOS.get(d);if(i==null)return;(rows[i]||[]).forEach(x=>s.add(x));});
-  return s.size;
-}
-function brandUnion(dates,field){
-  const s=new Set();
-  dates.forEach(d=>{const r=FDRU_BY_DAY.get(d);if(r)r[field].forEach(x=>s.add(x));});
-  return s.size;
-}
-
-function funnelStages(){
-  const wd=fWindowDates();
-  const ampCov=wd.some(d=>FAPOS.has(d));
-  const druCov=wd.some(d=>FDRU_BY_DAY.has(d));
-  return [
-    {key:'growth',label:'Growth businesses',unit:'businesses',fixed:true,
-     value:FSTATE.growth_businesses??null,
-     source:'Ops roster sheet — count as of '+(FSTATE.as_of||'today').slice(0,10)},
-    {key:'with_app',label:'Have the app',unit:'businesses',fixed:true,
-     value:FSTATE.onesignal_has_app_device??null,
-     source:'OneSignal — a Growth contact id with an iOS/Android push subscription on record, as of '+(FSTATE.as_of||'today').slice(0,10),
-     secondary:ampCov?{label:'active in the app · this period',value:unionCount(FAPP,wd),
-       source:'Amplitude — a mobile-app event, plan = growth (plan tag ~50% filled, so a floor not a ceiling)'}:null},
-    {key:'notif_on',label:'Notifications enabled',unit:'businesses',fixed:true,
-     value:FSTATE.notifications_enabled??null,
-     source:'OneSignal — enabled push subscription, as of '+(FSTATE.as_of||'today').slice(0,10)},
-    {key:'received',label:'Received a DRU',unit:'businesses',windowed:true,covered:druCov,
-     value:druCov?brandUnion(wd,'recv'):null,
-     source:'OneSignal Confirmed Delivery for a prod_dru_* push in the selected period'},
-    {key:'tapped',label:'Tapped a DRU',unit:'businesses',windowed:true,covered:druCov,
-     value:druCov?brandUnion(wd,'tap'):null,
-     source:'OneSignal click on a prod_dru_* push in the selected period'},
-    {key:'opened',label:'Opened the DRU screen',unit:'app users',windowed:true,covered:ampCov,
-     value:ampCov?unionCount(FDRU,wd):null,
-     source:'Amplitude DailyRoundupStoryView (app), plan = growth, in the selected period'},
-  ];
-}
+const FN=DATA.funnel||{snapshots:[],latest:null};
+const FSNAPS=FN.snapshots||[];
 
 function dropClass(pct){return pct>=70?'ok':pct>=45?'warn':'bad';}
 
-function renderFunnelSteps(stages){
+function renderFunnelSteps(snap){
   const host=$('#fnlSteps');host.innerHTML='';
-  const base=(stages[0]&&stages[0].value)||1;
-  stages.forEach((s,i)=>{
+  const steps=snap.steps||[];
+  const base=(steps[0]&&steps[0].value)||1;
+  steps.forEach((s,i)=>{
     if(i>0){
-      const prev=stages[i-1];
+      const prev=steps[i-1];
       const conn=document.createElement('div');conn.className='fnl-conn';
       const rule1=document.createElement('span');rule1.className='rule';
       const mid=document.createElement('div');mid.className='mid';
       const tag=document.createElement('span');
-      const havePair=prev.value!=null&&s.value!=null&&prev.value>0;
-      const pct=havePair?s.value/prev.value*100:0;
+      const pct=prev.value?s.value/prev.value*100:0;
       const unitFlip=s.unit!==prev.unit;
-      tag.className='drop-tag '+(!havePair?'warn':pct>100?'ok':dropClass(pct));
-      tag.textContent=!havePair?'—':(pct>100?'↑ ':'')+pct.toFixed(0)+'% of “'+prev.label+'”';
+      tag.className='drop-tag '+(pct>100?'ok':dropClass(pct));
+      tag.textContent=(pct>100?'↑ ':'')+pct.toFixed(0)+'% of “'+prev.label+'”';
       tag.addEventListener('mouseenter',e=>showTip(e,prev.label+'  →  '+s.label,[
-        havePair?(fmt(s.value)+' of '+fmt(prev.value)+'  ('+pct.toFixed(1)+'%)'):'One of these stages has no data for this period.',
+        fmt(s.value)+' of '+fmt(prev.value)+'  ('+pct.toFixed(1)+'%)',
         pct>100?'Above 100%: this stage is reached by routes that skip the previous one (opening DRU in-app without the push).':'',
         unitFlip?('Unit changes here: “'+prev.label+'” counts '+prev.unit+', “'+s.label+'” counts '+s.unit+'. Ratio is approximate.'):'',
-        (prev.fixed!==s.fixed)?'One side is a live “as of today” number, the other moves with the date filter.':'',
       ].filter(Boolean)));
       tag.addEventListener('mousemove',moveTip);tag.addEventListener('mouseleave',hideTip);
       const rule2=document.createElement('span');rule2.className='rule';
@@ -1723,44 +1611,29 @@ function renderFunnelSteps(stages){
     nm.append(txt((i+1)+'. '+s.label));
     const help=document.createElement('span');help.className='help';help.textContent='i';
     help.addEventListener('mouseenter',e=>showTip(e,s.label,[s.source,
-      s.unit==='app users'?'Counted as individual app logins, not businesses.':'Counted as businesses.']));
+      s.unit==='app users'?'Counted as individual app logins, not businesses.':'Counted as businesses (any qualifying contact counts the business).']));
     help.addEventListener('mousemove',moveTip);help.addEventListener('mouseleave',hideTip);
     nm.appendChild(help);
     const u=document.createElement('div');u.className='u'+(s.unit==='app users'?' people':'');
-    u.append(txt(s.unit));
-    if(s.fixed){
-      const t=document.createElement('span');t.className='asof-tag';t.textContent='as of today';
-      t.addEventListener('mouseenter',e=>showTip(e,s.label,[
-        'This stage has no history in any source, so it always shows the current number and does not move with the date filter.',s.source]));
-      t.addEventListener('mousemove',moveTip);t.addEventListener('mouseleave',hideTip);
-      u.appendChild(t);
-    }
+    u.textContent=s.unit;
     lab.append(nm,u);
 
     const barWrap=document.createElement('div');barWrap.className='fnl-bar-wrap';
     const bar=document.createElement('div');bar.className='fnl-bar';
     const val=document.createElement('div');val.className='fnl-bar-val';
-    if(s.value==null){
-      bar.style.width='0';bar.classList.add('empty');
-      val.textContent='no data';val.style.left='8px';val.style.color='var(--text-muted)';
-      barWrap.classList.add('empty');
-    }else{
-      const w=base?Math.max(s.value/base*100,1.5):1.5;
-      bar.style.width=w+'%';
-      if(s.fixed)bar.classList.add('fixed');
-      val.textContent=fmt(s.value);
-      if(w>=88){val.style.right='10px';val.style.color='var(--f-solid-fg)';}
-      else{val.style.left='calc('+w+'% + 8px)';}
-    }
+    const w=base?Math.max(s.value/base*100,1.5):1.5;
+    bar.style.width=w+'%';
+    val.textContent=fmt(s.value);
+    if(w>=88){val.style.right='10px';val.style.color='var(--f-solid-fg)';}
+    else{val.style.left='calc('+w+'% + 8px)';}
     barWrap.append(bar,val);
-    barWrap.addEventListener('mouseenter',e=>showTip(e,s.label,
-      s.value==null?['No data for this period.',s.source]:[
-        fmt(s.value)+' '+s.unit,
-        (base?(s.value/base*100).toFixed(1):'0')+'% of all Growth businesses',s.source]));
+    barWrap.addEventListener('mouseenter',e=>showTip(e,s.label,[
+      fmt(s.value)+' '+s.unit,
+      (base?(s.value/base*100).toFixed(1):'0')+'% of all Growth businesses',s.source]));
     barWrap.addEventListener('mousemove',moveTip);barWrap.addEventListener('mouseleave',hideTip);
 
     const pctCol=document.createElement('div');pctCol.className='fnl-pct';
-    pctCol.textContent=s.value==null?'—':(base?(s.value/base*100).toFixed(0):'0')+'%';
+    pctCol.textContent=(base?(s.value/base*100).toFixed(0):'0')+'%';
     const psub=document.createElement('span');psub.className='sub';psub.textContent='of Growth';
     pctCol.appendChild(psub);
 
@@ -1779,20 +1652,19 @@ function renderFunnelSteps(stages){
   });
 }
 
-function renderFunnelKpis(stages){
-  const m={};stages.forEach(s=>m[s.key]=s);
+function renderFunnelKpis(snap){
+  const m={};(snap.steps||[]).forEach(s=>m[s.key]=s);
   const host=$('#fnlKpis');host.innerHTML='';
   const g=(m.growth&&m.growth.value)||0;
-  const pctOf=s=>(g&&s&&s.value!=null)?(s.value/g*100).toFixed(0)+'% of Growth':'';
-  [['Growth businesses',m.growth,'as of today'],
+  const pctOf=s=>(g&&s)?(s.value/g*100).toFixed(0)+'% of Growth':'';
+  [['Growth businesses',m.growth,''],
    ['Have the app',m.with_app,pctOf(m.with_app)],
    ['Received a DRU',m.received,pctOf(m.received)],
    ['Opened the DRU screen',m.opened,pctOf(m.opened)]].forEach(([label,s,note])=>{
     const k=document.createElement('div');k.className='kpi';
     const l=document.createElement('div');l.className='label';l.textContent=label;
     const vr=document.createElement('div');vr.className='value-row';
-    const v=document.createElement('span');v.className='value';
-    v.textContent=(!s||s.value==null)?'—':fmt(s.value);
+    const v=document.createElement('span');v.className='value';v.textContent=s?fmt(s.value):'—';
     vr.appendChild(v);
     const n=document.createElement('div');n.className='note';n.textContent=note||'';
     k.append(l,vr,n);host.appendChild(k);
@@ -1800,15 +1672,15 @@ function renderFunnelKpis(stages){
 }
 
 const FTREND=[
-  {key:'with_app',label:'Active in the app',color:'var(--f-1)',daily:d=>{const i=FAPOS.get(d);return i==null?null:(FAPP[i]||[]).length;}},
-  {key:'received',label:'Received a DRU',color:'var(--f-2)',daily:d=>{const r=FDRU_BY_DAY.get(d);return r?r.recv.size:null;}},
-  {key:'opened',label:'Opened DRU screen',color:'var(--f-3)',daily:d=>{const i=FAPOS.get(d);return i==null?null:(FDRU[i]||[]).length;}},
+  {key:'with_app',label:'Have the app',color:'var(--f-1)'},
+  {key:'received',label:'Received a DRU',color:'var(--f-2)'},
+  {key:'opened',label:'Opened DRU screen',color:'var(--f-3)'},
 ];
 function renderFunnelTrend(){
-  const dates=fWindowDates();
+  const dates=FSNAPS.map(s=>s.date);
   const series=FTREND.map(t=>({
     key:t.key,label:t.label,color:t.color,hidden:false,
-    values:dates.map(d=>t.daily(d)||0),
+    values:FSNAPS.map(s=>{const st=(s.steps||[]).find(x=>x.key===t.key);return st?st.value:0;}),
   }));
   multiLineChart($('#fnlTrend'),dates,series,{h:250});
   const leg=$('#fnlTrendLeg');leg.innerHTML='';
@@ -1819,87 +1691,60 @@ function renderFunnelTrend(){
     c.append(sw,s);leg.appendChild(c);
   });
   const note=document.createElement('div');note.className='leg-note';note.style.marginTop='6px';
-  note.textContent='Daily unique count — these do not add up to the funnel totals above, which de-duplicate across the whole period.';
+  note.textContent=FSNAPS.length<2
+    ? 'Only '+FSNAPS.length+' snapshot so far — one more point lands per day.'
+    : FSNAPS.length+' daily snapshots, '+FSNAPS[0].date+' → '+FSNAPS[FSNAPS.length-1].date+'.';
   leg.appendChild(note);
 }
 
-function renderFunnelTable(stages){
+function renderFunnelTable(snap){
   const body=$('#fnlTableBody');body.innerHTML='';
-  const base=(stages[0]&&stages[0].value)||0;
-  const notes={
-    growth:'Ops roster sheet. No “as of” history — always the current count.',
-    with_app:'OneSignal: a Growth contact id with an iOS/Android push subscription on record — i.e. the app was installed and registered. Current state, no history. The chip below is Amplitude’s tighter “opened the app this period” count.',
-    notif_on:'OneSignal push subscription with notifications not disabled. Current state only, not plan-filtered further (DRU only sends to Growth).',
-    received:'OneSignal Confirmed Delivery for a prod_dru_* push in the period.',
-    tapped:'OneSignal click on a prod_dru_* push in the period.',
-    opened:'Amplitude DailyRoundupStoryView, plan = growth, in the period. App logins, and not yet tied to a push tap — some opens are organic in-app.',
-  };
-  stages.forEach((s,i)=>{
+  const base=(snap.steps[0]&&snap.steps[0].value)||0;
+  snap.steps.forEach((s,i)=>{
     const tr=document.createElement('tr');
     const c0=document.createElement('td');c0.textContent=(i+1)+'. '+s.label;
-    const c1=document.createElement('td');c1.className='num';c1.textContent=s.value==null?'—':fmt(s.value);
+    const c1=document.createElement('td');c1.className='num';c1.textContent=fmt(s.value);
     const c2=document.createElement('td');c2.className='num';
-    c2.textContent=(base&&s.value!=null)?(s.value/base*100).toFixed(1)+'%':'—';
+    c2.textContent=base?(s.value/base*100).toFixed(1)+'%':'—';
     const c3=document.createElement('td');
     const pill=document.createElement('span');pill.className='pill';pill.textContent=s.unit;
     if(s.unit==='app users')pill.style.color='var(--f-3)';
     c3.appendChild(pill);
-    if(s.fixed){const t=document.createElement('span');t.className='asof-tag';t.textContent='fixed';
-      t.style.marginLeft='6px';c3.appendChild(t);}
-    const c4=document.createElement('td');c4.style.cssText='max-width:340px;white-space:normal;color:var(--text-muted);font-size:11.5px';
-    c4.textContent=notes[s.key]||s.source;
+    const c4=document.createElement('td');
+    c4.style.cssText='max-width:360px;white-space:normal;color:var(--text-muted);font-size:11.5px';
+    c4.textContent=s.source;
     tr.append(c0,c1,c2,c3,c4);body.appendChild(tr);
   });
 }
 
 function renderFunnel(){
-  if(!FSTATE.growth_businesses&&!FADATES.length){
-    $('#fnlSub').textContent='No funnel data yet.';
-    $('#fnlSteps').innerHTML='<div class="empty-note">Run scripts/fetch_funnel.py and scripts/fetch_amplitude_funnel.py.</div>';
+  if(!FN.latest){
+    $('#fnlSub').textContent='No snapshots yet.';
+    $('#fnlSteps').innerHTML='<div class="empty-note">Run scripts/fetch_funnel.py to write the first snapshot.</div>';
     return;
   }
-  const stages=funnelStages();
-  const nd=daysBetween(fStart,fEnd)+1;
-  $('#fnlSub').textContent=(fStart===fEnd?fStart:(nd+' days · '+fStart+' → '+fEnd));
-  $('#fnlWindow').textContent='◷ '+(fStart===fEnd?fStart:fStart+' → '+fEnd);
-  renderFunnelKpis(stages);
-  renderFunnelSteps(stages);
+  const snap=FN.latest;
+  const dw=snap.dru_window||{};
+  $('#fnlSub').textContent='As of '+snap.date+' · '+FSNAPS.length+' day'+(FSNAPS.length===1?'':'s')+' of history';
+  $('#fnlWindow').textContent='◷ stages 4–6 look back 30 days ('+(dw.start||'')+' → '+(dw.end||'')+')';
+  renderFunnelKpis(snap);
+  renderFunnelSteps(snap);
   renderFunnelTrend();
-  renderFunnelTable(stages);
-  $('#fnlFoot').innerHTML='Growth roster from the ops sheet; app-installed, notification state and DRU delivery/clicks from OneSignal; '+
-    'app activity and DRU-screen opens from Amplitude. '+
-    '<b>Growth businesses</b>, <b>Have the app</b> and <b>Notifications enabled</b> have no history — they show today’s number and ignore the date filter. '+
-    'Stages 1–5 count <b>businesses</b> (a business counts if any of its contacts qualifies); “Opened the DRU screen” is from Amplitude and counts <b>app logins</b>. '+
-    'Not a strict funnel: a business can open DRU in-app without a push, so step 6 can exceed step 5.';
+  renderFunnelTable(snap);
+  $('#fnlFoot').innerHTML='Growth roster from the ops sheet; app-installed and notification state from OneSignal; '+
+    'DRU delivery/clicks from OneSignal; DRU-screen opens and in-app activity from Amplitude. '+
+    'Every stage is a snapshot "as of '+snap.date+'"; stages 4–6 count the trailing 30 days. '+
+    'Stages 1–5 count <b>businesses</b>; “Opened the DRU screen” is from Amplitude and counts <b>app logins</b>. '+
+    'Not a strict funnel — a business can open DRU in-app without a push, so step 6 can exceed step 5. '+
+    'No backfill: the trend starts '+ (FSNAPS[0]?FSNAPS[0].date:snap.date) +'.';
 }
-
-// ── filter bar ──────────────────────────────────────────────────────────
-function fSetPreset(p){
-  document.querySelectorAll('.fbtn[data-fp]').forEach(b=>b.classList.toggle('active',b.dataset.fp===p));
-  $('#fCustomWrap').classList.toggle('hidden',p!=='custom');
-  $('#fSingleWrap').classList.toggle('hidden',p!=='single');
-  if(p==='week'){fStart=addDays(FANCHOR,-6);fEnd=FANCHOR;renderFunnel();}
-  else if(p==='month'){fStart=FANCHOR.slice(0,8)+'01';fEnd=FANCHOR;renderFunnel();}
-  else if(p==='custom'){$('#fRangeStart').value=fStart;$('#fRangeEnd').value=fEnd;}
-  else if(p==='single'){$('#fSingleDate').value=fEnd;fStart=fEnd;renderFunnel();}
-}
-document.querySelectorAll('.fbtn[data-fp]').forEach(b=>b.addEventListener('click',()=>fSetPreset(b.dataset.fp)));
-[$('#fRangeStart'),$('#fRangeEnd')].forEach(inp=>inp.addEventListener('change',()=>{
-  if($('#fRangeStart').value&&$('#fRangeEnd').value){
-    fStart=$('#fRangeStart').value;fEnd=$('#fRangeEnd').value;
-    if(fStart>fEnd)[fStart,fEnd]=[fEnd,fStart];
-    renderFunnel();
-  }
-}));
-$('#fSingleDate').addEventListener('change',()=>{fStart=fEnd=$('#fSingleDate').value;renderFunnel();});
-[$('#fRangeStart'),$('#fRangeEnd'),$('#fSingleDate')].forEach(inp=>{inp.min=FMIN;inp.max=FANCHOR;});
 
 const fnlHelp=$('#fnlHelp');
 if(fnlHelp){
   fnlHelp.addEventListener('mouseenter',e=>showTip(e,'Reading this funnel',[
     'Bar length = share of all Growth businesses.',
     'The tag between two steps = the second as a % of the first.',
-    '“As of today” steps don’t move with the date filter — nothing records their history.',
+    'Every number is "as of" the snapshot date — stages 4–6 look back 30 days.',
     'Not strictly nested — see the note at the bottom.']));
   fnlHelp.addEventListener('mousemove',moveTip);
   fnlHelp.addEventListener('mouseleave',hideTip);
@@ -1912,7 +1757,7 @@ document.querySelectorAll('.viewnav button').forEach(b=>{
     $('#view-notif').classList.toggle('hidden',v!=='notif');
     $('#view-funnel').classList.toggle('hidden',v!=='funnel');
     hideTip();
-    if(v==='funnel'){if(!$('.fbtn[data-fp].active'))fSetPreset('month');else renderFunnel();}
+    if(v==='funnel')renderFunnel();
     else{renderSigRank();renderChart();}
   });
 });

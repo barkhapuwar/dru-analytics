@@ -39,16 +39,12 @@ jobs:
       - name: Resolve brand names
         run: python scripts/fetch_brands.py
 
-      - name: Funnel — per-day Amplitude sets (app use, DRU opens)
-        env:
-          AMPLITUDE_API_KEY: ${{ secrets.AMPLITUDE_API_KEY }}
-          AMPLITUDE_SECRET_KEY: ${{ secrets.AMPLITUDE_SECRET_KEY }}
-        run: python scripts/fetch_amplitude_funnel.py --days 7
-
-      - name: Funnel — current-state numbers (Growth roster, notifications on)
+      - name: Snapshot the Growth -> DRU funnel (one dated file per run)
         env:
           ONESIGNAL_APP_ID: ${{ secrets.ONESIGNAL_APP_ID }}
           ONESIGNAL_API_KEY: ${{ secrets.ONESIGNAL_API_KEY }}
+          AMPLITUDE_API_KEY: ${{ secrets.AMPLITUDE_API_KEY }}
+          AMPLITUDE_SECRET_KEY: ${{ secrets.AMPLITUDE_SECRET_KEY }}
         run: python scripts/fetch_funnel.py
 
       - name: Rebuild dashboard
