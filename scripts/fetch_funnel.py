@@ -70,11 +70,12 @@ def fetch_growth_roster():
     ci = hdr.index("contact_reelo_ids") if "contact_reelo_ids" in hdr else len(hdr)
     end_i = next((hdr.index(c) for c in ("NEW or Existing", "CSM", "TL") if c in hdr),
                  len(hdr))
-    brand_count, plans, contact_ids = 0, {}, set()
+    brand_count, plans, contact_to_brand = 0, {}, {}
     for r in rows[hi + 1:]:
         if not any(c.strip() for c in r):
             continue
-        if len(r) > id_i and r[id_i].strip():
+        bid = r[id_i].strip() if len(r) > id_i else ""
+        if bid:
             brand_count += 1
             if plan_i is not None and len(r) > plan_i:
                 p = r[plan_i].strip() or "(blank)"
@@ -82,9 +83,9 @@ def fetch_growth_roster():
         for cell in r[ci:end_i]:
             for tok in cell.split(","):
                 tok = tok.strip()
-                if HEX24.match(tok):
-                    contact_ids.add(tok)
-    return brand_count, plans, contact_ids
+                if HEX24.match(tok) and bid:
+                    contact_to_brand[tok] = bid
+    return brand_count, plans, contact_to_brand
 
 
 def all_time_dru_recipients():
@@ -125,7 +126,11 @@ def onesignal_rows():
     sys.exit("onesignal: export never became ready")
 
 
-def growth_app_and_enabled(rows, growth_ids):
+def growth_app_and_enabled(rows, contact_to_brand, growth_contacts):
+    """Distinct Growth *businesses* (not contacts) with an app push
+    subscription, and of those with notifications on. A contact whose brand
+    isn't in the roster sheet (e.g. a very recent signup that has still
+    received a DRU) is counted as its own business."""
     hdr = rows[0]
     col = {n: i for i, n in enumerate(hdr)}
     dt_i, nt_i, ext_i = col.get("device_type"), col.get("notification_types"), col.get("external_id")
@@ -137,16 +142,17 @@ def growth_app_and_enabled(rows, growth_ids):
         if len(r) <= max(dt_i, nt_i, ext_i):
             continue
         ext = r[ext_i].strip()
-        if ext not in growth_ids or r[dt_i].strip() not in APP_DEVICE_TYPES:
+        if ext not in growth_contacts or r[dt_i].strip() not in APP_DEVICE_TYPES:
             continue
-        with_app.add(ext)
+        brand = contact_to_brand.get(ext, ext)
+        with_app.add(brand)
         try:
             nt = int(r[nt_i] or 0)
         except ValueError:
             nt = 0
         invalid = inv_i is not None and len(r) > inv_i and r[inv_i].strip() == "t"
         if nt > 0 and not invalid:
-            enabled.add(ext)
+            enabled.add(brand)
     return len(with_app), len(enabled)
 
 
@@ -166,16 +172,17 @@ def load_dru_days():
 
 
 def dru_one_day(notifs):
-    received, tapped = set(), set()
+    sent, received, tapped = set(), set(), set()
     for n in notifs:
         e = n.get("external_id")
         if not e:
             continue
+        sent.add(e)
         if (n.get("received") or 0) > 0:
             received.add(e)
         if n.get("clicked"):
             tapped.add(e)
-    return len(received), len(tapped)
+    return len(sent), len(received), len(tapped)
 
 
 # ── 6. Amplitude (one-day unique users) ────────────────────────────────────
@@ -221,40 +228,50 @@ def main():
     log(f"snapshots for {recent[0]} .. {recent[-1]}  (re-writing {len(recent)} trailing days)")
 
     log("current-state stages (1-3)")
-    brand_count, plans, sheet_ids = fetch_growth_roster()
-    growth_ids = sheet_ids | all_time_dru_recipients()
+    brand_count, plans, contact_to_brand = fetch_growth_roster()
+    growth_contacts = set(contact_to_brand) | all_time_dru_recipients()
     rows = onesignal_rows()
-    has_app, notif_on = growth_app_and_enabled(rows, growth_ids)
+    has_app, notif_on = growth_app_and_enabled(rows, contact_to_brand, growth_contacts)
     log(f"   growth {brand_count} · have app {has_app} · notifications on {notif_on}")
 
     os.makedirs(OUT_DIR, exist_ok=True)
+    settling = set(recent[-4:])  # last ~4 days keep rising as late data lands
     for day in recent:
         d = datetime.date.fromisoformat(day)
-        received, tapped = dru_one_day(dru_days[day])
+        sent, received, tapped = dru_one_day(dru_days[day])
         opened = amp_uniques("DailyRoundupStoryView", d, d, platforms=None)
-        log(f"  {day}  received {received} · tapped {tapped} · opened DRU {opened}")
+        log(f"  {day}  sent {sent} · received {received} · tapped {tapped} · opened DRU {opened}")
         snapshot = {
             "date": day,
             "generated_at": gen,
+            "settling": day in settling,
             "steps": [
                 {"key": "growth", "label": "Growth businesses", "unit": "businesses",
                  "value": brand_count,
-                 "source": "Ops roster sheet — current count (stages 1-3 can't be rebuilt for a past day)"},
+                 "source": "Ops roster sheet, brand tab — every row is a growth_* plan. Current count."},
                 {"key": "with_app", "label": "Have the app", "unit": "businesses",
                  "value": has_app,
-                 "source": "OneSignal — Growth contact with an iOS/Android push subscription on record (current)"},
+                 "source": "OneSignal — distinct Growth businesses with an iOS/Android push "
+                           "subscription on record. Current state, no per-day history."},
                 {"key": "notif_on", "label": "Notifications enabled", "unit": "businesses",
                  "value": notif_on,
-                 "source": "OneSignal — of the app installs, notifications not disabled (current)"},
+                 "source": "OneSignal — of those, businesses whose push subscription is not "
+                           "disabled. Current state."},
                 {"key": "received", "label": "Received a DRU", "unit": "businesses",
                  "value": received,
-                 "source": f"OneSignal Confirmed Delivery for a prod_dru_* push on {day}"},
+                 "source": f"OneSignal Confirmed Delivery for a prod_dru_* push on {day} "
+                           f"({sent} were sent; the rest are not yet confirmed landed).",
+                 "secondary": {"label": f"sent a DRU on {day}", "value": sent,
+                               "unit": "businesses",
+                               "source": "OneSignal — a prod_dru_* push was queued and accepted "
+                                         "by the push service (delivery not necessarily confirmed)."}},
                 {"key": "tapped", "label": "Tapped a DRU", "unit": "businesses",
                  "value": tapped,
-                 "source": f"OneSignal click on a prod_dru_* push on {day}"},
+                 "source": f"OneSignal — a prod_dru_* push clicked on {day}. Brand-level (converted > 0)."},
                 {"key": "opened", "label": "Opened the DRU screen", "unit": "users",
                  "value": opened,
-                 "source": f"Amplitude DailyRoundupStoryView, plan = growth, all platforms, {day}"},
+                 "source": f"Amplitude DailyRoundupStoryView, plan = growth, all platforms, {day}. "
+                           f"Matches Amplitude's own daily unique-user count."},
             ],
             "plan_breakdown": plans,
         }

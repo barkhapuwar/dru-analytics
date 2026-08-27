@@ -1728,6 +1728,16 @@ function renderFunnel(){
   const snap=FN.latest;
   $('#fnlSub').textContent='For '+snap.date+' · '+FSNAPS.length+' day'+(FSNAPS.length===1?'':'s')+' tracked';
   $('#fnlWindow').textContent='◷ stages 4–6 are that day only · 1–3 are current counts';
+  const bn=$('#fnlBanners');bn.innerHTML='';
+  if(snap.settling){
+    const b=document.createElement('div');b.className='banner';
+    const dot=document.createElement('span');dot.className='dot';
+    const m=document.createElement('div');
+    m.innerHTML='<b>'+snap.date+' is still settling.</b> Late clicks and Amplitude events '+
+      'keep arriving for a few days — the tap and open counts here will rise. The job re-writes '+
+      'the last 5 days each run.';
+    b.append(dot,m);bn.appendChild(b);
+  }
   renderFunnelKpis(snap);
   renderFunnelSteps(snap);
   renderFunnelTrend();
