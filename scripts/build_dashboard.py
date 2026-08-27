@@ -569,7 +569,7 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;
 .fnl-label .n{font-size:13.5px;font-weight:650;color:var(--text-primary);display:flex;
   align-items:center;gap:6px}
 .fnl-label .u{font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;
-  color:var(--text-muted);font-weight:600}
+  color:var(--text-muted);font-weight:600;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
 .fnl-label .u.people{color:var(--f-3)}
 .fnl-label,.fnl-bar-wrap{min-width:0}
 .fnl-label .n{flex-wrap:wrap}
@@ -604,7 +604,8 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;
 .fnl-kpis{grid-template-columns:repeat(auto-fit,minmax(140px,1fr))}
 
 /* secondary metric chips under a step */
-.fnl-2nd{grid-column:2/4;display:flex;gap:8px;flex-wrap:wrap;margin-top:-4px;padding-bottom:2px}
+.fnl-2nd{display:flex;gap:8px;flex-wrap:wrap;margin:-6px 0 2px;padding-left:226px}
+@media (max-width:720px){.fnl-2nd{padding-left:0}}
 .fnl-2nd .chip{font-size:11px;font-weight:600;color:var(--text-secondary);
   background:var(--f-tint);border:1px solid var(--f-tint-border);border-radius:99px;
   padding:3px 10px;cursor:help}
@@ -1586,8 +1587,8 @@ FUNNEL_VIEW = (
     '  <div class="card">\n'
     '    <div class="card-head"><div>\n'
     '      <h2>The funnel <span class="help" id="fnlHelp">i</span></h2>\n'
-    '      <div class="desc">Where Growth businesses get to on the path from using the app to '
-    "reading their Daily Round-up, over the selected period.</div>\n"
+    '      <div class="desc">Where Growth businesses get to on the path from having the app to '
+    "reading their Daily Round-up. The DRU stages move with the date filter; the first three are current state.</div>\n"
     "    </div></div>\n"
     '    <div class="fnl-steps" id="fnlSteps"></div>\n'
     "  </div>\n"
@@ -1667,9 +1668,11 @@ function funnelStages(){
     {key:'growth',label:'Growth businesses',unit:'businesses',fixed:true,
      value:FSTATE.growth_businesses??null,
      source:'Ops roster sheet — count as of '+(FSTATE.as_of||'today').slice(0,10)},
-    {key:'with_app',label:'Used the app',unit:'app users',windowed:true,covered:ampCov,
-     value:ampCov?unionCount(FAPP,wd):null,
-     source:'Amplitude — a mobile-app event, plan = growth, in the selected period'},
+    {key:'with_app',label:'Have the app',unit:'businesses',fixed:true,
+     value:FSTATE.onesignal_has_app_device??null,
+     source:'OneSignal — a Growth contact id with an iOS/Android push subscription on record, as of '+(FSTATE.as_of||'today').slice(0,10),
+     secondary:ampCov?{label:'active in the app · this period',value:unionCount(FAPP,wd),
+       source:'Amplitude — a mobile-app event, plan = growth (plan tag ~50% filled, so a floor not a ceiling)'}:null},
     {key:'notif_on',label:'Notifications enabled',unit:'businesses',fixed:true,
      value:FSTATE.notifications_enabled??null,
      source:'OneSignal — enabled push subscription, as of '+(FSTATE.as_of||'today').slice(0,10)},
@@ -1718,20 +1721,20 @@ function renderFunnelSteps(stages){
     const lab=document.createElement('div');lab.className='fnl-label';
     const nm=document.createElement('div');nm.className='n';
     nm.append(txt((i+1)+'. '+s.label));
-    if(s.fixed){
-      const t=document.createElement('span');t.className='asof-tag';t.textContent='as of today';
-      t.addEventListener('mouseenter',e=>showTip(e,s.label,[
-        'This stage has no history in any source, so it always shows the current number and does not move with the date filter.',s.source]));
-      t.addEventListener('mousemove',moveTip);t.addEventListener('mouseleave',hideTip);
-      nm.appendChild(t);
-    }
     const help=document.createElement('span');help.className='help';help.textContent='i';
     help.addEventListener('mouseenter',e=>showTip(e,s.label,[s.source,
       s.unit==='app users'?'Counted as individual app logins, not businesses.':'Counted as businesses.']));
     help.addEventListener('mousemove',moveTip);help.addEventListener('mouseleave',hideTip);
     nm.appendChild(help);
     const u=document.createElement('div');u.className='u'+(s.unit==='app users'?' people':'');
-    u.textContent=s.unit;
+    u.append(txt(s.unit));
+    if(s.fixed){
+      const t=document.createElement('span');t.className='asof-tag';t.textContent='as of today';
+      t.addEventListener('mouseenter',e=>showTip(e,s.label,[
+        'This stage has no history in any source, so it always shows the current number and does not move with the date filter.',s.source]));
+      t.addEventListener('mousemove',moveTip);t.addEventListener('mouseleave',hideTip);
+      u.appendChild(t);
+    }
     lab.append(nm,u);
 
     const barWrap=document.createElement('div');barWrap.className='fnl-bar-wrap';
@@ -1763,6 +1766,16 @@ function renderFunnelSteps(stages){
 
     row.append(lab,barWrap,pctCol);
     host.appendChild(row);
+
+    if(s.secondary&&s.secondary.value!=null){
+      const sec=document.createElement('div');sec.className='fnl-2nd';
+      const chip=document.createElement('span');chip.className='chip';
+      chip.textContent=fmt(s.secondary.value)+' '+s.secondary.label;
+      chip.addEventListener('mouseenter',e=>showTip(e,s.label+' — also',
+        [fmt(s.secondary.value)+' '+(s.secondary.unit||''),s.secondary.source]));
+      chip.addEventListener('mousemove',moveTip);chip.addEventListener('mouseleave',hideTip);
+      sec.appendChild(chip);host.appendChild(sec);
+    }
   });
 }
 
@@ -1772,7 +1785,7 @@ function renderFunnelKpis(stages){
   const g=(m.growth&&m.growth.value)||0;
   const pctOf=s=>(g&&s&&s.value!=null)?(s.value/g*100).toFixed(0)+'% of Growth':'';
   [['Growth businesses',m.growth,'as of today'],
-   ['Used the app',m.with_app,pctOf(m.with_app)],
+   ['Have the app',m.with_app,pctOf(m.with_app)],
    ['Received a DRU',m.received,pctOf(m.received)],
    ['Opened the DRU screen',m.opened,pctOf(m.opened)]].forEach(([label,s,note])=>{
     const k=document.createElement('div');k.className='kpi';
@@ -1787,7 +1800,7 @@ function renderFunnelKpis(stages){
 }
 
 const FTREND=[
-  {key:'with_app',label:'Used the app',color:'var(--f-1)',daily:d=>{const i=FAPOS.get(d);return i==null?null:(FAPP[i]||[]).length;}},
+  {key:'with_app',label:'Active in the app',color:'var(--f-1)',daily:d=>{const i=FAPOS.get(d);return i==null?null:(FAPP[i]||[]).length;}},
   {key:'received',label:'Received a DRU',color:'var(--f-2)',daily:d=>{const r=FDRU_BY_DAY.get(d);return r?r.recv.size:null;}},
   {key:'opened',label:'Opened DRU screen',color:'var(--f-3)',daily:d=>{const i=FAPOS.get(d);return i==null?null:(FDRU[i]||[]).length;}},
 ];
@@ -1815,7 +1828,7 @@ function renderFunnelTable(stages){
   const base=(stages[0]&&stages[0].value)||0;
   const notes={
     growth:'Ops roster sheet. No “as of” history — always the current count.',
-    with_app:'Amplitude: a mobile-app event with plan = growth in the period. Amplitude’s plan tag is ~50% filled, so this undercounts.',
+    with_app:'OneSignal: a Growth contact id with an iOS/Android push subscription on record — i.e. the app was installed and registered. Current state, no history. The chip below is Amplitude’s tighter “opened the app this period” count.',
     notif_on:'OneSignal push subscription with notifications not disabled. Current state only, not plan-filtered further (DRU only sends to Growth).',
     received:'OneSignal Confirmed Delivery for a prod_dru_* push in the period.',
     tapped:'OneSignal click on a prod_dru_* push in the period.',
@@ -1853,11 +1866,11 @@ function renderFunnel(){
   renderFunnelSteps(stages);
   renderFunnelTrend();
   renderFunnelTable(stages);
-  $('#fnlFoot').innerHTML='Growth roster from the ops sheet, app &amp; DRU-open from Amplitude, '+
-    'notification state and DRU delivery/clicks from OneSignal. '+
-    '“Growth businesses” and “Notifications enabled” have no history — they show today’s number and ignore the date filter. '+
-    'Stages 1, 3, 4, 5 count <b>businesses</b>; “Used the app” and “Opened the DRU screen” count <b>app logins</b> '+
-    '(~1.0–1.3 per business). Not a strict funnel: a business can open DRU in-app without a push, so step 6 can exceed step 5.';
+  $('#fnlFoot').innerHTML='Growth roster from the ops sheet; app-installed, notification state and DRU delivery/clicks from OneSignal; '+
+    'app activity and DRU-screen opens from Amplitude. '+
+    '<b>Growth businesses</b>, <b>Have the app</b> and <b>Notifications enabled</b> have no history — they show today’s number and ignore the date filter. '+
+    'Stages 1–5 count <b>businesses</b> (a business counts if any of its contacts qualifies); “Opened the DRU screen” is from Amplitude and counts <b>app logins</b>. '+
+    'Not a strict funnel: a business can open DRU in-app without a push, so step 6 can exceed step 5.';
 }
 
 // ── filter bar ──────────────────────────────────────────────────────────

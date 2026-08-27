@@ -77,28 +77,33 @@ that don't share an identity key yet:
 | stage | source |
 |---|---|
 | Growth businesses | ops Google Sheet, brand tab (live roster) |
-| Have the app / Opened DRU | Amplitude segmentation API (`plan = growth`) |
+| Have the app | OneSignal — a Growth contact id with an iOS/Android push subscription on record (`scripts/fetch_funnel.py`) |
 | Notifications enabled | OneSignal subscription CSV export |
 | Received / Tapped a DRU | `data/raw/*.json` (already fetched) |
+| Opened the DRU screen | Amplitude, `DailyRoundupStoryView`, `plan = growth` (`scripts/fetch_amplitude_funnel.py`) |
 
-Rolling 30-day window. Stages 1–5 count **businesses**; "Opened the DRU screen"
-comes from Amplitude and counts **app logins** (~1.0–1.3 per business), so that
-ratio is approximate — the in-dashboard notes say which is which. **No backfill**
-for the top of the funnel: the sheet and OneSignal only expose current state, so
-that history starts the day the daily job first runs. Needs `AMPLITUDE_API_KEY`,
+The tab carries the **same filter bar as the notification tab** (week / month /
+custom / single date). Stages 4–6 recompute for any window from
+`data/amplitude_funnel.json` + `notifs`. Stages 1–3 (Growth roster, have-app,
+notifications on) have no history in any source, so they show as **"as of today"**
+reference bars and ignore the date filter — that's the dev ask, not fixable here.
+Stages 1–5 count **businesses**; "Opened the DRU screen" is from Amplitude and
+counts **app logins** (~1.0–1.3 per business). Needs `AMPLITUDE_API_KEY`,
 `AMPLITUDE_SECRET_KEY`, `ONESIGNAL_APP_ID`, `ONESIGNAL_API_KEY` in the env.
 
 ## Layout
 
 ```
-scripts/fetch_dru.py        OneSignal -> data/raw + data/agg
-scripts/fetch_funnel.py     sheet + Amplitude + OneSignal -> data/funnel/YYYY-MM-DD.json
-scripts/build_dashboard.py  data/agg + data/funnel -> dashboard.html
-data/templates.json         pinned template_id -> (signal, tone)
-data/raw/YYYY-MM-DD.json    per-notification records
-data/agg/YYYY-MM-DD.json    per-day aggregates
-data/funnel/YYYY-MM-DD.json per-day Growth -> DRU funnel snapshot
-data/summary.json           rolling rollup
+scripts/fetch_dru.py             OneSignal -> data/raw + data/agg
+scripts/fetch_amplitude_funnel.py Amplitude -> data/amplitude_funnel.json (per-day app/DRU id sets)
+scripts/fetch_funnel.py          sheet + OneSignal -> data/funnel_state.json (as-of-today numbers)
+scripts/build_dashboard.py       data/agg + funnel files -> dashboard.html
+data/templates.json              pinned template_id -> (signal, tone)
+data/raw/YYYY-MM-DD.json          per-notification records
+data/agg/YYYY-MM-DD.json          per-day aggregates
+data/amplitude_funnel.json        per-day Growth app-use / DRU-open id sets
+data/funnel_state.json            current Growth roster count + notifications-enabled count
+data/summary.json                 rolling rollup
 ```
 
 ## Before enabling the scheduled workflow
