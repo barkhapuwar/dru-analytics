@@ -1,0 +1,58 @@
+{
+  "date": "2026-08-26",
+  "generated_at": "2026-08-27T19:20:51+05:30",
+  "plan_breakdown": {
+    "growth_2 years": 14,
+    "growth_3 years": 17,
+    "growth_4 years": 1,
+    "growth_5 years": 92,
+    "growth_half_yearly": 39,
+    "growth_monthly": 320,
+    "growth_quarterly": 13,
+    "growth_yearly": 2028
+  },
+  "steps": [
+    {
+      "key": "growth",
+      "label": "Growth businesses",
+      "source": "Ops roster sheet \u2014 current count (stages 1-3 can't be rebuilt for a past day)",
+      "unit": "businesses",
+      "value": 2524
+    },
+    {
+      "key": "with_app",
+      "label": "Have the app",
+      "source": "OneSignal \u2014 Growth contact with an iOS/Android push subscription on record (current)",
+      "unit": "businesses",
+      "value": 2014
+    },
+    {
+      "key": "notif_on",
+      "label": "Notifications enabled",
+      "source": "OneSignal \u2014 of the app installs, notifications not disabled (current)",
+      "unit": "businesses",
+      "value": 1659
+    },
+    {
+      "key": "received",
+      "label": "Received a DRU",
+      "source": "OneSignal Confirmed Delivery for a prod_dru_* push on 2026-08-26",
+      "unit": "businesses",
+      "value": 1005
+    },
+    {
+      "key": "tapped",
+      "label": "Tapped a DRU",
+      "source": "OneSignal click on a prod_dru_* push on 2026-08-26",
+      "unit": "businesses",
+      "value": 112
+    },
+    {
+      "key": "opened",
+      "label": "Opened the DRU screen",
+      "source": "Amplitude DailyRoundupStoryView, plan = growth, all platforms, 2026-08-26",
+      "unit": "users",
+      "value": 142
+    }
+  ]
+}

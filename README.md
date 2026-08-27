@@ -82,15 +82,19 @@ that don't share an identity key yet:
 | Received / Tapped a DRU | `data/raw/*.json` (already fetched) |
 | Opened the DRU screen | Amplitude, `DailyRoundupStoryView`, `plan = growth` (`scripts/fetch_amplitude_funnel.py`) |
 
-`scripts/fetch_funnel.py` writes **one dated snapshot per run** to
-`data/funnel/YYYY-MM-DD.json`. Every stage is measured the same way — "as of the
-snapshot date", with stages 4–6 looking back 30 days — so there is no "some
-numbers have months of history, some don't" confusion. **No backfill**: the
-dashboard's trend line starts the day the job first ran and fills in one point
-per day. The latest snapshot is the headline funnel; older snapshots feed the
-trend. Stages 1–5 count **businesses**; "Opened the DRU screen" is from Amplitude
-and counts **app logins**. Needs `AMPLITUDE_API_KEY`, `AMPLITUDE_SECRET_KEY`,
-`ONESIGNAL_APP_ID`, `ONESIGNAL_API_KEY` in the env.
+`scripts/fetch_funnel.py` writes one dated file per day to
+`data/funnel/YYYY-MM-DD.json`, each covering **that single day**:
+
+- Stages 4–6 (received / tapped / opened DRU) = that day's activity. "Opened the
+  DRU screen" is Amplitude `DailyRoundupStoryView`, `plan = growth`, all
+  platforms — so it reconciles directly against Amplitude's own daily number.
+- Stages 1–3 (roster, have-app, notifications on) are **current** counts — they
+  can't be rebuilt for a past day, but barely move day to day.
+- The last `RESETTLE_DAYS` (5) files are re-written each run so late clicks and
+  events settle. **No backfill** — the trend starts the day the job first ran.
+
+Needs `AMPLITUDE_API_KEY`, `AMPLITUDE_SECRET_KEY`, `ONESIGNAL_APP_ID`,
+`ONESIGNAL_API_KEY` in the env.
 
 ## Layout
 

@@ -1541,16 +1541,16 @@ FUNNEL_VIEW = (
     '    <div class="card-head"><div>\n'
     '      <h2>The funnel <span class="help" id="fnlHelp">i</span></h2>\n'
     '      <div class="desc">Where Growth businesses get to on the path from having the app to '
-    "reading their Daily Round-up. Every stage is measured as of the snapshot date; the DRU stages "
-    "(4&ndash;6) look back 30 days.</div>\n"
+    "reading their Daily Round-up, for a single day. Stages 4&ndash;6 are that day&rsquo;s activity; "
+    "stages 1&ndash;3 are current counts.</div>\n"
     "    </div></div>\n"
     '    <div class="fnl-steps" id="fnlSteps"></div>\n'
     "  </div>\n"
     '  <div class="card">\n'
     '    <div class="card-head"><div>\n'
-    "      <h2>Trend since tracking started</h2>\n"
-    '      <div class="desc">One point per daily snapshot. No backfill &mdash; this line starts '
-    "the day the funnel job first ran and fills in going forward.</div>\n"
+    "      <h2>Daily trend</h2>\n"
+    '      <div class="desc">Each DRU milestone, one point per day. No backfill &mdash; this starts '
+    "the day tracking began and grows going forward.</div>\n"
     "    </div></div>\n"
     '    <div id="fnlTrend"></div>\n'
     '    <div class="leg-row" id="fnlTrendLeg" style="margin-top:12px"></div>\n'
@@ -1611,10 +1611,10 @@ function renderFunnelSteps(snap){
     nm.append(txt((i+1)+'. '+s.label));
     const help=document.createElement('span');help.className='help';help.textContent='i';
     help.addEventListener('mouseenter',e=>showTip(e,s.label,[s.source,
-      s.unit==='app users'?'Counted as individual app logins, not businesses.':'Counted as businesses (any qualifying contact counts the business).']));
+      (s.unit==='users'||s.unit==='app users')?'Counted as individual people/logins, not businesses.':'Counted as businesses (any qualifying contact counts the business).']));
     help.addEventListener('mousemove',moveTip);help.addEventListener('mouseleave',hideTip);
     nm.appendChild(help);
-    const u=document.createElement('div');u.className='u'+(s.unit==='app users'?' people':'');
+    const u=document.createElement('div');u.className='u'+((s.unit==='users'||s.unit==='app users')?' people':'');
     u.textContent=s.unit;
     lab.append(nm,u);
 
@@ -1671,9 +1671,10 @@ function renderFunnelKpis(snap){
   });
 }
 
+// received is ~flat near the top every day and would squash the rest; the
+// engagement lines (tapped, opened) are what move.
 const FTREND=[
-  {key:'with_app',label:'Have the app',color:'var(--f-1)'},
-  {key:'received',label:'Received a DRU',color:'var(--f-2)'},
+  {key:'tapped',label:'Tapped a DRU',color:'var(--f-1)'},
   {key:'opened',label:'Opened DRU screen',color:'var(--f-3)'},
 ];
 function renderFunnelTrend(){
@@ -1691,9 +1692,10 @@ function renderFunnelTrend(){
     c.append(sw,s);leg.appendChild(c);
   });
   const note=document.createElement('div');note.className='leg-note';note.style.marginTop='6px';
-  note.textContent=FSNAPS.length<2
-    ? 'Only '+FSNAPS.length+' snapshot so far — one more point lands per day.'
-    : FSNAPS.length+' daily snapshots, '+FSNAPS[0].date+' → '+FSNAPS[FSNAPS.length-1].date+'.';
+  note.textContent=(FSNAPS.length<2
+    ? 'Only '+FSNAPS.length+' day tracked so far — one more point lands per day.'
+    : FSNAPS.length+' days, '+FSNAPS[0].date+' → '+FSNAPS[FSNAPS.length-1].date+'.')
+    +' The last few points keep rising as late clicks/events settle.';
   leg.appendChild(note);
 }
 
@@ -1708,7 +1710,7 @@ function renderFunnelTable(snap){
     c2.textContent=base?(s.value/base*100).toFixed(1)+'%':'—';
     const c3=document.createElement('td');
     const pill=document.createElement('span');pill.className='pill';pill.textContent=s.unit;
-    if(s.unit==='app users')pill.style.color='var(--f-3)';
+    if(s.unit==='users'||s.unit==='app users')pill.style.color='var(--f-3)';
     c3.appendChild(pill);
     const c4=document.createElement('td');
     c4.style.cssText='max-width:360px;white-space:normal;color:var(--text-muted);font-size:11.5px';
@@ -1724,19 +1726,20 @@ function renderFunnel(){
     return;
   }
   const snap=FN.latest;
-  const dw=snap.dru_window||{};
-  $('#fnlSub').textContent='As of '+snap.date+' · '+FSNAPS.length+' day'+(FSNAPS.length===1?'':'s')+' of history';
-  $('#fnlWindow').textContent='◷ stages 4–6 look back 30 days ('+(dw.start||'')+' → '+(dw.end||'')+')';
+  $('#fnlSub').textContent='For '+snap.date+' · '+FSNAPS.length+' day'+(FSNAPS.length===1?'':'s')+' tracked';
+  $('#fnlWindow').textContent='◷ stages 4–6 are that day only · 1–3 are current counts';
   renderFunnelKpis(snap);
   renderFunnelSteps(snap);
   renderFunnelTrend();
   renderFunnelTable(snap);
   $('#fnlFoot').innerHTML='Growth roster from the ops sheet; app-installed and notification state from OneSignal; '+
-    'DRU delivery/clicks from OneSignal; DRU-screen opens and in-app activity from Amplitude. '+
-    'Every stage is a snapshot "as of '+snap.date+'"; stages 4–6 count the trailing 30 days. '+
-    'Stages 1–5 count <b>businesses</b>; “Opened the DRU screen” is from Amplitude and counts <b>app logins</b>. '+
+    'DRU delivery/clicks from OneSignal; DRU-screen opens from Amplitude. '+
+    'Stages 4–6 are the activity for <b>'+snap.date+'</b> alone — "Opened the DRU screen" matches Amplitude’s '+
+    'own daily DailyRoundupStoryView count (plan=growth). Stages 1–3 are current counts (they can’t be rebuilt for a past day). '+
+    'The last few days keep ticking up as late clicks and events arrive. '+
+    'Stages 1–5 count <b>businesses</b>; stage 6 counts <b>users</b>. '+
     'Not a strict funnel — a business can open DRU in-app without a push, so step 6 can exceed step 5. '+
-    'No backfill: the trend starts '+ (FSNAPS[0]?FSNAPS[0].date:snap.date) +'.';
+    'No backfill: tracking started '+ (FSNAPS[0]?FSNAPS[0].date:snap.date) +'.';
 }
 
 const fnlHelp=$('#fnlHelp');
@@ -1744,7 +1747,8 @@ if(fnlHelp){
   fnlHelp.addEventListener('mouseenter',e=>showTip(e,'Reading this funnel',[
     'Bar length = share of all Growth businesses.',
     'The tag between two steps = the second as a % of the first.',
-    'Every number is "as of" the snapshot date — stages 4–6 look back 30 days.',
+    'Stages 4–6 are that one day; stages 1–3 are current counts.',
+    'Recent days are still settling — late clicks/events keep arriving.',
     'Not strictly nested — see the note at the bottom.']));
   fnlHelp.addEventListener('mousemove',moveTip);
   fnlHelp.addEventListener('mouseleave',hideTip);
