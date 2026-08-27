@@ -66,14 +66,38 @@ undercounts. Each file carries `fetched_at` and `stable`; days newer than
 `--stable-after` (default 4) are flagged in the dashboard. The scheduled job
 re-fetches a rolling 5-day window and overwrites, so recent days converge.
 
+## Growth → DRU adoption funnel
+
+The dashboard has a second tab (pill nav, top of the page) tracking how far
+Growth businesses get on the path **have the app → notifications on → received a
+DRU → tapped it → opened the DRU screen**. `scripts/fetch_funnel.py` writes one
+snapshot per run to `data/funnel/YYYY-MM-DD.json`, stitched from three sources
+that don't share an identity key yet:
+
+| stage | source |
+|---|---|
+| Growth businesses | ops Google Sheet, brand tab (live roster) |
+| Have the app / Opened DRU | Amplitude segmentation API (`plan = growth`) |
+| Notifications enabled | OneSignal subscription CSV export |
+| Received / Tapped a DRU | `data/raw/*.json` (already fetched) |
+
+Rolling 30-day window. Stages 1–5 count **businesses**; "Opened the DRU screen"
+comes from Amplitude and counts **app logins** (~1.0–1.3 per business), so that
+ratio is approximate — the in-dashboard notes say which is which. **No backfill**
+for the top of the funnel: the sheet and OneSignal only expose current state, so
+that history starts the day the daily job first runs. Needs `AMPLITUDE_API_KEY`,
+`AMPLITUDE_SECRET_KEY`, `ONESIGNAL_APP_ID`, `ONESIGNAL_API_KEY` in the env.
+
 ## Layout
 
 ```
 scripts/fetch_dru.py        OneSignal -> data/raw + data/agg
-scripts/build_dashboard.py  data/agg  -> dashboard.html
+scripts/fetch_funnel.py     sheet + Amplitude + OneSignal -> data/funnel/YYYY-MM-DD.json
+scripts/build_dashboard.py  data/agg + data/funnel -> dashboard.html
 data/templates.json         pinned template_id -> (signal, tone)
 data/raw/YYYY-MM-DD.json    per-notification records
 data/agg/YYYY-MM-DD.json    per-day aggregates
+data/funnel/YYYY-MM-DD.json per-day Growth -> DRU funnel snapshot
 data/summary.json           rolling rollup
 ```
 
