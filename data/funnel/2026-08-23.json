@@ -1,6 +1,6 @@
 {
   "date": "2026-08-23",
-  "generated_at": "2026-08-27T19:30:59+05:30",
+  "generated_at": "2026-08-28T09:15:16+05:30",
   "plan_breakdown": {
     "growth_2 years": 14,
     "growth_3 years": 17,
@@ -11,7 +11,7 @@
     "growth_quarterly": 13,
     "growth_yearly": 2028
   },
-  "settling": true,
+  "settling": false,
   "steps": [
     {
       "key": "growth",
@@ -32,7 +32,7 @@
       "label": "Notifications enabled",
       "source": "OneSignal \u2014 of those, businesses whose push subscription is not disabled. Current state.",
       "unit": "businesses",
-      "value": 1658
+      "value": 1657
     },
     {
       "key": "received",

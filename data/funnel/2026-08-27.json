@@ -1,5 +1,5 @@
 {
-  "date": "2026-08-26",
+  "date": "2026-08-27",
   "generated_at": "2026-08-28T09:15:16+05:30",
   "plan_breakdown": {
     "growth_2 years": 14,
@@ -38,28 +38,28 @@
       "key": "received",
       "label": "Received a DRU",
       "secondary": {
-        "label": "sent a DRU on 2026-08-26",
+        "label": "sent a DRU on 2026-08-27",
         "source": "OneSignal \u2014 a prod_dru_* push was queued and accepted by the push service (delivery not necessarily confirmed).",
         "unit": "businesses",
-        "value": 1156
+        "value": 1164
       },
-      "source": "OneSignal Confirmed Delivery for a prod_dru_* push on 2026-08-26 (1156 were sent; the rest are not yet confirmed landed).",
+      "source": "OneSignal Confirmed Delivery for a prod_dru_* push on 2026-08-27 (1164 were sent; the rest are not yet confirmed landed).",
       "unit": "businesses",
-      "value": 1007
+      "value": 1022
     },
     {
       "key": "tapped",
       "label": "Tapped a DRU",
-      "source": "OneSignal \u2014 a prod_dru_* push clicked on 2026-08-26. Brand-level (converted > 0).",
+      "source": "OneSignal \u2014 a prod_dru_* push clicked on 2026-08-27. Brand-level (converted > 0).",
       "unit": "businesses",
-      "value": 113
+      "value": 118
     },
     {
       "key": "opened",
       "label": "Opened the DRU screen",
-      "source": "Amplitude DailyRoundupStoryView, plan = growth, all platforms, 2026-08-26. Matches Amplitude's own daily unique-user count.",
+      "source": "Amplitude DailyRoundupStoryView, plan = growth, all platforms, 2026-08-27. Matches Amplitude's own daily unique-user count.",
       "unit": "users",
-      "value": 142
+      "value": 177
     }
   ]
 }

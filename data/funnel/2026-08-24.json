@@ -1,6 +1,6 @@
 {
   "date": "2026-08-24",
-  "generated_at": "2026-08-27T19:30:59+05:30",
+  "generated_at": "2026-08-28T09:15:16+05:30",
   "plan_breakdown": {
     "growth_2 years": 14,
     "growth_3 years": 17,
@@ -32,7 +32,7 @@
       "label": "Notifications enabled",
       "source": "OneSignal \u2014 of those, businesses whose push subscription is not disabled. Current state.",
       "unit": "businesses",
-      "value": 1658
+      "value": 1657
     },
     {
       "key": "received",
@@ -45,7 +45,7 @@
       },
       "source": "OneSignal Confirmed Delivery for a prod_dru_* push on 2026-08-24 (1154 were sent; the rest are not yet confirmed landed).",
       "unit": "businesses",
-      "value": 996
+      "value": 997
     },
     {
       "key": "tapped",
