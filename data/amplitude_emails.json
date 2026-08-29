@@ -1,12 +1,12 @@
 {
   "days_covered": [
-    "2026-08-21",
     "2026-08-22",
     "2026-08-23",
     "2026-08-24",
     "2026-08-25",
     "2026-08-26",
-    "2026-08-27"
+    "2026-08-27",
+    "2026-08-28"
   ],
   "emails": {
     "06dinesh@gmail.com": [
@@ -65,6 +65,15 @@
     ],
     "9whospitality.bhatinda5sep@gmail.com": [
       "The Society"
+    ],
+    "aadit@farro.in": [
+      "Farro"
+    ],
+    "aadit@oi.in": [
+      "Oi Brewing Company"
+    ],
+    "aadit@sipandsavour.in": [
+      "Murphies Bistro and Bar"
     ],
     "aakarsh.menon@mirahhospitality.com": [
       "Bayroute Dining"
@@ -621,6 +630,9 @@
     "amberdalmia@gmail.com": [
       "Desserts n more"
     ],
+    "ame.ranchioffice@gmail.com": [
+      "Anardana"
+    ],
     "amibafoodcourt@gmail.com": [
       "Amiba Food Lounge"
     ],
@@ -971,6 +983,9 @@
     ],
     "aosaudaipur@gmail.com": [
       "Aosa"
+    ],
+    "aparnadip2@gmail.com": [
+      "CHINA NATION"
     ],
     "apetibun@gmail.com": [
       "Bun Apeti"
@@ -2586,6 +2601,9 @@
     ],
     "dhir@chokola.com": [
       "Choko La"
+    ],
+    "dhir@dorfbrewhouse.in": [
+      "Dorf Brewhouse"
     ],
     "dhir@freshkart.com": [
       "FreshKart"
@@ -4451,6 +4469,9 @@
     ],
     "jkenterprises120324@gmail.com": [
       "Pizza Galleria Udaipur"
+    ],
+    "jkjogeshwari@gmail.com": [
+      "JK Burgers"
     ],
     "jkmehlawat@gmail.com": [
       "Dil Dosa Etc"
@@ -6942,6 +6963,9 @@
     ],
     "pritesh@toritos.in": [
       "Toritos Kudasan"
+    ],
+    "pritirajhans18@gmail.com": [
+      "JK Burgers"
     ],
     "pritrajani@gmail.com": [
       "Rolls On Coals"
@@ -9669,6 +9693,9 @@
     "umeshdesireddy@gmail.com": [
       "Mayuri"
     ],
+    "uni@chaatmastani.com": [
+      "Chaat Mastani"
+    ],
     "unityventures120@gmail.com": [
       "Cafe Ciro"
     ],
@@ -10219,5 +10246,5 @@
       "Zorko Gwalior"
     ]
   },
-  "generated_at": "2026-08-28T09:15:14+05:30"
+  "generated_at": "2026-08-29T07:54:16+05:30"
 }

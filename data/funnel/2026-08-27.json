@@ -1,15 +1,15 @@
 {
   "date": "2026-08-27",
-  "generated_at": "2026-08-28T09:15:16+05:30",
+  "generated_at": "2026-08-29T07:54:41+05:30",
   "plan_breakdown": {
     "growth_2 years": 14,
     "growth_3 years": 17,
     "growth_4 years": 1,
     "growth_5 years": 92,
     "growth_half_yearly": 39,
-    "growth_monthly": 320,
+    "growth_monthly": 323,
     "growth_quarterly": 13,
-    "growth_yearly": 2028
+    "growth_yearly": 2022
   },
   "settling": true,
   "steps": [
@@ -18,7 +18,7 @@
       "label": "Growth businesses",
       "source": "Ops roster sheet, brand tab \u2014 every row is a growth_* plan. Current count.",
       "unit": "businesses",
-      "value": 2524
+      "value": 2521
     },
     {
       "key": "with_app",
@@ -45,14 +45,14 @@
       },
       "source": "OneSignal Confirmed Delivery for a prod_dru_* push on 2026-08-27 (1164 were sent; the rest are not yet confirmed landed).",
       "unit": "businesses",
-      "value": 1022
+      "value": 1023
     },
     {
       "key": "tapped",
       "label": "Tapped a DRU",
       "source": "OneSignal \u2014 a prod_dru_* push clicked on 2026-08-27. Brand-level (converted > 0).",
       "unit": "businesses",
-      "value": 118
+      "value": 122
     },
     {
       "key": "opened",
