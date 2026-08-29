@@ -1,12 +1,12 @@
 {
   "days_covered": [
-    "2026-08-22",
     "2026-08-23",
     "2026-08-24",
     "2026-08-25",
     "2026-08-26",
     "2026-08-27",
-    "2026-08-28"
+    "2026-08-28",
+    "2026-08-29"
   ],
   "emails": {
     "06dinesh@gmail.com": [
@@ -528,6 +528,9 @@
     "akshaykale877@gmail.com": [
       "Cafe The Momos Hub"
     ],
+    "akshaykoli1000@gmail.com": [
+      "Crosaaintwala"
+    ],
     "akshaymax111@gmail.com": [
       "Beyond Burgerz"
     ],
@@ -632,6 +635,9 @@
     ],
     "ame.ranchioffice@gmail.com": [
       "Anardana"
+    ],
+    "ameyak@bnbventures.in": [
+      "Knockout Sports Bar"
     ],
     "amibafoodcourt@gmail.com": [
       "Amiba Food Lounge"
@@ -2325,7 +2331,8 @@
       "crush and crave"
     ],
     "cs@reelo.io": [
-      "Cs Reelo"
+      "Cs Reelo",
+      "Knockout Sports Bar"
     ],
     "cs@thegridbangalore.com": [
       "The Grid"
@@ -3657,6 +3664,9 @@
     "helpdesk@99pancakes.in": [
       "99 Pancakes"
     ],
+    "hely@ninis.co.in": [
+      "Ninis"
+    ],
     "hemant.mumbai@gmail.com": [
       "JK Burgers"
     ],
@@ -3923,7 +3933,8 @@
       "Indian Chicken Express"
     ],
     "indiaspizzaplanet1@gmail.com": [
-      "Indias Pizza Planet"
+      "Indias Pizza Planet",
+      "Indias Pizza Planet 1"
     ],
     "indiranagar@gmail.com": [
       "KailashParbat Indiranagar"
@@ -6789,6 +6800,9 @@
     "prabhat12345@gmail.com": [
       "MARIGOLD RESTAURANT"
     ],
+    "prabhatsinha.107@gmail.com": [
+      "Mr Mutton dil se desi"
+    ],
     "prabhjot1297@gmail.com": [
       "The Dream Creamery"
     ],
@@ -7808,7 +7822,8 @@
       "ELAHI LUXURY DINING"
     ],
     "saheb@airportcentrepoint.com": [
-      "ACP Express"
+      "ACP Express",
+      "AIRPORT CENTRE POINT"
     ],
     "sahibsareen@gmail.com": [
       "Kohli Dhaba"
@@ -7998,8 +8013,10 @@
       "Chawlas 2 Since 1960",
       "DVG BENNE DOSA",
       "Dum Handi Biryani",
+      "Honest",
       "Iscon Gathiya",
       "Kritunga Restaurant",
+      "Laidback Cafe",
       "Loyal World Market",
       "Mitti Cafe",
       "RCP Group",
@@ -9669,6 +9686,9 @@
     "uae2@mailsac.com": [
       "UAE"
     ],
+    "uday@indexstudio.net": [
+      "Papadams"
+    ],
     "uday@nitrogrill.com": [
       "Nitro Grill"
     ],
@@ -10246,5 +10266,5 @@
       "Zorko Gwalior"
     ]
   },
-  "generated_at": "2026-08-29T07:54:16+05:30"
+  "generated_at": "2026-08-30T03:25:18+05:30"
 }
