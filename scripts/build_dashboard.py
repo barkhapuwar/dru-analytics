@@ -464,11 +464,16 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;
 .viewnav button{font-family:inherit;font-size:12.5px;font-weight:600;cursor:pointer;
   border:none;background:none;color:var(--text-secondary);padding:7px 16px;border-radius:99px;
   transition:all .13s;white-space:nowrap}
-.viewnav button:hover{color:var(--f-ink)}
-.viewnav button.active{background:var(--f-solid-bg);color:var(--f-solid-fg)}
+/* nav accent follows the active tab: notification blue by default, funnel green */
+:root{--nav-solid-bg:var(--brand-solid-bg); --nav-solid-fg:var(--brand-solid-fg);
+  --nav-ink:var(--brand-ink); --nav-tint:var(--brand-tint); --nav-tint-border:var(--brand-tint-border);}
+:root[data-view="funnel"]{--nav-solid-bg:var(--f-solid-bg); --nav-solid-fg:var(--f-solid-fg);
+  --nav-ink:var(--f-ink); --nav-tint:var(--f-tint); --nav-tint-border:var(--f-tint-border);}
+.viewnav button:hover{color:var(--nav-ink)}
+.viewnav button.active{background:var(--nav-solid-bg);color:var(--nav-solid-fg)}
 .topbar .theme-btn{position:static;margin-left:auto;background:var(--surface-1);
   border:1px solid var(--border);color:var(--text-secondary)}
-.topbar .theme-btn:hover{background:var(--f-tint);color:var(--f-ink);border-color:var(--f-tint-border)}
+.topbar .theme-btn:hover{background:var(--nav-tint);color:var(--nav-ink);border-color:var(--nav-tint-border)}
 .view.hidden{display:none}
 
 /* ═══ Growth-adoption funnel — pastel palette, scoped to this view ════════ */
@@ -524,6 +529,15 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;
 .hero-funnel .window-chip{display:inline-flex;align-items:center;gap:6px;margin-top:10px;
   font-size:12px;font-weight:600;color:#fff;background:rgba(255,255,255,.16);
   border:1px solid rgba(255,255,255,.22);border-radius:99px;padding:4px 12px}
+.daynav{display:flex;align-items:center;gap:8px;margin-top:14px}
+.daynav span{font-size:13px;font-weight:700;color:#fff;font-variant-numeric:tabular-nums;
+  min-width:96px;text-align:center}
+.daynav button{font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;color:#fff;
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.24);border-radius:8px;
+  width:30px;height:30px;line-height:1;display:inline-flex;align-items:center;justify-content:center}
+.daynav button#fnlLatest{width:auto;padding:0 12px;font-size:12px;margin-left:4px}
+.daynav button:hover:not(:disabled){background:rgba(255,255,255,.28)}
+.daynav button:disabled{opacity:.35;cursor:default}
 
 /* funnel step list */
 .fnl-steps{display:flex;flex-direction:column;gap:0}
@@ -1532,28 +1546,23 @@ FUNNEL_VIEW = (
     '    <div class="hero-head">\n'
     "      <h1>Growth &rarr; DRU adoption funnel</h1>\n"
     '      <div class="sub" id="fnlSub"></div>\n'
-    '      <div class="window-chip" id="fnlWindow"></div>\n'
+    '      <div class="daynav">\n'
+    '        <button id="fnlPrev" type="button" aria-label="previous day">&lsaquo;</button>\n'
+    '        <span id="fnlDay"></span>\n'
+    '        <button id="fnlNext" type="button" aria-label="next day">&rsaquo;</button>\n'
+    '        <button id="fnlLatest" type="button">Latest</button>\n'
+    "      </div>\n"
     "    </div>\n"
-    '    <div class="hero-card fnl-kpis" id="fnlKpis"></div>\n'
     "  </div>\n"
     '  <div id="fnlBanners"></div>\n'
     '  <div class="card">\n'
     '    <div class="card-head"><div>\n'
     '      <h2>The funnel <span class="help" id="fnlHelp">i</span></h2>\n'
     '      <div class="desc">Where Growth businesses get to on the path from having the app to '
-    "reading their Daily Round-up, for a single day. Stages 4&ndash;6 are that day&rsquo;s activity; "
+    "reading their Daily Round-up, for the selected day. Stages 4&ndash;6 are that day&rsquo;s activity; "
     "stages 1&ndash;3 are current counts.</div>\n"
     "    </div></div>\n"
     '    <div class="fnl-steps" id="fnlSteps"></div>\n'
-    "  </div>\n"
-    '  <div class="card">\n'
-    '    <div class="card-head"><div>\n'
-    "      <h2>Daily trend</h2>\n"
-    '      <div class="desc">Each DRU milestone, one point per day. No backfill &mdash; this starts '
-    "the day tracking began and grows going forward.</div>\n"
-    "    </div></div>\n"
-    '    <div id="fnlTrend"></div>\n'
-    '    <div class="leg-row" id="fnlTrendLeg" style="margin-top:12px"></div>\n'
     "  </div>\n"
     '  <div class="card">\n'
     '    <div class="card-head"><div>\n'
@@ -1576,6 +1585,7 @@ FUNNEL_VIEW = (
 JS_FUNNEL = r"""
 const FN=DATA.funnel||{snapshots:[],latest:null};
 const FSNAPS=FN.snapshots||[];
+let fIdx=FSNAPS.length-1;   // which snapshot day is shown
 
 function dropClass(pct){return pct>=70?'ok':pct>=45?'warn':'bad';}
 
@@ -1652,53 +1662,6 @@ function renderFunnelSteps(snap){
   });
 }
 
-function renderFunnelKpis(snap){
-  const m={};(snap.steps||[]).forEach(s=>m[s.key]=s);
-  const host=$('#fnlKpis');host.innerHTML='';
-  const g=(m.growth&&m.growth.value)||0;
-  const pctOf=s=>(g&&s)?(s.value/g*100).toFixed(0)+'% of Growth':'';
-  [['Growth businesses',m.growth,''],
-   ['Have the app',m.with_app,pctOf(m.with_app)],
-   ['Received a DRU',m.received,pctOf(m.received)],
-   ['Opened the DRU screen',m.opened,pctOf(m.opened)]].forEach(([label,s,note])=>{
-    const k=document.createElement('div');k.className='kpi';
-    const l=document.createElement('div');l.className='label';l.textContent=label;
-    const vr=document.createElement('div');vr.className='value-row';
-    const v=document.createElement('span');v.className='value';v.textContent=s?fmt(s.value):'—';
-    vr.appendChild(v);
-    const n=document.createElement('div');n.className='note';n.textContent=note||'';
-    k.append(l,vr,n);host.appendChild(k);
-  });
-}
-
-// received is ~flat near the top every day and would squash the rest; the
-// engagement lines (tapped, opened) are what move.
-const FTREND=[
-  {key:'tapped',label:'Tapped a DRU',color:'var(--f-1)'},
-  {key:'opened',label:'Opened DRU screen',color:'var(--f-3)'},
-];
-function renderFunnelTrend(){
-  const dates=FSNAPS.map(s=>s.date);
-  const series=FTREND.map(t=>({
-    key:t.key,label:t.label,color:t.color,hidden:false,
-    values:FSNAPS.map(s=>{const st=(s.steps||[]).find(x=>x.key===t.key);return st?st.value:0;}),
-  }));
-  multiLineChart($('#fnlTrend'),dates,series,{h:250});
-  const leg=$('#fnlTrendLeg');leg.innerHTML='';
-  FTREND.forEach(t=>{
-    const c=document.createElement('span');c.className='leg-chip';
-    const sw=document.createElement('span');sw.className='sw';sw.style.background=t.color;
-    const s=document.createElement('span');s.textContent=t.label;
-    c.append(sw,s);leg.appendChild(c);
-  });
-  const note=document.createElement('div');note.className='leg-note';note.style.marginTop='6px';
-  note.textContent=(FSNAPS.length<2
-    ? 'Only '+FSNAPS.length+' day tracked so far — one more point lands per day.'
-    : FSNAPS.length+' days, '+FSNAPS[0].date+' → '+FSNAPS[FSNAPS.length-1].date+'.')
-    +' The last few points keep rising as late clicks/events settle.';
-  leg.appendChild(note);
-}
-
 function renderFunnelTable(snap){
   const body=$('#fnlTableBody');body.innerHTML='';
   const base=(snap.steps[0]&&snap.steps[0].value)||0;
@@ -1713,68 +1676,74 @@ function renderFunnelTable(snap){
     if(s.unit==='users'||s.unit==='app users')pill.style.color='var(--f-3)';
     c3.appendChild(pill);
     const c4=document.createElement('td');
-    c4.style.cssText='max-width:360px;white-space:normal;color:var(--text-muted);font-size:11.5px';
+    c4.style.cssText='max-width:380px;white-space:normal;color:var(--text-muted);font-size:11.5px';
     c4.textContent=s.source;
     tr.append(c0,c1,c2,c3,c4);body.appendChild(tr);
   });
 }
 
 function renderFunnel(){
-  if(!FN.latest){
+  if(!FSNAPS.length){
     $('#fnlSub').textContent='No snapshots yet.';
     $('#fnlSteps').innerHTML='<div class="empty-note">Run scripts/fetch_funnel.py to write the first snapshot.</div>';
     return;
   }
-  const snap=FN.latest;
-  $('#fnlSub').textContent='For '+snap.date+' · '+FSNAPS.length+' day'+(FSNAPS.length===1?'':'s')+' tracked';
-  $('#fnlWindow').textContent='◷ stages 4–6 are that day only · 1–3 are current counts';
+  fIdx=Math.max(0,Math.min(FSNAPS.length-1,fIdx));
+  const snap=FSNAPS[fIdx];
+  $('#fnlDay').textContent=snap.date;
+  $('#fnlPrev').disabled=fIdx<=0;
+  $('#fnlNext').disabled=fIdx>=FSNAPS.length-1;
+  $('#fnlLatest').disabled=fIdx>=FSNAPS.length-1;
+  $('#fnlSub').textContent='Tracking since '+FSNAPS[0].date+' · '+FSNAPS.length+' day'+(FSNAPS.length===1?'':'s')+' · no backfill';
+
   const bn=$('#fnlBanners');bn.innerHTML='';
   if(snap.settling){
     const b=document.createElement('div');b.className='banner';
     const dot=document.createElement('span');dot.className='dot';
     const m=document.createElement('div');
     m.innerHTML='<b>'+snap.date+' is still settling.</b> Late clicks and Amplitude events '+
-      'keep arriving for a few days — the tap and open counts here will rise. The job re-writes '+
-      'the last 5 days each run.';
+      'keep arriving for a few days, so the Tapped and Opened counts here will still rise.';
     b.append(dot,m);bn.appendChild(b);
   }
-  renderFunnelKpis(snap);
   renderFunnelSteps(snap);
-  renderFunnelTrend();
   renderFunnelTable(snap);
-  $('#fnlFoot').innerHTML='Growth roster from the ops sheet; app-installed and notification state from OneSignal; '+
-    'DRU delivery/clicks from OneSignal; DRU-screen opens from Amplitude. '+
-    'Stages 4–6 are the activity for <b>'+snap.date+'</b> alone — "Opened the DRU screen" matches Amplitude’s '+
-    'own daily DailyRoundupStoryView count (plan=growth). Stages 1–3 are current counts (they can’t be rebuilt for a past day). '+
-    'The last few days keep ticking up as late clicks and events arrive. '+
-    'Stages 1–5 count <b>businesses</b>; stage 6 counts <b>users</b>. '+
+  $('#fnlFoot').innerHTML='Stages 4–6 are the activity for <b>'+snap.date+'</b> alone; stages 1–3 are current counts '+
+    '(they can’t be rebuilt for a past day). Stages 1–5 count <b>businesses</b>, stage 6 counts <b>users</b>. '+
     'Not a strict funnel — a business can open DRU in-app without a push, so step 6 can exceed step 5. '+
-    'No backfill: tracking started '+ (FSNAPS[0]?FSNAPS[0].date:snap.date) +'.';
+    'No backfill: tracking started '+FSNAPS[0].date+'.';
 }
+
+function fGo(delta){fIdx+=delta;renderFunnel();hideTip();}
+$('#fnlPrev').addEventListener('click',()=>fGo(-1));
+$('#fnlNext').addEventListener('click',()=>fGo(1));
+$('#fnlLatest').addEventListener('click',()=>{fIdx=FSNAPS.length-1;renderFunnel();hideTip();});
 
 const fnlHelp=$('#fnlHelp');
 if(fnlHelp){
   fnlHelp.addEventListener('mouseenter',e=>showTip(e,'Reading this funnel',[
     'Bar length = share of all Growth businesses.',
     'The tag between two steps = the second as a % of the first.',
-    'Stages 4–6 are that one day; stages 1–3 are current counts.',
-    'Recent days are still settling — late clicks/events keep arriving.',
+    'Stages 4–6 are the selected day; stages 1–3 are current counts.',
+    'Use ‹ › to step back through the days we have tracked.',
     'Not strictly nested — see the note at the bottom.']));
   fnlHelp.addEventListener('mousemove',moveTip);
   fnlHelp.addEventListener('mouseleave',hideTip);
 }
 
+function setActiveView(v){
+  document.documentElement.setAttribute('data-view',v);
+  document.querySelectorAll('.viewnav button').forEach(x=>x.classList.toggle('active',x.dataset.view===v));
+  $('#view-notif').classList.toggle('hidden',v!=='notif');
+  $('#view-funnel').classList.toggle('hidden',v!=='funnel');
+  hideTip();
+  if(v==='funnel')renderFunnel();
+  else{renderSigRank();renderChart();}
+}
 document.querySelectorAll('.viewnav button').forEach(b=>{
-  b.addEventListener('click',()=>{
-    const v=b.dataset.view;
-    document.querySelectorAll('.viewnav button').forEach(x=>x.classList.toggle('active',x===b));
-    $('#view-notif').classList.toggle('hidden',v!=='notif');
-    $('#view-funnel').classList.toggle('hidden',v!=='funnel');
-    hideTip();
-    if(v==='funnel')renderFunnel();
-    else{renderSigRank();renderChart();}
-  });
+  b.addEventListener('click',()=>setActiveView(b.dataset.view));
 });
+setActiveView('notif');
+
 addEventListener('resize',()=>{clearTimeout(window._frt);
   window._frt=setTimeout(()=>{if(!$('#view-funnel').classList.contains('hidden'))renderFunnel();},160);});
 btn.addEventListener('click',()=>{

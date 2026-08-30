@@ -80,7 +80,7 @@ that don't share an identity key yet:
 | Have the app | OneSignal — a Growth contact id with an iOS/Android push subscription on record (`scripts/fetch_funnel.py`) |
 | Notifications enabled | OneSignal subscription CSV export |
 | Received / Tapped a DRU | `data/raw/*.json` (already fetched) |
-| Opened the DRU screen | Amplitude, `DailyRoundupStoryView`, `plan = growth` (`scripts/fetch_amplitude_funnel.py`) |
+| Opened the DRU screen | Amplitude, `DailyRoundupStoryView`, `plan = growth`, all platforms |
 
 `scripts/fetch_funnel.py` writes one dated file per day to
 `data/funnel/YYYY-MM-DD.json`, each covering **that single day**:
@@ -91,7 +91,10 @@ that don't share an identity key yet:
 - Stages 1–3 (roster, have-app, notifications on) are **current** counts — they
   can't be rebuilt for a past day, but barely move day to day.
 - The last `RESETTLE_DAYS` (5) files are re-written each run so late clicks and
-  events settle. **No backfill** — the trend starts the day the job first ran.
+  events settle. **No backfill** — tracking starts the day the job first ran.
+
+The dashboard tab shows the funnel for one day plus the source table; a
+`‹ date ›` control steps back through every day tracked.
 
 Needs `AMPLITUDE_API_KEY`, `AMPLITUDE_SECRET_KEY`, `ONESIGNAL_APP_ID`,
 `ONESIGNAL_API_KEY` in the env.
