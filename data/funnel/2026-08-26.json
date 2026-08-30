@@ -1,38 +1,38 @@
 {
   "date": "2026-08-26",
-  "generated_at": "2026-08-30T03:25:47+05:30",
+  "generated_at": "2026-08-31T03:33:40+05:30",
   "plan_breakdown": {
     "growth_2 years": 14,
     "growth_3 years": 17,
     "growth_4 years": 1,
     "growth_5 years": 92,
     "growth_half_yearly": 39,
-    "growth_monthly": 321,
+    "growth_monthly": 323,
     "growth_quarterly": 13,
-    "growth_yearly": 2015
+    "growth_yearly": 2011
   },
-  "settling": true,
+  "settling": false,
   "steps": [
     {
       "key": "growth",
       "label": "Growth businesses",
       "source": "Ops roster sheet, brand tab \u2014 every row is a growth_* plan. Current count.",
       "unit": "businesses",
-      "value": 2512
+      "value": 2510
     },
     {
       "key": "with_app",
       "label": "Have the app",
       "source": "OneSignal \u2014 distinct Growth businesses with an iOS/Android push subscription on record. Current state, no per-day history.",
       "unit": "businesses",
-      "value": 2011
+      "value": 2014
     },
     {
       "key": "notif_on",
       "label": "Notifications enabled",
       "source": "OneSignal \u2014 of those, businesses whose push subscription is not disabled. Current state.",
       "unit": "businesses",
-      "value": 1656
+      "value": 1661
     },
     {
       "key": "received",

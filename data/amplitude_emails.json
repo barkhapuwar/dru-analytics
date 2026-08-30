@@ -1,12 +1,12 @@
 {
   "days_covered": [
-    "2026-08-23",
     "2026-08-24",
     "2026-08-25",
     "2026-08-26",
     "2026-08-27",
     "2026-08-28",
-    "2026-08-29"
+    "2026-08-29",
+    "2026-08-30"
   ],
   "emails": {
     "06dinesh@gmail.com": [
@@ -3114,6 +3114,12 @@
     "founder.lilac@gmail.com": [
       "Lilac and Crust"
     ],
+    "founder@zoaindia.com": [
+      "ZOA"
+    ],
+    "fourfortuneshospitality@gmail.com": [
+      "The Cloud Deck"
+    ],
     "foursparksmys@gmail.com": [
       "PizzaYolo"
     ],
@@ -4629,6 +4635,9 @@
     "karan77biz@gmail.com": [
       "The Burger Company"
     ],
+    "karan@foodbazar.com": [
+      "Food Bazar"
+    ],
     "karandevnani811@gmail.com": [
       "Sukoon The Cafe"
     ],
@@ -4913,6 +4922,9 @@
     ],
     "koolronak777@gmail.com": [
       "Kailash Parbat"
+    ],
+    "koseshaofficial@gmail.com": [
+      "Stories"
     ],
     "kostabhi5@gmail.com": [
       "Sharma footwear"
@@ -6560,6 +6572,9 @@
     ],
     "palak@adhiraandappa.in": [
       "Adhira and Appa"
+    ],
+    "palashdas@satyendrasattoo.in": [
+      "Kitchen Sutra"
     ],
     "palashthejungleresort@gmail.com": [
       "Aangan Restaurant",
@@ -10266,5 +10281,5 @@
       "Zorko Gwalior"
     ]
   },
-  "generated_at": "2026-08-30T03:25:18+05:30"
+  "generated_at": "2026-08-31T03:33:10+05:30"
 }
