@@ -79,7 +79,7 @@ def load_brand_names():
 
 def load_funnel():
     """All data/funnel/*.json snapshots, oldest first. Each is one day's
-    Growth -> DRU funnel; stages 4-6 are that day, 1-3 are current state.
+    Growth -> DRU funnel; stages 4-6 are that day; 1-3 are logged per day and frozen.
     No backfill — the history starts whenever scripts/fetch_funnel.py first
     ran. `opened_ids` (Amplitude ids that opened the DRU screen that day) are
     remapped to opaque 0..N indices here so the tab can de-duplicate the
@@ -1580,7 +1580,7 @@ FUNNEL_VIEW = (
     '      <h2>The funnel <span class="help" id="fnlHelp">i</span></h2>\n'
     '      <div class="desc">Where Growth businesses get to on the path from having the app to '
     "reading their Daily Round-up, for the selected period. Stages 4&ndash;6 count businesses / users "
-    "that reached that stage; stages 1&ndash;3 are current counts.</div>\n"
+    "that reached that stage; stages 1&ndash;3 are logged per day and frozen (no live re-count).</div>\n"
     "    </div></div>\n"
     '    <div class="fnl-steps" id="fnlSteps"></div>\n'
     "  </div>\n"
@@ -1724,10 +1724,11 @@ function funnelForWindow(){
   const wd=fWindowDates();
   const one=fStart===fEnd;
   const label=one?fStart:(fStart+' → '+fEnd);
-  // stages 1-3: current state, from the newest snapshot in (or before) the window
+  // stages 1-3: the frozen daily-logged state from the newest snapshot in the window
   let base=FSNAPS[FSNAPS.length-1];
   for(let i=FSNAPS.length-1;i>=0;i--){ if(FSNAPS[i].date<=fEnd){base=FSNAPS[i];break;} }
   const cur={};(base.steps||[]).forEach(s=>cur[s.key]=s);
+  const stAsOf=(base.state&&base.state.captured)||base.date;
 
   const deliv=new Set(),conf=new Set(),tap=new Set();
   wd.forEach(d=>{const r=FDRU.get(d);if(r){r.deliv.forEach(x=>deliv.add(x));r.conf.forEach(x=>conf.add(x));r.tap.forEach(x=>tap.add(x));}});
@@ -1735,7 +1736,7 @@ function funnelForWindow(){
   wd.forEach(d=>(FOPEN[d]||[]).forEach(x=>opened.add(x)));
 
   const per=one?'on '+label:'at least once in '+label;
-  return {date:label,one:one,
+  return {date:label,one:one,stAsOf:stAsOf,
     settling:wd.some(d=>FSETTLING.has(d)),
     steps:[
       {...cur.growth},
@@ -1781,8 +1782,9 @@ function renderFunnel(){
   renderFunnelSteps(snap);
   renderFunnelTable(snap);
   $('#fnlFoot').innerHTML='Stages 4–6 are '+(snap.one?'the activity for <b>'+snap.date+'</b>':
-    '<b>distinct</b> businesses / users over <b>'+snap.date+'</b>')+'; stages 1–3 are current counts '+
-    '(they can’t be rebuilt for a past day). Stages 1–5 count <b>businesses</b>; “Total DRU users” counts <b>users</b>. '+
+    '<b>distinct</b> businesses / users over <b>'+snap.date+'</b>')+'. '+
+    'Stages 1–3 have no per-day source, so each day&rsquo;s count is <b>logged the first time that day is written and frozen</b> '+
+    '&mdash; shown here as of <b>'+snap.stAsOf+'</b>. Stages 1–5 count <b>businesses</b>; “Total DRU users” counts <b>users</b>. '+
     '“Total DRU users” = tapped the push <i>or</i> opened DRU in the app, so it can exceed “Tapped the notification”. '+
     '“Delivered” is OneSignal’s Delivered metric; the chip under it is Confirmed Delivery, which OneSignal’s docs note undercounts. '+
     'No backfill: tracking started '+FMIN+'.';
@@ -1815,7 +1817,7 @@ if(fnlHelp){
     'Bar length = share of all Growth businesses.',
     'The tag between two steps = the second as a % of the first.',
     'For a range, stages 4–6 count businesses/users that hit that stage at least once.',
-    'Stages 1–3 are current counts. No backfill — pick any day since '+FMIN+'.',
+    'Stages 1–3 are logged the day each snapshot is first written, then frozen. No backfill — pick any day since '+FMIN+'.',
     'Not strictly nested — see the note at the bottom.']));
   fnlHelp.addEventListener('mousemove',moveTip);
   fnlHelp.addEventListener('mouseleave',hideTip);

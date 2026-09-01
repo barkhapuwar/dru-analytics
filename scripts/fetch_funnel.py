@@ -286,23 +286,53 @@ def main():
     existing = {d for d in all_days if os.path.exists(os.path.join(OUT_DIR, f"{d}.json"))}
     to_do = sorted(existing | resettle) or [latest]
 
+    def _load_snap(day):
+        try:
+            return json.load(open(os.path.join(OUT_DIR, f"{day}.json")))
+        except Exception:  # noqa: BLE001
+            return None
+
     # opened_ids: an Amplitude export per day (~10s). Only fetch it for days in
     # the resettle window (still settling) or days whose snapshot has none yet;
     # otherwise reuse what's on disk so the daily run stays fast.
     def cached_opened_ids(day):
-        try:
-            return json.load(open(os.path.join(OUT_DIR, f"{day}.json"))).get("opened_ids")
-        except Exception:  # noqa: BLE001
+        s = _load_snap(day)
+        return s.get("opened_ids") if s else None
+
+    # Stages 1-3 (roster, have-app, notifications-on) are current-state readings
+    # with no per-day history in any source. We freeze them the first time a
+    # day's snapshot is written and never touch them again — so a day you look
+    # at next week still shows what those counts were around that day, not
+    # today's numbers.
+    def frozen_state(day):
+        s = _load_snap(day)
+        if not s:
             return None
+        st = s.get("state")
+        if st and all(k in st for k in ("growth", "with_app", "notif_on")):
+            return st
+        v = {x["key"]: x["value"] for x in s.get("steps", [])
+             if x["key"] in ("growth", "with_app", "notif_on")}
+        if len(v) == 3:
+            v["captured"] = (s.get("generated_at") or "")[:10] or day
+            return v
+        return None
 
     log(f"processing {len(to_do)} snapshot(s): {to_do[0]} .. {to_do[-1]}")
 
-    log("current-state stages (1-3)")
-    brand_count, plans, contact_to_brand = fetch_growth_roster()
-    growth_contacts = set(contact_to_brand) | all_time_dru_recipients()
-    rows = onesignal_rows()
-    has_app, notif_on = growth_app_and_enabled(rows, contact_to_brand, growth_contacts)
-    log(f"   growth {brand_count} · have app {has_app} · notifications on {notif_on}")
+    # Only read the (expensive) current state if at least one day still needs it.
+    today = datetime.datetime.now(IST).date().isoformat()
+    need_state = [d for d in to_do if frozen_state(d) is None]
+    live = None
+    if need_state:
+        log(f"reading current state for {len(need_state)} new day(s)")
+        brand_count, plans, contact_to_brand = fetch_growth_roster()
+        growth_contacts = set(contact_to_brand) | all_time_dru_recipients()
+        rows = onesignal_rows()
+        has_app, notif_on = growth_app_and_enabled(rows, contact_to_brand, growth_contacts)
+        live = {"growth": brand_count, "with_app": has_app, "notif_on": notif_on,
+                "captured": today, "plans": plans}
+        log(f"   growth {brand_count} · have app {has_app} · notifications on {notif_on}")
 
     os.makedirs(OUT_DIR, exist_ok=True)
     settling = set(all_days[-4:])  # last ~4 days keep rising as late data lands
@@ -315,24 +345,32 @@ def main():
         else:
             opened_ids = cached
         opened = len(opened_ids)
+
+        st = frozen_state(day) or live
+        prev = _load_snap(day) or {}
+        plans = st.get("plans") or prev.get("plan_breakdown") or {}
+        cap = st.get("captured", day)
+        st_note = (f"as of {cap}" if cap == day else f"logged {cap}")
+
         log(f"  {day}  delivered {delivered} · confirmed {confirmed} · tapped {tapped} · DRU users {opened}")
         snapshot = {
             "date": day,
             "generated_at": gen,
             "settling": day in settling,
             "opened_ids": opened_ids,
+            "state": {k: st[k] for k in ("growth", "with_app", "notif_on", "captured")},
             "steps": [
                 {"key": "growth", "label": "Growth businesses", "unit": "businesses",
-                 "value": brand_count,
-                 "source": "Ops roster sheet, brand tab — every row is a growth_* plan. Current count."},
+                 "value": st["growth"],
+                 "source": f"Ops roster sheet, brand tab — every row is a growth_* plan ({st_note})."},
                 {"key": "with_app", "label": "Have the app", "unit": "businesses",
-                 "value": has_app,
-                 "source": "OneSignal — distinct Growth businesses with an iOS/Android push "
-                           "subscription on record. Current state, no per-day history."},
+                 "value": st["with_app"],
+                 "source": f"OneSignal — distinct Growth businesses with an iOS/Android push "
+                           f"subscription on record ({st_note}; frozen once written, not a live count)."},
                 {"key": "notif_on", "label": "Notifications enabled", "unit": "businesses",
-                 "value": notif_on,
-                 "source": "OneSignal — of those, businesses whose push subscription is not "
-                           "disabled. Current state."},
+                 "value": st["notif_on"],
+                 "source": f"OneSignal — of those, businesses whose push subscription is not "
+                           f"disabled ({st_note}; frozen once written)."},
                 {"key": "delivered", "label": "Delivered a DRU", "unit": "businesses",
                  "value": delivered,
                  "source": f"OneSignal — the DRU push was delivered (accepted by APNs / FCM) "

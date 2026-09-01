@@ -89,8 +89,11 @@ that don't share an identity key yet:
 - Stages 4–6 (received / tapped / opened DRU) = that day's activity. "Opened the
   DRU screen" is Amplitude `DailyRoundupStoryView`, `plan = growth`, all
   platforms — so it reconciles directly against Amplitude's own daily number.
-- Stages 1–3 (roster, have-app, notifications on) are **current** counts — they
-  can't be rebuilt for a past day, but barely move day to day.
+- Stages 1–3 (roster, have-app, notifications on) have no per-day source, so
+  each day's count is **logged the first time that day's snapshot is written
+  and then frozen** (stored in the snapshot's `state` block with a `captured`
+  date). Looking at a past day next week still shows what those counts were
+  around that day, not today's numbers.
 - The last `RESETTLE_DAYS` (5) files are re-written each run so late clicks and
   events settle. Each snapshot also stores `opened_ids` (the Amplitude ids that
   opened the DRU screen that day) so the dashboard can de-duplicate stage 6 over
