@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 """
 Dated snapshots of the Growth -> DRU adoption funnel, one file per day in
-data/funnel/YYYY-MM-DD.json, each covering that single day. No backfill: the
-trend starts the day this first runs. The last few days are re-written each
-run so late-arriving clicks / events settle.
+data/funnel/YYYY-MM-DD.json. No backfill: tracking starts the day this first
+runs. The last few days are re-written each run so late-arriving clicks /
+events settle; each snapshot also carries `opened_ids` (the Amplitude ids
+that opened the DRU screen that day) so the dashboard can de-duplicate the
+"Opened the DRU screen" stage across any selected date range.
 
   1. Growth businesses     ops Google Sheet (brand tab) — current roster
   2. Have the app          OneSignal — Growth contact with an iOS/Android push sub
@@ -34,6 +36,7 @@ import time
 import urllib.error
 import urllib.parse
 import urllib.request
+import zipfile
 
 IST = datetime.timezone(datetime.timedelta(hours=5, minutes=30))
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -48,7 +51,6 @@ BRAND_GID = os.environ.get("BRAND_BRAND_GID", "1306646119")
 RESETTLE_DAYS = 5  # re-write this many trailing days each run (late clicks/events)
 HEX24 = re.compile(r"^[0-9a-f]{24}$")
 APP_DEVICE_TYPES = {"0", "1"}  # OneSignal device_type: 0 iOS, 1 Android
-MOBILE_PLATFORMS = ["mobile-app-ios", "mobile-app-android"]
 
 
 def log(msg):
@@ -185,35 +187,71 @@ def dru_one_day(notifs):
     return len(sent), len(received), len(tapped)
 
 
-# ── 6. Amplitude (one-day unique users) ────────────────────────────────────
-def amp_uniques(event, start, end, *, platforms=None):
-    api_key = os.environ["AMPLITUDE_API_KEY"]
-    secret = os.environ["AMPLITUDE_SECRET_KEY"]
-    auth = base64.b64encode(f"{api_key}:{secret}".encode()).decode()
-    e = {"event_type": event}
-    if platforms:
-        e["filters"] = [{"subprop_type": "event", "subprop_key": "platform",
-                         "subprop_op": "is", "subprop_value": platforms}]
-    params = {
-        "e": json.dumps(e), "m": "uniques", "i": "1",
-        "start": start.strftime("%Y%m%d"), "end": end.strftime("%Y%m%d"),
-        "s": json.dumps([{"prop": "gp:plan", "op": "is", "values": ["growth"]}]),
-    }
-    url = f"{AMP_REGION}/api/2/events/segmentation?{urllib.parse.urlencode(params)}"
+# ── 6. Amplitude — DRU-open user ids per day (Export API) ───────────────────
+# The dashboard needs the actual id set, not just a count, so it can
+# de-duplicate "opened the DRU screen" across a selected date range the same
+# way the notification tab de-duplicates brands. len(set) == Amplitude's own
+# daily unique-user number for that day.
+def _amp_auth():
+    return base64.b64encode(
+        f"{os.environ['AMPLITUDE_API_KEY']}:{os.environ['AMPLITUDE_SECRET_KEY']}".encode()
+    ).decode()
+
+
+def _amp_export_chunk(auth, start, end):
+    url = f"{AMP_REGION}/api/2/export?" + urllib.parse.urlencode({"start": start, "end": end})
     delay = 5
     for _ in range(4):
         try:
             req = urllib.request.Request(url, headers={"Authorization": f"Basic {auth}"})
-            with urllib.request.urlopen(req, timeout=180) as resp:
-                d = json.load(resp)
-            collapsed = d.get("data", {}).get("seriesCollapsed") or [[{"value": 0}]]
-            return int(collapsed[0][0].get("value", 0))
+            with urllib.request.urlopen(req, timeout=300) as resp:
+                data = resp.read()
+            out = []
+            zf = zipfile.ZipFile(io.BytesIO(data))
+            for name in zf.namelist():
+                with zf.open(name) as f, gzip.open(f, "rt", encoding="utf-8") as gz:
+                    for line in gz:
+                        line = line.strip()
+                        if line:
+                            try:
+                                out.append(json.loads(line))
+                            except json.JSONDecodeError:
+                                pass
+            return out
         except urllib.error.HTTPError as ex:
-            if ex.code < 500:
-                sys.exit(f"amplitude HTTP {ex.code}: {ex.read()[:300]}")
+            if ex.code == 404:
+                return []
             time.sleep(delay)
             delay = min(delay * 2, 60)
-    sys.exit("amplitude: gave up after retries")
+        except Exception:  # noqa: BLE001
+            time.sleep(delay)
+            delay = min(delay * 2, 60)
+    return []
+
+
+def dru_open_ids(day):
+    """Set of Amplitude ids that fired DailyRoundupStoryView on this IST day,
+    plan = growth, all platforms. IST = UTC+5:30."""
+    auth = _amp_auth()
+    prev = day - datetime.timedelta(days=1)
+    chunks = [
+        (prev.strftime("%Y%m%dT18"), prev.strftime("%Y%m%dT23")),
+        (day.strftime("%Y%m%dT00"), day.strftime("%Y%m%dT05")),
+        (day.strftime("%Y%m%dT06"), day.strftime("%Y%m%dT11")),
+        (day.strftime("%Y%m%dT12"), day.strftime("%Y%m%dT17")),
+    ]
+    ids = set()
+    for s, e in chunks:
+        for ev in _amp_export_chunk(auth, s, e):
+            if ev.get("event_type") != "DailyRoundupStoryView":
+                continue
+            plan = str((ev.get("user_properties") or {}).get("plan") or "").lower()
+            if not plan.startswith("growth"):
+                continue
+            uid = ev.get("amplitude_id") or ev.get("user_id")
+            if uid is not None:
+                ids.add(uid)
+    return sorted(ids)
 
 
 def main():
@@ -224,8 +262,31 @@ def main():
 
     gen = datetime.datetime.now(IST).isoformat(timespec="seconds")
     dru_days = load_dru_days()
-    recent = sorted(dru_days)[-RESETTLE_DAYS:]
-    log(f"snapshots for {recent[0]} .. {recent[-1]}  (re-writing {len(recent)} trailing days)")
+    all_days = sorted(dru_days)
+    latest = all_days[-1]
+
+    # Process a day if it is in the resettle window (always — covers brand-new
+    # days too) OR it already has a snapshot that is missing the per-user open
+    # ids (self-healing for snapshots written before that field existed).
+    # Never create a snapshot for a day older than tracking start: days with no
+    # snapshot and outside the resettle window are skipped, so there is no
+    # accidental backfill down the whole data/raw history.
+    resettle = set(all_days[-RESETTLE_DAYS:])
+    to_do = []
+    for day in all_days:
+        snap_path = os.path.join(OUT_DIR, f"{day}.json")
+        has_snap = os.path.exists(snap_path)
+        needs_ids = False
+        if has_snap:
+            try:
+                needs_ids = "opened_ids" not in json.load(open(snap_path))
+            except Exception:  # noqa: BLE001
+                needs_ids = True
+        if day in resettle or (has_snap and needs_ids):
+            to_do.append(day)
+    if not to_do:
+        to_do = [latest]
+    log(f"processing {len(to_do)} day(s): {to_do[0]} .. {to_do[-1]}")
 
     log("current-state stages (1-3)")
     brand_count, plans, contact_to_brand = fetch_growth_roster()
@@ -235,16 +296,18 @@ def main():
     log(f"   growth {brand_count} · have app {has_app} · notifications on {notif_on}")
 
     os.makedirs(OUT_DIR, exist_ok=True)
-    settling = set(recent[-4:])  # last ~4 days keep rising as late data lands
-    for day in recent:
+    settling = set(all_days[-4:])  # last ~4 days keep rising as late data lands
+    for day in to_do:
         d = datetime.date.fromisoformat(day)
         sent, received, tapped = dru_one_day(dru_days[day])
-        opened = amp_uniques("DailyRoundupStoryView", d, d, platforms=None)
+        opened_ids = dru_open_ids(d)
+        opened = len(opened_ids)
         log(f"  {day}  sent {sent} · received {received} · tapped {tapped} · opened DRU {opened}")
         snapshot = {
             "date": day,
             "generated_at": gen,
             "settling": day in settling,
+            "opened_ids": opened_ids,
             "steps": [
                 {"key": "growth", "label": "Growth businesses", "unit": "businesses",
                  "value": brand_count,
@@ -280,7 +343,7 @@ def main():
         with open(tmp, "w") as f:
             json.dump(snapshot, f, indent=2, sort_keys=True)
         os.replace(tmp, out)
-    log(f"wrote {len(recent)} snapshot(s) to {OUT_DIR}")
+    log(f"wrote {len(to_do)} snapshot(s) to {OUT_DIR}")
 
 
 if __name__ == "__main__":

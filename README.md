@@ -91,10 +91,16 @@ that don't share an identity key yet:
 - Stages 1–3 (roster, have-app, notifications on) are **current** counts — they
   can't be rebuilt for a past day, but barely move day to day.
 - The last `RESETTLE_DAYS` (5) files are re-written each run so late clicks and
-  events settle. **No backfill** — tracking starts the day the job first ran.
+  events settle. Each snapshot also stores `opened_ids` (the Amplitude ids that
+  opened the DRU screen that day) so the dashboard can de-duplicate stage 6 over
+  a date range. **No backfill** — tracking starts the day the job first ran;
+  days before the first snapshot are never written.
 
-The dashboard tab shows the funnel for one day plus the source table; a
-`‹ date ›` control steps back through every day tracked.
+The funnel tab has the same filter bar as the notification tab (This week /
+This month / Custom range / Single date). For a range, stages 4–6 count the
+distinct businesses / users that reached that stage at least once; for a single
+day, stage 6 matches Amplitude's own daily unique-user count. The tab shows the
+funnel plus the "How each number is measured" table — nothing else.
 
 Needs `AMPLITUDE_API_KEY`, `AMPLITUDE_SECRET_KEY`, `ONESIGNAL_APP_ID`,
 `ONESIGNAL_API_KEY` in the env.
