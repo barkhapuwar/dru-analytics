@@ -5,17 +5,20 @@ data/funnel/YYYY-MM-DD.json. No backfill: tracking starts the day this first
 runs. The last few days are re-written each run so late-arriving clicks /
 events settle; each snapshot also carries `opened_ids` (the Amplitude ids
 that opened the DRU screen that day) so the dashboard can de-duplicate the
-"Opened the DRU screen" stage across any selected date range.
+"Total DRU users" stage across any selected date range.
 
   1. Growth businesses     ops Google Sheet (brand tab) — current roster
   2. Have the app          OneSignal — Growth contact with an iOS/Android push sub
   3. Notifications enabled  OneSignal — of those, notifications not disabled
      (1-3 are current counts — they can't be reconstructed for a past day, but
       barely move day to day)
-  4. Received a DRU         data/raw/*.json — that day only
-  5. Tapped a DRU           data/raw/*.json — that day only
-  6. Opened the DRU screen  Amplitude — DailyRoundupStoryView, plan=growth,
-     all platforms, that day only  (matches Amplitude's own daily number)
+  4. Delivered a DRU        data/raw/*.json — `successful` (OneSignal's
+     Delivered metric); `received` / Confirmed Delivery kept as a secondary
+     floor since OneSignal's docs say it undercounts
+  5. Tapped the notification data/raw/*.json — the push was clicked
+  6. Total DRU users        Amplitude — DailyRoundupStoryView, plan=growth,
+     all platforms; everyone who viewed the DRU screen whether via push tap
+     or in-app (matches Amplitude's own daily number)
 
 Run:
     set -a && source .env && set +a
@@ -174,17 +177,26 @@ def load_dru_days():
 
 
 def dru_one_day(notifs):
-    sent, received, tapped = set(), set(), set()
+    """Distinct businesses for one day:
+      delivered — OneSignal marked the push delivered (`successful`), i.e. the
+                  push service (APNs / FCM) accepted it. This is OneSignal's
+                  "Delivered" metric.
+      confirmed — `received`, OneSignal's Confirmed Delivery (a device-side
+                  receipt). Their docs note it undercounts, so it's a floor.
+      tapped    — the push was clicked (`converted` > 0).
+    """
+    delivered, confirmed, tapped = set(), set(), set()
     for n in notifs:
         e = n.get("external_id")
         if not e:
             continue
-        sent.add(e)
+        if (n.get("successful") or 0) > 0:
+            delivered.add(e)
         if (n.get("received") or 0) > 0:
-            received.add(e)
+            confirmed.add(e)
         if n.get("clicked"):
             tapped.add(e)
-    return len(sent), len(received), len(tapped)
+    return len(delivered), len(confirmed), len(tapped)
 
 
 # ── 6. Amplitude — DRU-open user ids per day (Export API) ───────────────────
@@ -265,28 +277,25 @@ def main():
     all_days = sorted(dru_days)
     latest = all_days[-1]
 
-    # Process a day if it is in the resettle window (always — covers brand-new
-    # days too) OR it already has a snapshot that is missing the per-user open
-    # ids (self-healing for snapshots written before that field existed).
-    # Never create a snapshot for a day older than tracking start: days with no
-    # snapshot and outside the resettle window are skipped, so there is no
-    # accidental backfill down the whole data/raw history.
+    # Every day that already has a snapshot is re-written each run, so schema
+    # and stage labels stay consistent. New days enter only through the
+    # resettle window (the last RESETTLE_DAYS) — a day with no snapshot and
+    # outside that window is skipped, so there is no accidental backfill down
+    # the whole data/raw history.
     resettle = set(all_days[-RESETTLE_DAYS:])
-    to_do = []
-    for day in all_days:
-        snap_path = os.path.join(OUT_DIR, f"{day}.json")
-        has_snap = os.path.exists(snap_path)
-        needs_ids = False
-        if has_snap:
-            try:
-                needs_ids = "opened_ids" not in json.load(open(snap_path))
-            except Exception:  # noqa: BLE001
-                needs_ids = True
-        if day in resettle or (has_snap and needs_ids):
-            to_do.append(day)
-    if not to_do:
-        to_do = [latest]
-    log(f"processing {len(to_do)} day(s): {to_do[0]} .. {to_do[-1]}")
+    existing = {d for d in all_days if os.path.exists(os.path.join(OUT_DIR, f"{d}.json"))}
+    to_do = sorted(existing | resettle) or [latest]
+
+    # opened_ids: an Amplitude export per day (~10s). Only fetch it for days in
+    # the resettle window (still settling) or days whose snapshot has none yet;
+    # otherwise reuse what's on disk so the daily run stays fast.
+    def cached_opened_ids(day):
+        try:
+            return json.load(open(os.path.join(OUT_DIR, f"{day}.json"))).get("opened_ids")
+        except Exception:  # noqa: BLE001
+            return None
+
+    log(f"processing {len(to_do)} snapshot(s): {to_do[0]} .. {to_do[-1]}")
 
     log("current-state stages (1-3)")
     brand_count, plans, contact_to_brand = fetch_growth_roster()
@@ -299,10 +308,14 @@ def main():
     settling = set(all_days[-4:])  # last ~4 days keep rising as late data lands
     for day in to_do:
         d = datetime.date.fromisoformat(day)
-        sent, received, tapped = dru_one_day(dru_days[day])
-        opened_ids = dru_open_ids(d)
+        delivered, confirmed, tapped = dru_one_day(dru_days[day])
+        cached = cached_opened_ids(day)
+        if day in resettle or cached is None:
+            opened_ids = dru_open_ids(d)
+        else:
+            opened_ids = cached
         opened = len(opened_ids)
-        log(f"  {day}  sent {sent} · received {received} · tapped {tapped} · opened DRU {opened}")
+        log(f"  {day}  delivered {delivered} · confirmed {confirmed} · tapped {tapped} · DRU users {opened}")
         snapshot = {
             "date": day,
             "generated_at": gen,
@@ -320,21 +333,24 @@ def main():
                  "value": notif_on,
                  "source": "OneSignal — of those, businesses whose push subscription is not "
                            "disabled. Current state."},
-                {"key": "received", "label": "Received a DRU", "unit": "businesses",
-                 "value": received,
-                 "source": f"OneSignal Confirmed Delivery for a prod_dru_* push on {day} "
-                           f"({sent} were sent; the rest are not yet confirmed landed).",
-                 "secondary": {"label": f"sent a DRU on {day}", "value": sent,
+                {"key": "delivered", "label": "Delivered a DRU", "unit": "businesses",
+                 "value": delivered,
+                 "source": f"OneSignal — the DRU push was delivered (accepted by APNs / FCM) "
+                           f"on {day}. This is OneSignal's Delivered metric.",
+                 "secondary": {"label": f"confirmed on device {day}", "value": confirmed,
                                "unit": "businesses",
-                               "source": "OneSignal — a prod_dru_* push was queued and accepted "
-                                         "by the push service (delivery not necessarily confirmed)."}},
-                {"key": "tapped", "label": "Tapped a DRU", "unit": "businesses",
+                               "source": "OneSignal Confirmed Delivery — a device-side receipt. "
+                                         "OneSignal's docs note it undercounts (offline devices, "
+                                         "OS restrictions), so treat it as a floor."}},
+                {"key": "tapped", "label": "Tapped the notification", "unit": "businesses",
                  "value": tapped,
-                 "source": f"OneSignal — a prod_dru_* push clicked on {day}. Brand-level (converted > 0)."},
-                {"key": "opened", "label": "Opened the DRU screen", "unit": "users",
+                 "source": f"OneSignal — the DRU push was clicked on {day}. Brand-level (converted > 0)."},
+                {"key": "opened", "label": "Total DRU users", "unit": "users",
                  "value": opened,
-                 "source": f"Amplitude DailyRoundupStoryView, plan = growth, all platforms, {day}. "
-                           f"Matches Amplitude's own daily unique-user count."},
+                 "source": f"Amplitude — everyone who viewed the DRU screen on {day}, whether they "
+                           f"got there by tapping the push or opening it in the app "
+                           f"(DailyRoundupStoryView, plan = growth, all platforms). "
+                           f"Equals Amplitude's own daily unique-user count."},
             ],
             "plan_breakdown": plans,
         }

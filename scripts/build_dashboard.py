@@ -83,7 +83,7 @@ def load_funnel():
     No backfill — the history starts whenever scripts/fetch_funnel.py first
     ran. `opened_ids` (Amplitude ids that opened the DRU screen that day) are
     remapped to opaque 0..N indices here so the tab can de-duplicate the
-    "Opened the DRU screen" stage over any selected range without shipping a
+    "Total DRU users" stage over any selected range without shipping a
     real id. A missing dir just shows an empty-state on the tab."""
     snaps = []
     for f in sorted(glob.glob(os.path.join(FUNNEL_DIR, "*.json"))):
@@ -140,12 +140,14 @@ def load_all():
                 continue
             brand_set.add(b)
             signal_set.add(s)
-            # "received" is OneSignal's Confirmed Delivery (device-side receipt),
-            # distinct from "successful" (push service accepted it) - every row
-            # here is already a successful send, this just flags whether it's
-            # also confirmed to have actually landed on the device.
+            # "successful" = OneSignal's Delivered metric (push service accepted
+            # it). "received" = Confirmed Delivery (a device-side receipt);
+            # OneSignal's docs note it undercounts, so the funnel tab treats
+            # "delivered" (successful) as the real number and shows received
+            # only as a secondary floor.
             rows.append((date, b, s, 1 if n.get("clicked") else 0,
-                        1 if (n.get("received") or 0) > 0 else 0))
+                        1 if (n.get("received") or 0) > 0 else 0,
+                        1 if (n.get("successful") or 0) > 0 else 0))
 
     dates = sorted(set(dates))
     brands = sorted(brand_set)
@@ -155,7 +157,8 @@ def load_all():
     signal_idx = {s: i for i, s in enumerate(signals)}
 
     notifs = [
-        [date_idx[d], brand_idx[b], signal_idx[s], c, rv] for d, b, s, c, rv in rows
+        [date_idx[d], brand_idx[b], signal_idx[s], c, rv, sc]
+        for d, b, s, c, rv, sc in rows
     ]
 
     return {
@@ -890,8 +893,9 @@ function brandNameOf(eid){return D.brandNames[eid]||'';}
 function brandEmailOf(eid){return D.brandEmails[eid]||'';}
 
 // notifs -> plain objects once, indices resolved
-const NOTIFS=D.notifs.map(([di,bi,si,c,rv])=>({
-  date:D.dates[di],brand:D.brands[bi],signal:D.signals[si],clicked:!!c,received:!!rv}));
+const NOTIFS=D.notifs.map(([di,bi,si,c,rv,sc])=>({
+  date:D.dates[di],brand:D.brands[bi],signal:D.signals[si],
+  clicked:!!c,received:!!rv,delivered:sc===undefined?true:!!sc}));
 
 $('#sub').innerHTML='';
 $('#sub').append(txt('Data '+D.dates[0]+' to '+D.dates[D.dates.length-1]+' · generated '+D.generated));
@@ -1606,13 +1610,13 @@ const FDATES=FSNAPS.map(s=>s.date);              // tracked days, ascending
 const FMIN=FDATES[0], FANCHOR=FDATES[FDATES.length-1];
 const FSETTLING=new Set(FSNAPS.filter(s=>s.settling).map(s=>s.date));
 
-// DRU received / tapped / sent per day, brand-level, from the notif payload
-const FDRU=new Map();   // date -> {sent:Set, recv:Set, tap:Set}
+// DRU delivered / confirmed / tapped per day, brand-level, from the notif payload
+const FDRU=new Map();   // date -> {deliv:Set, conf:Set, tap:Set}
 NOTIFS.forEach(n=>{
   let r=FDRU.get(n.date);
-  if(!r){r={sent:new Set(),recv:new Set(),tap:new Set()};FDRU.set(n.date,r);}
-  r.sent.add(n.brand);
-  if(n.received)r.recv.add(n.brand);
+  if(!r){r={deliv:new Set(),conf:new Set(),tap:new Set()};FDRU.set(n.date,r);}
+  if(n.delivered)r.deliv.add(n.brand);
+  if(n.received)r.conf.add(n.brand);
   if(n.clicked)r.tap.add(n.brand);
 });
 
@@ -1725,8 +1729,8 @@ function funnelForWindow(){
   for(let i=FSNAPS.length-1;i>=0;i--){ if(FSNAPS[i].date<=fEnd){base=FSNAPS[i];break;} }
   const cur={};(base.steps||[]).forEach(s=>cur[s.key]=s);
 
-  const sent=new Set(),recv=new Set(),tap=new Set();
-  wd.forEach(d=>{const r=FDRU.get(d);if(r){r.sent.forEach(x=>sent.add(x));r.recv.forEach(x=>recv.add(x));r.tap.forEach(x=>tap.add(x));}});
+  const deliv=new Set(),conf=new Set(),tap=new Set();
+  wd.forEach(d=>{const r=FDRU.get(d);if(r){r.deliv.forEach(x=>deliv.add(x));r.conf.forEach(x=>conf.add(x));r.tap.forEach(x=>tap.add(x));}});
   const opened=new Set();
   wd.forEach(d=>(FOPEN[d]||[]).forEach(x=>opened.add(x)));
 
@@ -1737,15 +1741,18 @@ function funnelForWindow(){
       {...cur.growth},
       {...cur.with_app},
       {...cur.notif_on},
-      {key:'received',label:'Received a DRU',unit:'businesses',value:recv.size,
-       source:'OneSignal Confirmed Delivery for a prod_dru_* push '+per+' ('+fmt(sent.size)+' were sent).',
-       secondary:{label:'sent a DRU '+per,value:sent.size,unit:'businesses',
-         source:'OneSignal — a prod_dru_* push queued and accepted by the push service.'}},
-      {key:'tapped',label:'Tapped a DRU',unit:'businesses',value:tap.size,
-       source:'OneSignal — a prod_dru_* push clicked '+per+'. Brand-level (converted > 0).'},
-      {key:'opened',label:'Opened the DRU screen',unit:'users',value:opened.size,
-       source:'Amplitude DailyRoundupStoryView, plan = growth, all platforms, '+per+'. '
-         +(one?'Matches Amplitude’s own daily unique-user count.':'Distinct users across the range.')},
+      {key:'delivered',label:'Delivered a DRU',unit:'businesses',value:deliv.size,
+       source:'OneSignal — the DRU push was delivered (accepted by APNs / FCM) '+per+'. '
+         +'This is OneSignal’s Delivered metric.',
+       secondary:{label:'confirmed on device '+per,value:conf.size,unit:'businesses',
+         source:'OneSignal Confirmed Delivery — a device-side receipt. OneSignal’s docs note it '
+           +'undercounts (offline devices, OS restrictions), so treat it as a floor, not the true number.'}},
+      {key:'tapped',label:'Tapped the notification',unit:'businesses',value:tap.size,
+       source:'OneSignal — the DRU push was clicked '+per+'. Brand-level (converted > 0).'},
+      {key:'opened',label:'Total DRU users',unit:'users',value:opened.size,
+       source:'Amplitude — everyone who viewed the DRU screen '+per+', whether they got there by '
+         +'tapping the push or opening it in the app (DailyRoundupStoryView, plan = growth, all platforms). '
+         +(one?'Equals Amplitude’s own daily unique-user count.':'Distinct users across the range.')},
     ]};
 }
 
@@ -1775,8 +1782,9 @@ function renderFunnel(){
   renderFunnelTable(snap);
   $('#fnlFoot').innerHTML='Stages 4–6 are '+(snap.one?'the activity for <b>'+snap.date+'</b>':
     '<b>distinct</b> businesses / users over <b>'+snap.date+'</b>')+'; stages 1–3 are current counts '+
-    '(they can’t be rebuilt for a past day). Stages 1–5 count <b>businesses</b>, stage 6 counts <b>users</b>. '+
-    'Not a strict funnel — a business can open DRU in-app without a push, so step 6 can exceed step 5. '+
+    '(they can’t be rebuilt for a past day). Stages 1–5 count <b>businesses</b>; “Total DRU users” counts <b>users</b>. '+
+    '“Total DRU users” = tapped the push <i>or</i> opened DRU in the app, so it can exceed “Tapped the notification”. '+
+    '“Delivered” is OneSignal’s Delivered metric; the chip under it is Confirmed Delivery, which OneSignal’s docs note undercounts. '+
     'No backfill: tracking started '+FMIN+'.';
 }
 

@@ -1,6 +1,6 @@
 {
   "date": "2026-08-29",
-  "generated_at": "2026-09-01T11:53:55+05:30",
+  "generated_at": "2026-09-01T12:13:08+05:30",
   "opened_ids": [
     981668488598,
     981684298808,
@@ -195,39 +195,39 @@
       "label": "Have the app",
       "source": "OneSignal \u2014 distinct Growth businesses with an iOS/Android push subscription on record. Current state, no per-day history.",
       "unit": "businesses",
-      "value": 2022
+      "value": 2023
     },
     {
       "key": "notif_on",
       "label": "Notifications enabled",
       "source": "OneSignal \u2014 of those, businesses whose push subscription is not disabled. Current state.",
       "unit": "businesses",
-      "value": 1673
+      "value": 1674
     },
     {
-      "key": "received",
-      "label": "Received a DRU",
+      "key": "delivered",
+      "label": "Delivered a DRU",
       "secondary": {
-        "label": "sent a DRU on 2026-08-29",
-        "source": "OneSignal \u2014 a prod_dru_* push was queued and accepted by the push service (delivery not necessarily confirmed).",
+        "label": "confirmed on device 2026-08-29",
+        "source": "OneSignal Confirmed Delivery \u2014 a device-side receipt. OneSignal's docs note it undercounts (offline devices, OS restrictions), so treat it as a floor.",
         "unit": "businesses",
-        "value": 1143
+        "value": 1003
       },
-      "source": "OneSignal Confirmed Delivery for a prod_dru_* push on 2026-08-29 (1143 were sent; the rest are not yet confirmed landed).",
+      "source": "OneSignal \u2014 the DRU push was delivered (accepted by APNs / FCM) on 2026-08-29. This is OneSignal's Delivered metric.",
       "unit": "businesses",
-      "value": 1003
+      "value": 1141
     },
     {
       "key": "tapped",
-      "label": "Tapped a DRU",
-      "source": "OneSignal \u2014 a prod_dru_* push clicked on 2026-08-29. Brand-level (converted > 0).",
+      "label": "Tapped the notification",
+      "source": "OneSignal \u2014 the DRU push was clicked on 2026-08-29. Brand-level (converted > 0).",
       "unit": "businesses",
       "value": 129
     },
     {
       "key": "opened",
-      "label": "Opened the DRU screen",
-      "source": "Amplitude DailyRoundupStoryView, plan = growth, all platforms, 2026-08-29. Matches Amplitude's own daily unique-user count.",
+      "label": "Total DRU users",
+      "source": "Amplitude \u2014 everyone who viewed the DRU screen on 2026-08-29, whether they got there by tapping the push or opening it in the app (DailyRoundupStoryView, plan = growth, all platforms). Equals Amplitude's own daily unique-user count.",
       "unit": "users",
       "value": 168
     }

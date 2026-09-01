@@ -79,8 +79,9 @@ that don't share an identity key yet:
 | Growth businesses | ops Google Sheet, brand tab (live roster) |
 | Have the app | OneSignal — a Growth contact id with an iOS/Android push subscription on record (`scripts/fetch_funnel.py`) |
 | Notifications enabled | OneSignal subscription CSV export |
-| Received / Tapped a DRU | `data/raw/*.json` (already fetched) |
-| Opened the DRU screen | Amplitude, `DailyRoundupStoryView`, `plan = growth`, all platforms |
+| Delivered a DRU | `data/raw/*.json` — OneSignal `successful` (its "Delivered" metric); `received` / Confirmed Delivery kept as a secondary floor |
+| Tapped the notification | `data/raw/*.json` — the push was clicked |
+| Total DRU users | Amplitude, `DailyRoundupStoryView`, `plan = growth`, all platforms — tapped the push *or* opened DRU in-app |
 
 `scripts/fetch_funnel.py` writes one dated file per day to
 `data/funnel/YYYY-MM-DD.json`, each covering **that single day**:
