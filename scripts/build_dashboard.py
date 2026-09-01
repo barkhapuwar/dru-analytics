@@ -602,6 +602,21 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;
   background:var(--f-tint);border:1px solid var(--f-tint-border);border-radius:99px;
   padding:3px 10px;cursor:help}
 
+/* funnel trend — small multiples */
+.spark-grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.spark{border:1px solid var(--border);border-radius:10px;padding:12px 13px 8px;
+  background:var(--page);cursor:help}
+.spark .sp-lab{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;
+  color:var(--text-muted)}
+.spark .sp-row{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin:3px 0 6px}
+.spark .sp-val{font-size:20px;font-weight:700;color:var(--text-primary);font-variant-numeric:tabular-nums}
+.spark .sp-delta{font-size:10.5px;font-weight:700}
+.spark .sp-delta.up{color:var(--drop-ok)}
+.spark .sp-delta.down{color:var(--drop-bad)}
+.spark .sp-delta.flat{color:var(--text-muted)}
+.spark .sp-chart{height:64px}
+.spark .sp-chart svg{width:100%;height:64px;display:block}
+
 @media (max-width:720px){
   .fnl-step{grid-template-columns:1fr auto;grid-template-areas:'label pct' 'bar bar';
     column-gap:10px;row-gap:8px}
@@ -1587,8 +1602,8 @@ FUNNEL_VIEW = (
     '  <div class="card">\n'
     '    <div class="card-head"><div>\n'
     "      <h2>Daily trend</h2>\n"
-    '      <div class="desc">Every day since tracking started &mdash; independent of the filter above. '
-    "The most recent few days are still settling and will rise.</div>\n"
+    '      <div class="desc">Every day since tracking started, independent of the filter above &mdash; '
+    "app installs, notifications enabled, DRU sent / delivered, and total DRU users. Each chart has its own scale.</div>\n"
     "    </div></div>\n"
     '    <div id="fnlTrend"></div>\n'
     '    <div class="leg-row" id="fnlTrendLeg" style="margin-top:12px"></div>\n'
@@ -1709,30 +1724,72 @@ function renderFunnelSteps(snap){
 // one focused line chart: the two engagement numbers that actually move.
 // "Delivered" sits ~1,100 every day and would flatten everything; stages 1-3
 // barely change. All tracked days, independent of the filter above.
-const FTREND=[
-  {key:'opened',label:'Total DRU users',color:'var(--f-3)'},
-  {key:'tapped',label:'Tapped the notification',color:'var(--f-1)'},
-];
 function valOf(snap,key){const s=(snap.steps||[]).find(x=>x.key===key);return s?s.value:0;}
+// the five metrics span ~10x in magnitude (App downloaded ~2,000 vs Total DRU
+// users ~200), so one shared axis would flatten most of them — small multiples,
+// each with its own scale.
+const FTREND=[
+  {label:'App downloaded',  get:s=>(s.state&&s.state.with_app)||valOf(s,'with_app'), settle:false},
+  {label:'Notifications enabled', get:s=>(s.state&&s.state.notif_on)||valOf(s,'notif_on'), settle:false},
+  {label:'DRU sent',        get:s=>s.sent!=null?s.sent:valOf(s,'delivered'), settle:false},
+  {label:'Delivered',       get:s=>valOf(s,'delivered'), settle:false},
+  {label:'Total DRU users', get:s=>valOf(s,'opened'), settle:true},
+];
+function funnelSpark(node,dates,vals,settle){
+  node.innerHTML='';
+  const W=Math.max(node.clientWidth||0,180),H=64,M={t:6,r:6,b:6,l:6};
+  const iw=W-M.l-M.r, ih=H-M.t-M.b;
+  const lo=Math.min(...vals), hi=Math.max(...vals), span=(hi-lo)||1;
+  const n=vals.length;
+  const xAt=i=>n===1?M.l+iw/2:M.l+(i/(n-1))*iw;
+  const yAt=v=>M.t+ih-((v-lo)/span)*ih;
+  const svg=el('svg',{viewBox:`0 0 ${W} ${H}`,preserveAspectRatio:'none'});
+  const pts=vals.map((v,i)=>[xAt(i),yAt(v)]);
+  const line=pts.map((p,i)=>(i?'L':'M')+p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ');
+  svg.appendChild(el('path',{d:line+` L${xAt(n-1).toFixed(1)},${M.t+ih} L${M.l},${M.t+ih} Z`,
+    fill:'var(--f-tint)',opacity:.7,stroke:'none'}));
+  svg.appendChild(el('path',{d:line,fill:'none',stroke:'var(--f-bar)','stroke-width':2,
+    'stroke-linejoin':'round','stroke-linecap':'round'}));
+  // dash the unsettled tail
+  if(settle&&n>4){
+    const seg=pts.slice(n-4).map((p,i)=>(i?'L':'M')+p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ');
+    svg.appendChild(el('path',{d:seg,fill:'none',stroke:'var(--f-bar)','stroke-width':2,
+      'stroke-dasharray':'2 3','stroke-linecap':'round'}));
+  }
+  svg.appendChild(el('circle',{cx:pts[n-1][0],cy:pts[n-1][1],r:3,fill:'var(--f-bar)',
+    stroke:'var(--surface-1)','stroke-width':1.5}));
+  node.appendChild(svg);
+}
 function renderFunnelTrend(){
+  const host=$('#fnlTrend');host.innerHTML='';
   const dates=FSNAPS.map(s=>s.date);
-  const series=FTREND.map(t=>({
-    key:t.key,label:t.label,color:t.color,hidden:false,
-    values:FSNAPS.map(s=>valOf(s,t.key)),
-  }));
-  multiLineChart($('#fnlTrend'),dates,series,{h:230});
-  const leg=$('#fnlTrendLeg');leg.innerHTML='';
-  FTREND.forEach(t=>{
-    const c=document.createElement('span');c.className='leg-chip';
-    const sw=document.createElement('span');sw.className='sw';sw.style.background=t.color;
-    c.append(sw,Object.assign(document.createElement('span'),{textContent:t.label}));
-    leg.appendChild(c);
+  const grid=document.createElement('div');grid.className='spark-grid';
+  FTREND.forEach(m=>{
+    const vals=FSNAPS.map(m.get);
+    const first=vals[0],last=vals[vals.length-1],d=last-first;
+    const cell=document.createElement('div');cell.className='spark';
+    const lab=document.createElement('div');lab.className='sp-lab';lab.textContent=m.label;
+    const row=document.createElement('div');row.className='sp-row';
+    const v=document.createElement('span');v.className='sp-val';v.textContent=fmt(last);
+    const ch=document.createElement('span');
+    ch.className='sp-delta '+(d>0?'up':d<0?'down':'flat');
+    ch.textContent=(d>0?'▲ ':d<0?'▼ ':'')+(d===0?'0':fmt(Math.abs(d)))+' since '+dates[0].slice(5);
+    row.append(v,ch);
+    const chart=document.createElement('div');chart.className='sp-chart';
+    cell.append(lab,row,chart);grid.appendChild(cell);
+    funnelSpark(chart,dates,vals,m.settle);
+    cell.addEventListener('mouseenter',e=>showTip(e,m.label,
+      dates.map((dt,i)=>dt+': '+fmt(vals[i]))));
+    cell.addEventListener('mousemove',moveTip);
+    cell.addEventListener('mouseleave',hideTip);
   });
-  const note=document.createElement('div');note.className='leg-note';note.style.marginTop='6px';
-  note.textContent=FSNAPS.length<2
+  host.appendChild(grid);
+  const leg=$('#fnlTrendLeg');leg.innerHTML='';
+  const note=document.createElement('div');note.className='leg-note';
+  note.innerHTML=FSNAPS.length<2
     ? FSNAPS.length+' day tracked so far — a point lands per day.'
     : FSNAPS.length+' days, '+FSNAPS[0].date+' → '+FSNAPS[FSNAPS.length-1].date
-      +'. The last few points keep rising as late clicks / events settle.';
+      +'. Each chart has its own scale. The dashed tail on “Total DRU users” is still settling.';
   leg.appendChild(note);
 }
 

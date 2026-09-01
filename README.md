@@ -103,8 +103,10 @@ that don't share an identity key yet:
 The funnel tab has the same filter bar as the notification tab (This week /
 This month / Custom range / Single date). For a range, stages 4–6 count the
 distinct businesses / users that reached that stage at least once; for a single
-day, stage 6 matches Amplitude's own daily unique-user count. The tab shows the
-funnel plus the "How each number is measured" table — nothing else.
+day, stage 6 matches Amplitude's own daily unique-user count. Below the funnel
+is a "Daily trend" card — small-multiple line charts for app installs,
+notifications enabled, DRU sent, delivered and total DRU users, one point per
+tracked day (own scale each) — then the "How each number is measured" table.
 
 Needs `AMPLITUDE_API_KEY`, `AMPLITUDE_SECRET_KEY`, `ONESIGNAL_APP_ID`,
 `ONESIGNAL_API_KEY` in the env.

@@ -178,25 +178,26 @@ def load_dru_days():
 
 def dru_one_day(notifs):
     """Distinct businesses for one day:
+      sent      — a DRU push was queued for the brand at all.
       delivered — OneSignal marked the push delivered (`successful`), i.e. the
-                  push service (APNs / FCM) accepted it. This is OneSignal's
-                  "Delivered" metric.
+                  push service (APNs / FCM) accepted it. OneSignal's "Delivered".
       confirmed — `received`, OneSignal's Confirmed Delivery (a device-side
                   receipt). Their docs note it undercounts, so it's a floor.
       tapped    — the push was clicked (`converted` > 0).
     """
-    delivered, confirmed, tapped = set(), set(), set()
+    sent, delivered, confirmed, tapped = set(), set(), set(), set()
     for n in notifs:
         e = n.get("external_id")
         if not e:
             continue
+        sent.add(e)
         if (n.get("successful") or 0) > 0:
             delivered.add(e)
         if (n.get("received") or 0) > 0:
             confirmed.add(e)
         if n.get("clicked"):
             tapped.add(e)
-    return len(delivered), len(confirmed), len(tapped)
+    return len(sent), len(delivered), len(confirmed), len(tapped)
 
 
 # ── 6. Amplitude — DRU-open user ids per day (Export API) ───────────────────
@@ -338,7 +339,7 @@ def main():
     settling = set(all_days[-4:])  # last ~4 days keep rising as late data lands
     for day in to_do:
         d = datetime.date.fromisoformat(day)
-        delivered, confirmed, tapped = dru_one_day(dru_days[day])
+        sent, delivered, confirmed, tapped = dru_one_day(dru_days[day])
         cached = cached_opened_ids(day)
         if day in resettle or cached is None:
             opened_ids = dru_open_ids(d)
@@ -358,6 +359,7 @@ def main():
             "generated_at": gen,
             "settling": day in settling,
             "opened_ids": opened_ids,
+            "sent": sent,
             "state": {k: st[k] for k in ("growth", "with_app", "notif_on", "captured")},
             "steps": [
                 {"key": "growth", "label": "Growth businesses", "unit": "businesses",
