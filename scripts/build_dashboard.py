@@ -1586,6 +1586,15 @@ FUNNEL_VIEW = (
     "  </div>\n"
     '  <div class="card">\n'
     '    <div class="card-head"><div>\n'
+    "      <h2>Daily trend</h2>\n"
+    '      <div class="desc">Every day since tracking started &mdash; independent of the filter above. '
+    "The most recent few days are still settling and will rise.</div>\n"
+    "    </div></div>\n"
+    '    <div id="fnlTrend"></div>\n'
+    '    <div class="leg-row" id="fnlTrendLeg" style="margin-top:12px"></div>\n'
+    "  </div>\n"
+    '  <div class="card">\n'
+    '    <div class="card-head"><div>\n'
     "      <h2>How each number is measured</h2>\n"
     '      <div class="desc">Three systems, no shared identity key yet &mdash; read this before quoting a number.</div>\n'
     "    </div></div>\n"
@@ -1697,6 +1706,36 @@ function renderFunnelSteps(snap){
   });
 }
 
+// one focused line chart: the two engagement numbers that actually move.
+// "Delivered" sits ~1,100 every day and would flatten everything; stages 1-3
+// barely change. All tracked days, independent of the filter above.
+const FTREND=[
+  {key:'opened',label:'Total DRU users',color:'var(--f-3)'},
+  {key:'tapped',label:'Tapped the notification',color:'var(--f-1)'},
+];
+function valOf(snap,key){const s=(snap.steps||[]).find(x=>x.key===key);return s?s.value:0;}
+function renderFunnelTrend(){
+  const dates=FSNAPS.map(s=>s.date);
+  const series=FTREND.map(t=>({
+    key:t.key,label:t.label,color:t.color,hidden:false,
+    values:FSNAPS.map(s=>valOf(s,t.key)),
+  }));
+  multiLineChart($('#fnlTrend'),dates,series,{h:230});
+  const leg=$('#fnlTrendLeg');leg.innerHTML='';
+  FTREND.forEach(t=>{
+    const c=document.createElement('span');c.className='leg-chip';
+    const sw=document.createElement('span');sw.className='sw';sw.style.background=t.color;
+    c.append(sw,Object.assign(document.createElement('span'),{textContent:t.label}));
+    leg.appendChild(c);
+  });
+  const note=document.createElement('div');note.className='leg-note';note.style.marginTop='6px';
+  note.textContent=FSNAPS.length<2
+    ? FSNAPS.length+' day tracked so far — a point lands per day.'
+    : FSNAPS.length+' days, '+FSNAPS[0].date+' → '+FSNAPS[FSNAPS.length-1].date
+      +'. The last few points keep rising as late clicks / events settle.';
+  leg.appendChild(note);
+}
+
 function renderFunnelTable(snap){
   const body=$('#fnlTableBody');body.innerHTML='';
   const base=(snap.steps[0]&&snap.steps[0].value)||0;
@@ -1776,10 +1815,11 @@ function renderFunnel(){
     b.append(Object.assign(document.createElement('span'),{className:'dot'}));
     const m=document.createElement('div');
     m.innerHTML='<b>Recent days are still settling.</b> Late clicks and Amplitude events keep '+
-      'arriving for a few days, so Tapped and Opened for the newest days will still rise.';
+      'arriving for a few days, so Tapped and DRU-user counts for the newest days will still rise.';
     b.appendChild(m);bn.appendChild(b);
   }
   renderFunnelSteps(snap);
+  renderFunnelTrend();
   renderFunnelTable(snap);
   $('#fnlFoot').innerHTML='Stages 4–6 are '+(snap.one?'the activity for <b>'+snap.date+'</b>':
     '<b>distinct</b> businesses / users over <b>'+snap.date+'</b>')+'. '+
