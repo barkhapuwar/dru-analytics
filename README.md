@@ -104,9 +104,10 @@ The funnel tab has the same filter bar as the notification tab (This week /
 This month / Custom range / Single date). For a range, stages 4–6 count the
 distinct businesses / users that reached that stage at least once; for a single
 day, stage 6 matches Amplitude's own daily unique-user count. Below the funnel
-is a "Daily trend" card — small-multiple line charts for app installs,
-notifications enabled, DRU sent, delivered and total DRU users, one point per
-tracked day (own scale each) — then the "How each number is measured" table.
+is a "Daily trend" line chart with a metric picker on the right (app installs,
+notifications enabled, DRU sent, delivered, tapped, total DRU users) — one point
+per tracked day; the y-axis rescales to whichever metrics are checked. Then the
+"How each number is measured" table.
 
 Needs `AMPLITUDE_API_KEY`, `AMPLITUDE_SECRET_KEY`, `ONESIGNAL_APP_ID`,
 `ONESIGNAL_API_KEY` in the env.

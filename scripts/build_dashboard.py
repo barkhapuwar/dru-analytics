@@ -544,6 +544,10 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;
   border-color:var(--f-solid-bg)}
 #view-funnel .fbtn.active:hover{background:var(--f-solid-bg);color:var(--f-solid-fg)}
 #view-funnel .fbtn:hover{color:var(--f-ink);border-color:var(--f-tint-border);background:var(--f-tint)}
+#view-funnel .dropdown-btn:hover,#view-funnel .sig-filter.open .dropdown-btn{
+  color:var(--f-ink);border-color:var(--f-tint-border);background:var(--f-tint)}
+#view-funnel .leg-link:hover:not(:disabled){color:var(--f-ink);border-color:var(--f-tint-border);background:var(--f-tint)}
+#view-funnel .leg-chip input{accent-color:var(--f-solid-bg)}
 .hero-funnel{background:linear-gradient(120deg,var(--f-hero-a) 0%,var(--f-hero-b) 100%)}
 .hero-funnel::after{background:radial-gradient(circle,rgba(255,255,255,.22),transparent 68%)}
 .hero-funnel .sub{color:rgba(255,255,255,.86)}
@@ -602,21 +606,6 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;
   background:var(--f-tint);border:1px solid var(--f-tint-border);border-radius:99px;
   padding:3px 10px;cursor:help}
 
-/* funnel trend — small multiples */
-.spark-grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
-.spark{border:1px solid var(--border);border-radius:10px;padding:12px 13px 8px;
-  background:var(--page)}
-.spark .sp-delta{cursor:help}
-.spark .sp-lab{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;
-  color:var(--text-muted)}
-.spark .sp-row{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin:3px 0 6px}
-.spark .sp-val{font-size:20px;font-weight:700;color:var(--text-primary);font-variant-numeric:tabular-nums}
-.spark .sp-delta{font-size:10.5px;font-weight:700}
-.spark .sp-delta.up{color:var(--drop-ok)}
-.spark .sp-delta.down{color:var(--drop-bad)}
-.spark .sp-delta.flat{color:var(--text-muted)}
-.spark .sp-chart{height:64px}
-.spark .sp-chart svg{width:100%;height:64px;display:block}
 
 @media (max-width:720px){
   .fnl-step{grid-template-columns:1fr auto;grid-template-areas:'label pct' 'bar bar';
@@ -1601,13 +1590,27 @@ FUNNEL_VIEW = (
     '    <div class="fnl-steps" id="fnlSteps"></div>\n'
     "  </div>\n"
     '  <div class="card">\n'
-    '    <div class="card-head"><div>\n'
+    '    <div class="card-head">\n'
+    "    <div>\n"
     "      <h2>Daily trend</h2>\n"
-    '      <div class="desc">Every day since tracking started, independent of the filter above &mdash; '
-    "app installs, notifications enabled, DRU sent / delivered, and total DRU users. Each chart has its own scale.</div>\n"
-    "    </div></div>\n"
+    '      <div class="desc">One point per day since tracking started &mdash; independent of the filter above. '
+    "Use the picker to choose which metrics to plot.</div>\n"
+    "    </div>\n"
+    '    <div class="sig-filter" id="fnlTrendFilter">\n'
+    '      <button class="dropdown-btn" id="fnlTrendBtn" type="button">\n'
+    '        <span id="fnlTrendLabel"></span><span class="dd-chev">▾</span>\n'
+    "      </button>\n"
+    '      <div class="dropdown-panel hidden" id="fnlTrendPanel">\n'
+    '        <div class="leg-controls">\n'
+    '          <button class="leg-link" id="fnlTrendAll" type="button">Select all</button>\n'
+    '          <button class="leg-link" id="fnlTrendNone" type="button">Deselect all</button>\n'
+    "        </div>\n"
+    '        <div class="leg-row vertical" id="fnlTrendLegRow"></div>\n'
+    "      </div>\n"
+    "    </div>\n"
+    "    </div>\n"
     '    <div id="fnlTrend"></div>\n'
-    '    <div class="leg-row" id="fnlTrendLeg" style="margin-top:12px"></div>\n'
+    '    <div class="leg-note" id="fnlTrendNote" style="margin-top:10px"></div>\n'
     "  </div>\n"
     '  <div class="card">\n'
     '    <div class="card-head"><div>\n'
@@ -1722,92 +1725,75 @@ function renderFunnelSteps(snap){
   });
 }
 
-// one focused line chart: the two engagement numbers that actually move.
-// "Delivered" sits ~1,100 every day and would flatten everything; stages 1-3
-// barely change. All tracked days, independent of the filter above.
 function valOf(snap,key){const s=(snap.steps||[]).find(x=>x.key===key);return s?s.value:0;}
-// the five metrics span ~10x in magnitude (App downloaded ~2,000 vs Total DRU
-// users ~200), so one shared axis would flatten most of them — small multiples,
-// each with its own scale.
+// one line chart, all metrics on it, a checkbox picker on the right — same
+// pattern as the notification tab's signal trend. Metrics span ~15x, so the
+// picker is how you isolate the ones you care about.
 const FTREND=[
-  {label:'App downloaded',  get:s=>(s.state&&s.state.with_app)||valOf(s,'with_app'), settle:false},
-  {label:'Notifications enabled', get:s=>(s.state&&s.state.notif_on)||valOf(s,'notif_on'), settle:false},
-  {label:'DRU sent',        get:s=>s.sent!=null?s.sent:valOf(s,'delivered'), settle:false},
-  {label:'Delivered',       get:s=>valOf(s,'delivered'), settle:false},
-  {label:'Total DRU users', get:s=>valOf(s,'opened'), settle:true},
+  {key:'with_app', label:'App downloaded',        color:'var(--series-1)', get:s=>(s.state&&s.state.with_app)||valOf(s,'with_app')},
+  {key:'notif_on', label:'Notifications enabled', color:'var(--series-3)', get:s=>(s.state&&s.state.notif_on)||valOf(s,'notif_on')},
+  {key:'sent',     label:'DRU sent',              color:'var(--series-4)', get:s=>s.sent!=null?s.sent:valOf(s,'delivered')},
+  {key:'delivered',label:'Delivered',             color:'var(--series-2)', get:s=>valOf(s,'delivered')},
+  {key:'tapped',   label:'Tapped the notification',color:'var(--series-7)', get:s=>valOf(s,'tapped')},
+  {key:'opened',   label:'Total DRU users',       color:'var(--series-5)', get:s=>valOf(s,'opened')},
 ];
-function funnelSpark(node,dates,vals,settle,label,onhover){
-  node.innerHTML='';
-  const W=Math.max(node.clientWidth||0,180),H=64,M={t:7,r:7,b:7,l:7};
-  const iw=W-M.l-M.r, ih=H-M.t-M.b;
-  const lo=Math.min(...vals), hi=Math.max(...vals), span=(hi-lo)||1;
-  const n=vals.length;
-  const xAt=i=>n===1?M.l+iw/2:M.l+(i/(n-1))*iw;
-  const yAt=v=>M.t+ih-((v-lo)/span)*ih;
-  const svg=el('svg',{viewBox:`0 0 ${W} ${H}`});
-  const pts=vals.map((v,i)=>[xAt(i),yAt(v)]);
-  const line=pts.map((p,i)=>(i?'L':'M')+p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ');
-  svg.appendChild(el('path',{d:line+` L${xAt(n-1).toFixed(1)},${M.t+ih} L${M.l},${M.t+ih} Z`,
-    fill:'var(--f-tint)',opacity:.7,stroke:'none'}));
-  svg.appendChild(el('path',{d:line,fill:'none',stroke:'var(--f-bar)','stroke-width':2,
-    'stroke-linejoin':'round','stroke-linecap':'round'}));
-  if(settle&&n>4){
-    const seg=pts.slice(n-4).map((p,i)=>(i?'L':'M')+p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ');
-    svg.appendChild(el('path',{d:seg,fill:'none',stroke:'var(--f-bar)','stroke-width':2,
-      'stroke-dasharray':'2 3','stroke-linecap':'round'}));
-  }
-  svg.appendChild(el('circle',{cx:pts[n-1][0],cy:pts[n-1][1],r:3,fill:'var(--f-bar)',
-    stroke:'var(--surface-1)','stroke-width':1.5}));
-  // hover: snap to the nearest day, mark it, show just that day's value
-  const guide=el('line',{y1:M.t,y2:M.t+ih,stroke:'var(--axis)','stroke-width':1,style:'display:none'});
-  const dot=el('circle',{r:3.5,fill:'var(--f-solid-bg)',stroke:'var(--surface-1)','stroke-width':1.5,style:'display:none'});
-  svg.append(guide,dot);
-  const hit=el('rect',{x:0,y:0,width:W,height:H,fill:'transparent',style:'cursor:crosshair'});
-  hit.addEventListener('mousemove',e=>{
-    const r=svg.getBoundingClientRect();
-    const px=(e.clientX-r.left)*(W/r.width);
-    let i=n===1?0:Math.round(((px-M.l)/iw)*(n-1));
-    i=Math.max(0,Math.min(n-1,i));
-    guide.setAttribute('x1',pts[i][0]);guide.setAttribute('x2',pts[i][0]);guide.style.display='';
-    dot.setAttribute('cx',pts[i][0]);dot.setAttribute('cy',pts[i][1]);dot.style.display='';
-    showTip(e,dates[i],[label+': '+fmt(vals[i])]);
-  });
-  hit.addEventListener('mouseleave',()=>{guide.style.display='none';dot.style.display='none';hideTip();});
-  svg.appendChild(hit);
-  node.appendChild(svg);
-}
-function renderFunnelTrend(){
-  const host=$('#fnlTrend');host.innerHTML='';
+const fnlTrendOn=new Set(FTREND.map(t=>t.key));
+
+function drawFunnelTrend(){
   const dates=FSNAPS.map(s=>s.date);
-  const grid=document.createElement('div');grid.className='spark-grid';
-  const cells=[];
-  FTREND.forEach(m=>{
-    const vals=FSNAPS.map(m.get);
-    const first=vals[0],last=vals[vals.length-1],d=last-first;
-    const cell=document.createElement('div');cell.className='spark';
-    const lab=document.createElement('div');lab.className='sp-lab';lab.textContent=m.label;
-    const row=document.createElement('div');row.className='sp-row';
-    const v=document.createElement('span');v.className='sp-val';v.textContent=fmt(last);
-    const ch=document.createElement('span');
-    ch.className='sp-delta '+(d>0?'up':d<0?'down':'flat');
-    ch.textContent=(d>0?'▲':d<0?'▼':'±')+' '+(d===0?'0':fmt(Math.abs(d)))+' since '+dates[0].slice(5);
-    ch.title='Change from '+dates[0]+' to '+dates[dates.length-1];
-    row.append(v,ch);
-    const chart=document.createElement('div');chart.className='sp-chart';
-    cell.append(lab,row,chart);grid.appendChild(cell);
-    cells.push(()=>funnelSpark(chart,dates,vals,m.settle,m.label));
-  });
-  host.appendChild(grid);
-  cells.forEach(fn=>fn());
-  renderFunnelTrend._redraw=()=>cells.forEach(fn=>fn());
-  const leg=$('#fnlTrendLeg');leg.innerHTML='';
-  const note=document.createElement('div');note.className='leg-note';
+  // pass only the checked series, so the y-axis rescales to fit them — that is
+  // how you read a small metric: hide the big ones and it fills the chart.
+  const series=FTREND.filter(t=>fnlTrendOn.has(t.key)).map(t=>({
+    key:t.key,label:t.label,color:t.color,values:FSNAPS.map(t.get),hidden:false,
+  }));
+  multiLineChart($('#fnlTrend'),dates,series,{h:280});
+  $('#fnlTrendLabel').textContent=fnlTrendOn.size===FTREND.length
+    ? 'All metrics' : fnlTrendOn.size+' of '+FTREND.length+' metrics';
+  $('#fnlTrendAll').disabled=fnlTrendOn.size===FTREND.length;
+  $('#fnlTrendNone').disabled=fnlTrendOn.size===0;
+  const note=$('#fnlTrendNote');
   note.textContent=FSNAPS.length<2
     ? FSNAPS.length+' day tracked so far — a point lands per day.'
     : FSNAPS.length+' days, '+FSNAPS[0].date+' → '+FSNAPS[FSNAPS.length-1].date
-      +'. Hover a chart for a single day. Each has its own scale; the dashed tail on “Total DRU users” is still settling.';
-  leg.appendChild(note);
+      +'. Each metric keeps its colour; hover the chart for a day’s values. '
+      +'Newest days for Tapped / Total DRU users are still settling.';
 }
+function buildFunnelTrendLegend(){
+  const row=$('#fnlTrendLegRow');row.innerHTML='';
+  FTREND.forEach(t=>{
+    const lab=document.createElement('label');lab.className='leg-chip';
+    const cb=document.createElement('input');cb.type='checkbox';cb.checked=fnlTrendOn.has(t.key);
+    const sw=document.createElement('span');sw.className='sw';sw.style.background=t.color;
+    lab.append(cb,sw,Object.assign(document.createElement('span'),{textContent:t.label}));
+    if(!cb.checked)lab.classList.add('off');
+    cb.addEventListener('change',()=>{
+      if(cb.checked)fnlTrendOn.add(t.key);else fnlTrendOn.delete(t.key);
+      lab.classList.toggle('off',!cb.checked);
+      drawFunnelTrend();
+    });
+    row.appendChild(lab);
+  });
+}
+function fnlTrendSetAll(on){
+  FTREND.forEach(t=>on?fnlTrendOn.add(t.key):fnlTrendOn.delete(t.key));
+  buildFunnelTrendLegend();drawFunnelTrend();
+}
+$('#fnlTrendAll').addEventListener('click',()=>fnlTrendSetAll(true));
+$('#fnlTrendNone').addEventListener('click',()=>fnlTrendSetAll(false));
+const fnlTrendFilterEl=$('#fnlTrendFilter'),fnlTrendPanelEl=$('#fnlTrendPanel');
+$('#fnlTrendBtn').addEventListener('click',e=>{
+  e.stopPropagation();
+  const open=fnlTrendPanelEl.classList.toggle('hidden');
+  fnlTrendFilterEl.classList.toggle('open',!open);
+});
+document.addEventListener('click',e=>{
+  if(!fnlTrendFilterEl.contains(e.target)){
+    fnlTrendPanelEl.classList.add('hidden');fnlTrendFilterEl.classList.remove('open');
+  }
+});
+buildFunnelTrendLegend();
+
+function renderFunnelTrend(){drawFunnelTrend();}
 
 function renderFunnelTable(snap){
   const body=$('#fnlTableBody');body.innerHTML='';
