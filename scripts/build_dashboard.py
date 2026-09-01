@@ -605,7 +605,8 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;
 /* funnel trend — small multiples */
 .spark-grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
 .spark{border:1px solid var(--border);border-radius:10px;padding:12px 13px 8px;
-  background:var(--page);cursor:help}
+  background:var(--page)}
+.spark .sp-delta{cursor:help}
 .spark .sp-lab{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;
   color:var(--text-muted)}
 .spark .sp-row{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin:3px 0 6px}
@@ -1735,22 +1736,21 @@ const FTREND=[
   {label:'Delivered',       get:s=>valOf(s,'delivered'), settle:false},
   {label:'Total DRU users', get:s=>valOf(s,'opened'), settle:true},
 ];
-function funnelSpark(node,dates,vals,settle){
+function funnelSpark(node,dates,vals,settle,label,onhover){
   node.innerHTML='';
-  const W=Math.max(node.clientWidth||0,180),H=64,M={t:6,r:6,b:6,l:6};
+  const W=Math.max(node.clientWidth||0,180),H=64,M={t:7,r:7,b:7,l:7};
   const iw=W-M.l-M.r, ih=H-M.t-M.b;
   const lo=Math.min(...vals), hi=Math.max(...vals), span=(hi-lo)||1;
   const n=vals.length;
   const xAt=i=>n===1?M.l+iw/2:M.l+(i/(n-1))*iw;
   const yAt=v=>M.t+ih-((v-lo)/span)*ih;
-  const svg=el('svg',{viewBox:`0 0 ${W} ${H}`,preserveAspectRatio:'none'});
+  const svg=el('svg',{viewBox:`0 0 ${W} ${H}`});
   const pts=vals.map((v,i)=>[xAt(i),yAt(v)]);
   const line=pts.map((p,i)=>(i?'L':'M')+p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ');
   svg.appendChild(el('path',{d:line+` L${xAt(n-1).toFixed(1)},${M.t+ih} L${M.l},${M.t+ih} Z`,
     fill:'var(--f-tint)',opacity:.7,stroke:'none'}));
   svg.appendChild(el('path',{d:line,fill:'none',stroke:'var(--f-bar)','stroke-width':2,
     'stroke-linejoin':'round','stroke-linecap':'round'}));
-  // dash the unsettled tail
   if(settle&&n>4){
     const seg=pts.slice(n-4).map((p,i)=>(i?'L':'M')+p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ');
     svg.appendChild(el('path',{d:seg,fill:'none',stroke:'var(--f-bar)','stroke-width':2,
@@ -1758,12 +1758,29 @@ function funnelSpark(node,dates,vals,settle){
   }
   svg.appendChild(el('circle',{cx:pts[n-1][0],cy:pts[n-1][1],r:3,fill:'var(--f-bar)',
     stroke:'var(--surface-1)','stroke-width':1.5}));
+  // hover: snap to the nearest day, mark it, show just that day's value
+  const guide=el('line',{y1:M.t,y2:M.t+ih,stroke:'var(--axis)','stroke-width':1,style:'display:none'});
+  const dot=el('circle',{r:3.5,fill:'var(--f-solid-bg)',stroke:'var(--surface-1)','stroke-width':1.5,style:'display:none'});
+  svg.append(guide,dot);
+  const hit=el('rect',{x:0,y:0,width:W,height:H,fill:'transparent',style:'cursor:crosshair'});
+  hit.addEventListener('mousemove',e=>{
+    const r=svg.getBoundingClientRect();
+    const px=(e.clientX-r.left)*(W/r.width);
+    let i=n===1?0:Math.round(((px-M.l)/iw)*(n-1));
+    i=Math.max(0,Math.min(n-1,i));
+    guide.setAttribute('x1',pts[i][0]);guide.setAttribute('x2',pts[i][0]);guide.style.display='';
+    dot.setAttribute('cx',pts[i][0]);dot.setAttribute('cy',pts[i][1]);dot.style.display='';
+    showTip(e,dates[i],[label+': '+fmt(vals[i])]);
+  });
+  hit.addEventListener('mouseleave',()=>{guide.style.display='none';dot.style.display='none';hideTip();});
+  svg.appendChild(hit);
   node.appendChild(svg);
 }
 function renderFunnelTrend(){
   const host=$('#fnlTrend');host.innerHTML='';
   const dates=FSNAPS.map(s=>s.date);
   const grid=document.createElement('div');grid.className='spark-grid';
+  const cells=[];
   FTREND.forEach(m=>{
     const vals=FSNAPS.map(m.get);
     const first=vals[0],last=vals[vals.length-1],d=last-first;
@@ -1773,23 +1790,22 @@ function renderFunnelTrend(){
     const v=document.createElement('span');v.className='sp-val';v.textContent=fmt(last);
     const ch=document.createElement('span');
     ch.className='sp-delta '+(d>0?'up':d<0?'down':'flat');
-    ch.textContent=(d>0?'▲ ':d<0?'▼ ':'')+(d===0?'0':fmt(Math.abs(d)))+' since '+dates[0].slice(5);
+    ch.textContent=(d>0?'▲':d<0?'▼':'±')+' '+(d===0?'0':fmt(Math.abs(d)))+' since '+dates[0].slice(5);
+    ch.title='Change from '+dates[0]+' to '+dates[dates.length-1];
     row.append(v,ch);
     const chart=document.createElement('div');chart.className='sp-chart';
     cell.append(lab,row,chart);grid.appendChild(cell);
-    funnelSpark(chart,dates,vals,m.settle);
-    cell.addEventListener('mouseenter',e=>showTip(e,m.label,
-      dates.map((dt,i)=>dt+': '+fmt(vals[i]))));
-    cell.addEventListener('mousemove',moveTip);
-    cell.addEventListener('mouseleave',hideTip);
+    cells.push(()=>funnelSpark(chart,dates,vals,m.settle,m.label));
   });
   host.appendChild(grid);
+  cells.forEach(fn=>fn());
+  renderFunnelTrend._redraw=()=>cells.forEach(fn=>fn());
   const leg=$('#fnlTrendLeg');leg.innerHTML='';
   const note=document.createElement('div');note.className='leg-note';
-  note.innerHTML=FSNAPS.length<2
+  note.textContent=FSNAPS.length<2
     ? FSNAPS.length+' day tracked so far — a point lands per day.'
     : FSNAPS.length+' days, '+FSNAPS[0].date+' → '+FSNAPS[FSNAPS.length-1].date
-      +'. Each chart has its own scale. The dashed tail on “Total DRU users” is still settling.';
+      +'. Hover a chart for a single day. Each has its own scale; the dashed tail on “Total DRU users” is still settling.';
   leg.appendChild(note);
 }
 
