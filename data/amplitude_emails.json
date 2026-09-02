@@ -1,12 +1,12 @@
 {
   "days_covered": [
-    "2026-08-26",
     "2026-08-27",
     "2026-08-28",
     "2026-08-29",
     "2026-08-30",
     "2026-08-31",
-    "2026-09-01"
+    "2026-09-01",
+    "2026-09-02"
   ],
   "emails": {
     "06dinesh@gmail.com": [
@@ -132,6 +132,7 @@
     ],
     "aayushi.thawani@reelo.io": [
       "Copper Chimney",
+      "Golden chimney",
       "Love and Cheesecake",
       "Sheikh Chang Singh"
     ],
@@ -1111,6 +1112,9 @@
     ],
     "arshchikan@gmail.com": [
       "Arsh Chikankari"
+    ],
+    "artisticofoods@gmail.com": [
+      "Queen Margheritas"
     ],
     "arun.aanandhan@ombc.in": [
       "Old Madras Baking Company"
@@ -2186,6 +2190,9 @@
     "ckcpuducherry@gmail.com": [
       "Chaat Ka Chaska"
     ],
+    "client.horizon@dotpe.in": [
+      "RR Durbar"
+    ],
     "club17gkp@gmail.com": [
       "Club 17"
     ],
@@ -2346,7 +2353,8 @@
       "Crema Cafe"
     ],
     "cremosa.gelateriaa@gmail.com": [
-      "Creamosa"
+      "Creamosa",
+      "Cremosa"
     ],
     "crepefactory.co@gmail.com": [
       "Crepe Factory"
@@ -2566,7 +2574,8 @@
       "Handi"
     ],
     "devalmaheshwari25@gmail.com": [
-      "Maheshwari Bhoj"
+      "Maheshwari Bhoj",
+      "Maheshwari Fastfood"
     ],
     "devangchavda5255@gmail.com": [
       "The Heritage Palace"
@@ -3367,6 +3376,9 @@
     "gm@maizeandmalt.com": [
       "Maize Malt"
     ],
+    "gm@oasisbrewery.in": [
+      "Oasis Brewery"
+    ],
     "gm@phoenixresortrajkot.com": [
       "Phoenix Resort"
     ],
@@ -3429,6 +3441,9 @@
     ],
     "golusingh85418504@gmail.com": [
       "Gangaramfamilyrestaurant"
+    ],
+    "goodbuddy.ops@gmail.com": [
+      "NAYA"
     ],
     "gooddaysllp@gmail.com": [
       "Khaleez"
@@ -3679,6 +3694,9 @@
     ],
     "hello@cannella.in": [
       "Cannella By Two Cloves"
+    ],
+    "hello@foodaholics.org": [
+      "Oliver Brown"
     ],
     "hello@heydgreen.com": [
       "Freshlymade"
@@ -5092,6 +5110,9 @@
     "kunchalsstoresgk1@gmail.com": [
       "Kunchals"
     ],
+    "kurosizzlers@gmail.com": [
+      "Kuro Sizzlers"
+    ],
     "kush@therasoda.com": [
       "The Rasoda"
     ],
@@ -5237,6 +5258,9 @@
     ],
     "loro@theavatarhotel.com": [
       "Loro Bar and Kitchen"
+    ],
+    "lotusbaybng@gmail.com": [
+      "Lotus Bay Food Park"
     ],
     "lovepreetsinghgodara@gmail.com": [
       "Moga Punjabi Haveli",
@@ -8335,6 +8359,9 @@
     "sejpalmanish@gmail.com": [
       "Pizza Da Dhaba"
     ],
+    "selsur@gmail.com": [
+      "NAYA"
+    ],
     "semilisweb@gmail.com": [
       "Semilis"
     ],
@@ -8728,6 +8755,9 @@
     ],
     "skh7295@gmail.com": [
       "Roastery X Colocal X PS Cheese"
+    ],
+    "sksventures26@gmail.com": [
+      "the host"
     ],
     "skyfoods2024@gmail.com": [
       "Greenbelly Smoothies"
@@ -9793,6 +9823,9 @@
     "twoandahalfmile@gmail.com": [
       "Two and a Half Mile"
     ],
+    "tybadarshnagar@gmail.com": [
+      "The Yellow Bowl"
+    ],
     "tybnoidasec76@gmail.com": [
       "The Yellow Bowl"
     ],
@@ -9807,6 +9840,9 @@
     ],
     "tybvaishali@gmail.com": [
       "The Yellow Bowl"
+    ],
+    "tycascentgroup@gmail.com": [
+      "The Yellow Chilli"
     ],
     "tykkharadi.rmh@gmail.com": [
       "TYK TYK"
@@ -10063,6 +10099,9 @@
     ],
     "vikash@meghanafoods.co.in": [
       "Meghana Foods"
+    ],
+    "vikashbhangar80@gmail.com": [
+      "Nativo"
     ],
     "vikashguha123@gmail.com": [
       "Ruhani"
@@ -10416,5 +10455,5 @@
       "Zorko Gwalior"
     ]
   },
-  "generated_at": "2026-09-02T03:26:50+05:30"
+  "generated_at": "2026-09-03T03:28:28+05:30"
 }

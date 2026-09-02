@@ -1,6 +1,6 @@
 {
   "date": "2026-08-31",
-  "fetched_at": "2026-09-02T03:25:25+05:30",
+  "fetched_at": "2026-09-03T03:26:10+05:30",
   "stable": false,
   "notifications": [
     {
@@ -10544,7 +10544,7 @@
       "tone": "v0",
       "external_id": "6a1d774c24d49045f1debe4f",
       "successful": 2,
-      "received": 1,
+      "received": 2,
       "converted": 0,
       "clicked": false
     },
