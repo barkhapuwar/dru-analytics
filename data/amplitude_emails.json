@@ -1,12 +1,12 @@
 {
   "days_covered": [
-    "2026-08-27",
     "2026-08-28",
     "2026-08-29",
     "2026-08-30",
     "2026-08-31",
     "2026-09-01",
-    "2026-09-02"
+    "2026-09-02",
+    "2026-09-03"
   ],
   "emails": {
     "06dinesh@gmail.com": [
@@ -199,6 +199,9 @@
     ],
     "abhishek.s@maiz.in": [
       "Harvest Salad Co"
+    ],
+    "abhishekjain.jain150@gmail.com": [
+      "The Yellow Bowl"
     ],
     "abhishekrajepaul@gmail.com": [
       "Paesaute Chicken"
@@ -571,6 +574,9 @@
     "alkakakkad11@gmail.com": [
       "Martinoz Pizza"
     ],
+    "allor.pmclr@phoenixmills.com": [
+      "Bell Coins"
+    ],
     "allora.pune@phoenixmills.com": [
       "Bell Coins"
     ],
@@ -786,6 +792,9 @@
     ],
     "anil@bikkgane.in": [
       "Bikkgane Biryani"
+    ],
+    "anil@sbarroucf.com": [
+      "Sbarro New York Pizza"
     ],
     "anilkumarb@rediffmail.com": [
       "The Clink"
@@ -1792,6 +1801,9 @@
     "businessburhan52@gmail.com": [
       "Kleren"
     ],
+    "businessdevelopment@nandancoffee.com": [
+      "Nandan Coffee"
+    ],
     "businessdevelopment@oliverbrown.in": [
       "Oliver Brown"
     ],
@@ -1836,6 +1848,9 @@
     ],
     "cafe@yourstrulycoffee.in": [
       "Yours Truly"
+    ],
+    "cafebabulnath@quattroristorante.com": [
+      "Gupta Brands"
     ],
     "cafebackyardchills@gmail.com": [
       "Backyard Chills"
@@ -4366,6 +4381,9 @@
     "it@goldenparkk.com": [
       "Golden Parkk Hotel"
     ],
+    "it@himeshfoods.com": [
+      "Mad Over Donuts"
+    ],
     "it@onestalove.in": [
       "Onesta"
     ],
@@ -5505,6 +5523,9 @@
     "mannik.enterprises@gmail.com": [
       "Food Overloded"
     ],
+    "manojr.kuttan@gmail.com": [
+      "FruitBae"
+    ],
     "manpreetmauji@gmail.com": [
       "MAUJI"
     ],
@@ -5828,6 +5849,9 @@
     ],
     "mistidhar23@gmail.com": [
       "The Nest Restro and Club"
+    ],
+    "mitesh.kadam@dnhpl.com": [
+      "Mosaic"
     ],
     "mithilesh3022@gmail.com": [
       "Zorko Panvel"
@@ -6234,6 +6258,9 @@
     "nehrunagar.niyaaz@gmail.com": [
       "Niyaaz"
     ],
+    "neilquadras@gmail.com": [
+      "Dolphins"
+    ],
     "nelson.nair@nynehospitality.in": [
       "Adelina"
     ],
@@ -6620,6 +6647,9 @@
     ],
     "ops.ixr@zoiworld.com": [
       "ZOI"
+    ],
+    "ops.nagpur@mondayhotels.com": [
+      "Mosaic"
     ],
     "ops.rasoi@gmail.ccom": [
       "Rasoi"
@@ -7448,7 +7478,8 @@
       "Shawarma House Express"
     ],
     "rasmi.ranjan@dnhpl.com": [
-      "Mosaic"
+      "Mosaic",
+      "The Skyroof By M2 Square"
     ],
     "rasodamanager@gmail.com": [
       "The Rasoda"
@@ -7772,6 +7803,9 @@
     ],
     "rohitharikiran@gmail.com": [
       "Nouveau Cafe"
+    ],
+    "rohitsable2001@gmail.com": [
+      "Pav Bhaji Panda"
     ],
     "roli.shrivastava@hocco.in": [
       "Huber and Holly"
@@ -8386,6 +8420,9 @@
     ],
     "shahidresham@gmail.com": [
       "Hotel ahmed zaika"
+    ],
+    "shahirisrestaurant@gmail.com": [
+      "Shahiris Restaurant"
     ],
     "shaikhyusuf2003@gmail.com": [
       "THREE O CLOCK CAFE"
@@ -9155,6 +9192,9 @@
     ],
     "superbrecipes@gmail.com": [
       "Wasabee"
+    ],
+    "superdonutbackoffice@gmail.com": [
+      "Super Donuts"
     ],
     "support.bbcpune@gmail.com": [
       "Big Bang Community"
@@ -10015,6 +10055,9 @@
     "varunmittall@gmail.com": [
       "QAIRO"
     ],
+    "varunsoni31@gmail.com": [
+      "Moti Mahal"
+    ],
     "vasai.manager@rehbarfoods.com": [
       "Cluckin"
     ],
@@ -10455,5 +10498,5 @@
       "Zorko Gwalior"
     ]
   },
-  "generated_at": "2026-09-03T03:28:28+05:30"
+  "generated_at": "2026-09-04T03:22:22+05:30"
 }
