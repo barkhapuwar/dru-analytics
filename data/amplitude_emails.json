@@ -1,12 +1,12 @@
 {
   "days_covered": [
-    "2026-08-28",
     "2026-08-29",
     "2026-08-30",
     "2026-08-31",
     "2026-09-01",
     "2026-09-02",
-    "2026-09-03"
+    "2026-09-03",
+    "2026-09-04"
   ],
   "emails": {
     "06dinesh@gmail.com": [
@@ -1535,6 +1535,9 @@
     "bhalekarrishi4@gmail.com": [
       "The Corner Room"
     ],
+    "bhansali.razzle@gamil.com": [
+      "Apna Dhaba"
+    ],
     "bhanu_khari@yahoo.com": [
       "Cafe Kanaka Roots"
     ],
@@ -1564,6 +1567,9 @@
     ],
     "bhavikarestaurants@gmail.com": [
       "The Vibe X"
+    ],
+    "bhaviksparmar@gmail.com": [
+      "Mr and Mrs Idly"
     ],
     "bhavsar250@gmail.com": [
       "PANDEYJI RESTAURANT"
@@ -1785,6 +1791,9 @@
     "burgerito555@gmail.com": [
       "Burgerito"
     ],
+    "burgermafia.2023@gmail.com": [
+      "Burger Mafia"
+    ],
     "burnoutventures@gmail.com": [
       "BURNOUT Restaurant Games",
       "Burnout"
@@ -1962,6 +1971,9 @@
     ],
     "canteen.marcomm@gmail.com": [
       "Canteen"
+    ],
+    "captain@kitchensutra.co.in": [
+      "Kitchen Sutra"
     ],
     "caravanicecream@gmail.com": [
       "Caravan Ice Creams"
@@ -2300,6 +2312,9 @@
     ],
     "contact@flora.org.in": [
       "Flora Restaurant"
+    ],
+    "contact@ikviti.coffee": [
+      "ikviti coffee"
     ],
     "contact@jagdishfoods.com": [
       "Jagdish Foods"
@@ -5620,6 +5635,9 @@
     "marketing@maharajabhog.com": [
       "Maharaja Bhog"
     ],
+    "marketing@namasteindia.com.my": [
+      "Namaste India and PomodOro"
+    ],
     "marketing@oliverbrown.in": [
       "Oliver Brown"
     ],
@@ -5692,6 +5710,9 @@
     ],
     "masterlogin@reelo.io": [
       "Reelo Pizza"
+    ],
+    "mathew.lijosh@gmail.com": [
+      "St George Gourmet"
     ],
     "mathura.prateekenterprises@winnicakes.com": [
       "Winni Cakes and More"
@@ -6132,6 +6153,9 @@
     "nabintafe@gmail.com": [
       "Aynamoti"
     ],
+    "nadeemchaudhary96@gmail.com": [
+      "Araabaik"
+    ],
     "nadeemiphone7@gmail.com": [
       "MS Mandi and Shawarma"
     ],
@@ -6263,6 +6287,9 @@
     ],
     "nelson.nair@nynehospitality.in": [
       "Adelina"
+    ],
+    "netneighbourhood@gmail.com": [
+      "JK Burgers"
     ],
     "new7venheavencafe@gmail.com": [
       "7ven Heaven Cafe"
@@ -6543,6 +6570,9 @@
     "ogbrewsandbakes@gmail.com": [
       "OG Brews and Bakes"
     ],
+    "ogrolls2026@gmail.com": [
+      "OG Rolls"
+    ],
     "oishi.templeofwok@gmail.com": [
       "Oishi"
     ],
@@ -6599,6 +6629,9 @@
     ],
     "operation1@sankalponline.com": [
       "Sankalp Group"
+    ],
+    "operation@keenmustard.in": [
+      "Heyou"
     ],
     "operation@oliverbrown.in": [
       "Oliver Brown"
@@ -9300,7 +9333,8 @@
       "Swad Exotica Ratlam"
     ],
     "swadeahlade2025@gmail.com": [
-      "Swade Ahlade"
+      "Swade Ahlade",
+      "Swade Ahlade Porur"
     ],
     "swagramam_manager@rrdurbar.com": [
       "Swagramam"
@@ -9782,6 +9816,9 @@
     "thunderhospitality7@gmail.com": [
       "Tales of Flamingo"
     ],
+    "tia.tyagi90@gmail.com": [
+      "Roms Pizza"
+    ],
     "tierracafehubli@gmail.com": [
       "Tierra Cafe"
     ],
@@ -10237,6 +10274,9 @@
     "vishalnaharukd@gmail.co": [
       "Slyde by Crave Junction"
     ],
+    "vishalsethi17@gmail.com": [
+      "Batter and Co"
+    ],
     "vishaltajpuria@thecherrytreebakery.com": [
       "The Cherry Tree"
     ],
@@ -10498,5 +10538,5 @@
       "Zorko Gwalior"
     ]
   },
-  "generated_at": "2026-09-04T03:22:22+05:30"
+  "generated_at": "2026-09-05T03:21:57+05:30"
 }
