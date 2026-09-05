@@ -1,12 +1,12 @@
 {
   "days_covered": [
-    "2026-08-29",
     "2026-08-30",
     "2026-08-31",
     "2026-09-01",
     "2026-09-02",
     "2026-09-03",
-    "2026-09-04"
+    "2026-09-04",
+    "2026-09-05"
   ],
   "emails": {
     "06dinesh@gmail.com": [
@@ -55,6 +55,9 @@
     ],
     "38dataentery@gmail.com": [
       "38 Barracks"
+    ],
+    "74vinayjain@gmail.com": [
+      "Jain Mithai Bhandar"
     ],
     "7layersbakers@gmail.com": [
       "7 layers bakery"
@@ -132,6 +135,7 @@
     ],
     "aayushi.thawani@reelo.io": [
       "Copper Chimney",
+      "Funky Monkeys",
       "Golden chimney",
       "Love and Cheesecake",
       "Sheikh Chang Singh"
@@ -357,6 +361,9 @@
     ],
     "aditya.dudani@reelo.io": [
       "The Great Kebab Factory"
+    ],
+    "aditya.lamba29@gmail.com": [
+      "Sagar Ratna"
     ],
     "aditya.tavora@navtara.in": [
       "Navtara"
@@ -3792,6 +3799,9 @@
     "hi@rd.cafe": [
       "RD Cafe"
     ],
+    "hima.kanumuru@gmail.com": [
+      "63 degress"
+    ],
     "himadri.rock90@gmail.com": [
       "Royal Hut"
     ],
@@ -4593,6 +4603,9 @@
     "jkaartienterprises@gmail.com": [
       "JK Burgers"
     ],
+    "jkburger056@gmail.com": [
+      "JK Burgers"
+    ],
     "jkenterprises120324@gmail.com": [
       "Pizza Galleria Udaipur"
     ],
@@ -5212,6 +5225,9 @@
     ],
     "laxmieateries@gmail.com": [
       "Taste of Egg"
+    ],
+    "lay@aryans.com": [
+      "Aryan"
     ],
     "lazizpizzasemiliguda@gmail.com": [
       "LAZIZ PIZZA",
@@ -6449,6 +6465,9 @@
     "nishikanth@bharathiya.co": [
       "Bharathiya"
     ],
+    "nishvikaventures@gmail.com": [
+      "Absolute shawarma"
+    ],
     "nitantjain10@gmail.com": [
       "Devils Den Cafe"
     ],
@@ -7070,6 +7089,9 @@
     "prasad.shetty@aramasuites.com": [
       "Chavadi"
     ],
+    "prasad_parulekar@hotmail.com": [
+      "Sapre Foods"
+    ],
     "prasanna.dambs@gmail.com": [
       "The Greenhouse Barbecue"
     ],
@@ -7437,6 +7459,9 @@
     ],
     "rajkshah92@gmail.com": [
       "Asian by Kilo"
+    ],
+    "rajkumardotm7@gmail.com": [
+      "Vasans Parambariya"
     ],
     "rajnesh@frothytales.com": [
       "The Bier Library"
@@ -7878,6 +7903,9 @@
     ],
     "rotikulchaaurnaan@gmail.com": [
       "Roti Kulcha Naan"
+    ],
+    "rotishottibhilai@gmail.com": [
+      "Roti shotti"
     ],
     "royalistofoodproductpvtltd@gmail.com": [
       "Royalisto"
@@ -8403,6 +8431,9 @@
     ],
     "scgmulti2022@gmail.com": [
       "Trikaay"
+    ],
+    "schandis.goa@gmail.com": [
+      "Schandis Restaurant"
     ],
     "sciencecity@ninis.co.in": [
       "NinisKitchen ScienceCity"
@@ -9410,6 +9441,9 @@
     ],
     "tambi.vasai@gmail.com": [
       "Tambi"
+    ],
+    "tamuenterprises2024@gmail.com": [
+      "Tamu"
     ],
     "tanaya@manifesthospitality.in": [
       "Sorano"
@@ -10538,5 +10572,5 @@
       "Zorko Gwalior"
     ]
   },
-  "generated_at": "2026-09-05T03:21:57+05:30"
+  "generated_at": "2026-09-06T03:00:29+05:30"
 }
