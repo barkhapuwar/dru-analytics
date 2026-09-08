@@ -116,7 +116,9 @@ def onesignal_rows():
     with urllib.request.urlopen(req, timeout=60) as resp:
         csv_url = json.load(resp)["csv_file_url"]
     log(f"  export queued: {csv_url.rsplit('/', 1)[-1]}")
-    for attempt in range(30):
+    # OneSignal's export can take 5-12 min as the subscriber base grows; poll
+    # for up to ~18 min before giving up.
+    for attempt in range(108):
         time.sleep(10)
         try:
             raw = urllib.request.urlopen(csv_url, timeout=120).read()
@@ -128,7 +130,7 @@ def onesignal_rows():
         rows = list(csv.reader(io.StringIO(text)))
         log(f"  export ready after ~{(attempt + 1) * 10}s: {len(rows) - 1} rows")
         return rows
-    sys.exit("onesignal: export never became ready")
+    raise RuntimeError("onesignal: export never became ready")
 
 
 def growth_app_and_enabled(rows, contact_to_brand, growth_contacts):
@@ -321,19 +323,36 @@ def main():
 
     log(f"processing {len(to_do)} snapshot(s): {to_do[0]} .. {to_do[-1]}")
 
+    def last_known_state():
+        for d in reversed(all_days):
+            s = _load_snap(d)
+            if s and s.get("state"):
+                return {**s["state"], "plans": s.get("plan_breakdown", {})}
+        return None
+
     # Only read the (expensive) current state if at least one day still needs it.
     today = datetime.datetime.now(IST).date().isoformat()
     need_state = [d for d in to_do if frozen_state(d) is None]
     live = None
     if need_state:
         log(f"reading current state for {len(need_state)} new day(s)")
-        brand_count, plans, contact_to_brand = fetch_growth_roster()
-        growth_contacts = set(contact_to_brand) | all_time_dru_recipients()
-        rows = onesignal_rows()
-        has_app, notif_on = growth_app_and_enabled(rows, contact_to_brand, growth_contacts)
-        live = {"growth": brand_count, "with_app": has_app, "notif_on": notif_on,
-                "captured": today, "plans": plans}
-        log(f"   growth {brand_count} · have app {has_app} · notifications on {notif_on}")
+        try:
+            brand_count, plans, contact_to_brand = fetch_growth_roster()
+            growth_contacts = set(contact_to_brand) | all_time_dru_recipients()
+            rows = onesignal_rows()
+            has_app, notif_on = growth_app_and_enabled(rows, contact_to_brand, growth_contacts)
+            live = {"growth": brand_count, "with_app": has_app, "notif_on": notif_on,
+                    "captured": today, "plans": plans}
+            log(f"   growth {brand_count} · have app {has_app} · notifications on {notif_on}")
+        except Exception as e:  # noqa: BLE001
+            # a slow OneSignal export or sheet hiccup must not blackhole the run:
+            # carry the last frozen state forward so stages 4-6 still get written.
+            live = last_known_state()
+            if live is None:
+                raise
+            live = {**live, "captured": live.get("captured", today), "carried": True}
+            log(f"   WARN current-state read failed ({type(e).__name__}: {e}); "
+                f"carrying forward state from {live['captured']}")
 
     os.makedirs(OUT_DIR, exist_ok=True)
     settling = set(all_days[-4:])  # last ~4 days keep rising as late data lands

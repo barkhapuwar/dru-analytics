@@ -40,6 +40,9 @@ jobs:
         run: python scripts/fetch_brands.py
 
       - name: Snapshot the Growth -> DRU funnel (one dated file per run)
+        continue-on-error: true    # a slow OneSignal/Amplitude export must not
+                                   # block the DRU refresh + dashboard rebuild;
+                                   # the resettle window self-heals next run
         env:
           ONESIGNAL_APP_ID: ${{ secrets.ONESIGNAL_APP_ID }}
           ONESIGNAL_API_KEY: ${{ secrets.ONESIGNAL_API_KEY }}
