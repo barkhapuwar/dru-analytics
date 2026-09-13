@@ -1,12 +1,12 @@
 {
   "days_covered": [
-    "2026-09-06",
     "2026-09-07",
     "2026-09-08",
     "2026-09-09",
     "2026-09-10",
     "2026-09-11",
-    "2026-09-12"
+    "2026-09-12",
+    "2026-09-13"
   ],
   "emails": {
     "06dinesh@gmail.com": [
@@ -1180,6 +1180,9 @@
     "aryan.t@jumboking.co.in": [
       "Jumboking"
     ],
+    "aryanbajaj30@gmail.com": [
+      "AMBROS"
+    ],
     "aryank0301@gmail.com": [
       "Lucky store"
     ],
@@ -2056,6 +2059,9 @@
     ],
     "cashier@123.com": [
       "Food Bazar"
+    ],
+    "cashier@continuumdining.in": [
+      "Continuum"
     ],
     "cashier@mumbai.com": [
       "Mumbai Rejoice"
@@ -7312,6 +7318,9 @@
     "prashant.archinks@gmail.com": [
       "Goodgaon"
     ],
+    "prashant.saw@frothytales.com": [
+      "The Bier Library"
+    ],
     "prashantchitte5@gmail.com": [
       "Absolute Hair & Beauty Studio"
     ],
@@ -8326,6 +8335,9 @@
     "saisiddhienterprises1978@gmail.com": [
       "JK Burgers"
     ],
+    "saisinghenterprises1422@gmail.com": [
+      "JK Burgers"
+    ],
     "saisumanthsai@gmail.com": [
       "Radhika's Authentic South Indian Food"
     ],
@@ -8410,7 +8422,8 @@
       "Samarkand Restaurant"
     ],
     "sambharsa@gmail.com": [
-      "Sambharsa"
+      "Sambharsa",
+      "Sambharsa Vaishali Nagar"
     ],
     "sambharsapune22vighnraja@gmail.com": [
       "Sambharsa"
@@ -10188,6 +10201,9 @@
     "tsangsrcc@yahoo.com": [
       "Sikkim coffee"
     ],
+    "tshgoregoan@gmail.com": [
+      "The Sancha House"
+    ],
     "tsmmotera2025@gmail.com": [
       "the shake maker"
     ],
@@ -10882,5 +10898,5 @@
       "Zorko Gwalior"
     ]
   },
-  "generated_at": "2026-09-13T03:08:29+05:30"
+  "generated_at": "2026-09-14T03:09:49+05:30"
 }
