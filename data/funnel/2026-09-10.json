@@ -1,6 +1,6 @@
 {
   "date": "2026-09-10",
-  "generated_at": "2026-09-14T03:10:15+05:30",
+  "generated_at": "2026-09-15T04:16:07+05:30",
   "opened_ids": [
     981743638175,
     981803785256,
@@ -161,7 +161,7 @@
     "growth_yearly": 1953
   },
   "sent": 1156,
-  "settling": true,
+  "settling": false,
   "state": {
     "captured": "2026-09-11",
     "growth": 2466,

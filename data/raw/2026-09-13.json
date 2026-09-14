@@ -1,6 +1,6 @@
 {
   "date": "2026-09-13",
-  "fetched_at": "2026-09-14T03:04:21+05:30",
+  "fetched_at": "2026-09-15T04:09:57+05:30",
   "stable": false,
   "notifications": [
     {
@@ -239,7 +239,7 @@
       "tone": "v0",
       "external_id": "6501d528b4a0e7e8f4820a97",
       "successful": 1,
-      "received": 0,
+      "received": 1,
       "converted": 0,
       "clicked": false
     },
@@ -1409,7 +1409,7 @@
       "tone": "v0",
       "external_id": "679141056cd3f71b9e12cb10",
       "successful": 2,
-      "received": 0,
+      "received": 1,
       "converted": 0,
       "clicked": false
     },
@@ -5984,7 +5984,7 @@
       "tone": "v0",
       "external_id": "6a195bc0b6099dd182060fde",
       "successful": 3,
-      "received": 2,
+      "received": 3,
       "converted": 0,
       "clicked": false
     },
@@ -15734,7 +15734,7 @@
       "tone": "v0",
       "external_id": "681cb6720118e0a61b262b41",
       "successful": 3,
-      "received": 2,
+      "received": 3,
       "converted": 0,
       "clicked": false
     },

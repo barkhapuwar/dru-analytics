@@ -1,16 +1,19 @@
 {
   "days_covered": [
-    "2026-09-07",
     "2026-09-08",
     "2026-09-09",
     "2026-09-10",
     "2026-09-11",
     "2026-09-12",
-    "2026-09-13"
+    "2026-09-13",
+    "2026-09-14"
   ],
   "emails": {
     "06dinesh@gmail.com": [
       "Jee Hoozur Restaurant"
+    ],
+    "104noida@bercos.net": [
+      "Bercos Sec 104"
     ],
     "11.11coffeeindia@gmail.com": [
       "11 11 COFFEE"
@@ -158,6 +161,9 @@
     ],
     "abdulmustafa00007@gmail.com": [
       "Lavender Bakery and Desserts"
+    ],
+    "abeljiju@gmail.com": [
+      "Ivory Spoon"
     ],
     "abhayplanb45@gmail.com": [
       "JK Burgers"
@@ -2193,7 +2199,8 @@
       "Cha O Taa"
     ],
     "charles@cavern.com": [
-      "Cavern"
+      "Cavern",
+      "Chives All Day Diner"
     ],
     "chasetheflavour@gmail.com": [
       "Chattorey"
@@ -2501,6 +2508,7 @@
       "LePlay"
     ],
     "ctbstore@gmail.com": [
+      "ROOM FOR DESSERTS EATERY",
       "Room For Desserts CAFE"
     ],
     "ctlucknow2@gmail.com": [
@@ -3965,6 +3973,9 @@
     "hkgupta@breakinbrew.com": [
       "Breakin Brew"
     ],
+    "hlfvastral@gmail.com": [
+      "HL Frankie"
+    ],
     "hod.dining@theavatarhotel.com": [
       "The Avatar Hotel"
     ],
@@ -4021,6 +4032,9 @@
     ],
     "hotelpanchamrutveg@gmail.com": [
       "Hotel Panchamrut"
+    ],
+    "hotelprimesquare@gmail.com": [
+      "HOTEL PRIME SQUARE"
     ],
     "hotelrambhavan7@gmail.com": [
       "Ram Bhavan"
@@ -4090,6 +4104,9 @@
     ],
     "husaintaheer@gmail.com": [
       "LAZEEZ HAKEEM"
+    ],
+    "hybcafe@outlook.com": [
+      "HYB Cafe"
     ],
     "hybrid.forumkochi@lbf.co.in": [
       "Smiley Points"
@@ -4500,6 +4517,9 @@
     "israfilhafiz@gmail.com": [
       "Biryaaniwala"
     ],
+    "issaraloungeandbar@gmail.com": [
+      "Issara Lounge and Bar"
+    ],
     "it.ibh@iconhotelsindia.com": [
       "Bhagini Group"
     ],
@@ -4549,6 +4569,7 @@
       "Sandys"
     ],
     "itsyummy@tariwala.com": [
+      "Tariwala",
       "Tariwala Wall Street"
     ],
     "iyerbunglow@gmail.com": [
@@ -4759,6 +4780,9 @@
     ],
     "jpnagar@onestalove.in": [
       "Onesta JP Nagar"
+    ],
+    "jrsfood2026@gmail.com": [
+      "HL Frankie"
     ],
     "jshotels2019@gmail.com": [
       "Hotel The Downtown",
@@ -9736,6 +9760,9 @@
     "tamuenterprises2024@gmail.com": [
       "Tamu"
     ],
+    "tanay@mumbaipav.co": [
+      "Mumbai Pav Co"
+    ],
     "tanaya@manifesthospitality.in": [
       "Sorano"
     ],
@@ -10030,6 +10057,9 @@
     ],
     "themefoods@gmail.com": [
       "OLD SCHOOL"
+    ],
+    "themomomessrewa@gmail.com": [
+      "The Momo Mess"
     ],
     "themuttoncurry25@gmail.com": [
       "The Mutton Curry"
@@ -10898,5 +10928,5 @@
       "Zorko Gwalior"
     ]
   },
-  "generated_at": "2026-09-14T03:09:49+05:30"
+  "generated_at": "2026-09-15T04:15:41+05:30"
 }
