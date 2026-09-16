@@ -1,12 +1,12 @@
 {
   "days_covered": [
-    "2026-09-09",
     "2026-09-10",
     "2026-09-11",
     "2026-09-12",
     "2026-09-13",
     "2026-09-14",
-    "2026-09-15"
+    "2026-09-15",
+    "2026-09-16"
   ],
   "emails": {
     "06dinesh@gmail.com": [
@@ -380,6 +380,9 @@
     ],
     "aditya.tavora@navtara.in": [
       "Navtara"
+    ],
+    "aditya@autofocuss.in": [
+      "Tambi"
     ],
     "aditya@cafeuppercrust.com": [
       "Upper Crust"
@@ -1694,6 +1697,9 @@
       "Kapoors Cafe Yelahanka",
       "Kapoors cafe"
     ],
+    "biz.albadawi@gmail.com": [
+      "Ruzz Al Badawi"
+    ],
     "biz_accounts@dcorbiz.com": [
       "Vintclub"
     ],
@@ -2155,6 +2161,9 @@
     ],
     "ceo@zedthebaker.com": [
       "Zed The Baker"
+    ],
+    "cerys.lazarus@2pintsbrewing.com": [
+      "2 Pints Brewing"
     ],
     "cgm@coffeeculture.co.in": [
       "Coffee Culture"
@@ -5235,6 +5244,9 @@
     "kolkata10ds.cashier@gmail.com": [
       "10 Downing Street Kolkata"
     ],
+    "kolkatakravingsblr@gmail.com": [
+      "Kolkata Kravings"
+    ],
     "komal.periwal@reelo.io": [
       "Kiki Coffee Roasters"
     ],
@@ -5525,6 +5537,9 @@
     "lotusbaybng@gmail.com": [
       "Lotus Bay Food Park"
     ],
+    "loveakash897909.as@gmail.com": [
+      "Food Uncle"
+    ],
     "lovepreetsinghgodara@gmail.com": [
       "Moga Punjabi Haveli",
       "Moga punjabi haveli"
@@ -5711,6 +5726,9 @@
     ],
     "manager@chickencounty.in": [
       "Chicken County Restaurant"
+    ],
+    "manager@rd.cafe": [
+      "RD Cafe"
     ],
     "manager@sortd.cafe": [
       "Sortd Cafe"
@@ -6102,6 +6120,7 @@
       "Raju Ki Chai"
     ],
     "mis@shovona.com": [
+      "Shanghai Flavours Of ChinaTown",
       "Shanghai x Saltanat"
     ],
     "misgoodeats@gmail.com": [
@@ -6121,6 +6140,9 @@
     ],
     "mithunr@yaathumconcepts.com": [
       "Trevizo"
+    ],
+    "mizani.ind@gmail.com": [
+      "Mizani"
     ],
     "mkdhinesh1@gmail.com": [
       "kovai royal biriyani"
@@ -6867,6 +6889,9 @@
     ],
     "omprakash10class@gmail.com": [
       "Bikaner Elite"
+    ],
+    "omshreelaxmifoods@gmail.com": [
+      "HL Frankie"
     ],
     "ondumotteyakathe01@gmail.com": [
       "Ondu motteya kathe cafe"
@@ -7736,6 +7761,9 @@
     ],
     "rajnikant@gokulgourmet.com": [
       "Gokul Sweets Howrah"
+    ],
+    "rajnirikhyehospitality@gmail.com": [
+      "Chatore Bhature"
     ],
     "rajnishkumar71@gmail.com": [
       "RUMI Kasturi Nagar"
@@ -10816,6 +10844,9 @@
     "wfdiner@gmail.com": [
       "The Diner"
     ],
+    "wildwestmex2026@gmail.com": [
+      "Wild West"
+    ],
     "wjpsuperlative@gmail.com": [
       "William Johns Pizza"
     ],
@@ -10977,5 +11008,5 @@
       "Zorko Gwalior"
     ]
   },
-  "generated_at": "2026-09-16T03:56:54+05:30"
+  "generated_at": "2026-09-17T03:50:08+05:30"
 }

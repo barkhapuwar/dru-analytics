@@ -1,6 +1,6 @@
 {
   "date": "2026-09-12",
-  "fetched_at": "2026-09-16T03:53:39+05:30",
+  "fetched_at": "2026-09-17T03:45:17+05:30",
   "stable": true,
   "notifications": [
     {
@@ -17220,8 +17220,8 @@
       "external_id": "66d020f9a9b49da8830a4e45",
       "successful": 1,
       "received": 1,
-      "converted": 0,
-      "clicked": false
+      "converted": 1,
+      "clicked": true
     },
     {
       "id": "10f8aaa0-8909-49b5-a47b-121fdbf77fff",
