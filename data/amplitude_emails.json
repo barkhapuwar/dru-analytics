@@ -1,12 +1,12 @@
 {
   "days_covered": [
-    "2026-09-10",
     "2026-09-11",
     "2026-09-12",
     "2026-09-13",
     "2026-09-14",
     "2026-09-15",
-    "2026-09-16"
+    "2026-09-16",
+    "2026-09-17"
   ],
   "emails": {
     "06dinesh@gmail.com": [
@@ -267,6 +267,9 @@
     ],
     "account@amarpunjabigroup.com": [
       "Amar Punjabi"
+    ],
+    "accounts@annapoornamithai.com": [
+      "Annapoorna Mithai"
     ],
     "accounts@bercos.net": [
       "Bercos"
@@ -3267,6 +3270,7 @@
       "The Modern Sarai"
     ],
     "fnb@thesahilhotel.com": [
+      "Rivaaz Restaurant",
       "The Sahil Hotel"
     ],
     "fnbbellandur@biergarten.co.in": [
@@ -3667,6 +3671,9 @@
     "grillfoods02020@gmail.com": [
       "Grill Masters"
     ],
+    "grillyum69@gmail.com": [
+      "Grillyum"
+    ],
     "grittygamingg@gmail.com": [
       "Gritty Gaming"
     ],
@@ -3707,6 +3714,9 @@
     ],
     "guptasarthak10@gmail.com": [
       "Meeshi"
+    ],
+    "gurleen.kaur@burgerbrewery.com": [
+      "Burger Brewery"
     ],
     "gurshaldeep@gmail.com": [
       "o2 Cafe"
@@ -3788,6 +3798,9 @@
     ],
     "harsh104@rediffmail.com": [
       "JK Burgers"
+    ],
+    "harshad7006@gmail.com": [
+      "Barik Mandi"
     ],
     "harshadkoli@frozenfun.com": [
       "Frozen Fun"
@@ -5459,6 +5472,10 @@
     "lefoudelights@gmail.com": [
       "Le Fou Delights"
     ],
+    "lekhajn@vihaanahotels.com": [
+      "Vamshee By Vihaana",
+      "Vihaana Restuarant"
+    ],
     "lekhanair.nk@gmail.com": [
       "Beetroot Bistro"
     ],
@@ -6333,6 +6350,9 @@
     "muhammed.selia@gmail.com": [
       "Deliure and The Eatrium"
     ],
+    "mujibkhan.in@gmail.com": [
+      "JhingaLala"
+    ],
     "mukesh.kumar@rajamanesystems.co": [
       "Tall Oaks"
     ],
@@ -6426,6 +6446,9 @@
     ],
     "nabintafe@gmail.com": [
       "Aynamoti"
+    ],
+    "nadeem@jhingalala.com": [
+      "JhingaLala"
     ],
     "nadeemchaudhary96@gmail.com": [
       "Araabaik"
@@ -6928,6 +6951,9 @@
     ],
     "operations.manager@talloaks.in": [
       "Tall Oaks"
+    ],
+    "operations@arborbrewing.in": [
+      "Arbor Brewing Company"
     ],
     "operations@brewbakes.co": [
       "Punjabi Adda Noida"
@@ -7921,6 +7947,9 @@
       "RavoyiATelangana Kitchen"
     ],
     "reelo-test+1789049390189@mailinator.com": [
+      "TesterCafe"
+    ],
+    "reelo-test+1789626586551@mailinator.com": [
       "TesterCafe"
     ],
     "reelo123@gmail.com": [
@@ -9478,6 +9507,9 @@
     "subhambargame6@gmail.com": [
       "Behrupiya Restaurant"
     ],
+    "subhamchoudhuri62@yahoo.com": [
+      "Tipsy Tap"
+    ],
     "subhamd1988@gmail.com": [
       "Kulture"
     ],
@@ -9958,6 +9990,9 @@
     ],
     "tgif.forumsujana.hyderabad@fridaysindia.com": [
       "TGIF Nexus Hyd Mall"
+    ],
+    "thakkarkashyap03@gmail.com": [
+      "Jalaram Hotel"
     ],
     "thakursmr@gmail.com": [
       "Love Asia Bengaluru"
@@ -11008,5 +11043,5 @@
       "Zorko Gwalior"
     ]
   },
-  "generated_at": "2026-09-17T03:50:08+05:30"
+  "generated_at": "2026-09-18T03:56:09+05:30"
 }
