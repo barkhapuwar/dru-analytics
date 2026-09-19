@@ -1,6 +1,6 @@
 {
   "date": "2026-09-18",
-  "fetched_at": "2026-09-19T03:19:27+05:30",
+  "fetched_at": "2026-09-20T03:05:58+05:30",
   "stable": false,
   "notifications": [
     {
@@ -959,7 +959,7 @@
       "tone": "v2",
       "external_id": "6a5494674abd0709e9d6bd8b",
       "successful": 1,
-      "received": 0,
+      "received": 1,
       "converted": 0,
       "clicked": false
     },
@@ -3509,7 +3509,7 @@
       "tone": "v2",
       "external_id": "678de7a74e1b92e126cdcd56",
       "successful": 3,
-      "received": 3,
+      "received": 4,
       "converted": 0,
       "clicked": false
     },
@@ -5579,7 +5579,7 @@
       "tone": "v2",
       "external_id": "6a195bc0b6099dd182060fde",
       "successful": 3,
-      "received": 2,
+      "received": 3,
       "converted": 0,
       "clicked": false
     },
@@ -6119,7 +6119,7 @@
       "tone": "v2",
       "external_id": "6587af38d384362eb1de82f5",
       "successful": 1,
-      "received": 0,
+      "received": 1,
       "converted": 0,
       "clicked": false
     },
@@ -9524,7 +9524,7 @@
       "tone": "v2",
       "external_id": "6a15941bb3a1b7dc22952964",
       "successful": 2,
-      "received": 1,
+      "received": 2,
       "converted": 1,
       "clicked": true
     },
@@ -13785,8 +13785,8 @@
       "external_id": "663b624fdba80b28cfa36f29",
       "successful": 1,
       "received": 1,
-      "converted": 0,
-      "clicked": false
+      "converted": 1,
+      "clicked": true
     },
     {
       "id": "e8af1849-f637-4b64-9361-8c2763abe27c",
@@ -15839,7 +15839,7 @@
       "tone": "v2",
       "external_id": "6a96afae1d4d2c08b1605710",
       "successful": 1,
-      "received": 0,
+      "received": 1,
       "converted": 0,
       "clicked": false
     },
@@ -17940,8 +17940,8 @@
       "external_id": "68428030a648ebcc79b50eea",
       "successful": 1,
       "received": 1,
-      "converted": 0,
-      "clicked": false
+      "converted": 1,
+      "clicked": true
     },
     {
       "id": "d897c971-8521-46c5-86a9-b569f109d69a",
@@ -20429,7 +20429,7 @@
       "tone": "v2",
       "external_id": "656e939ef5a31d860a7365e6",
       "successful": 1,
-      "received": 0,
+      "received": 1,
       "converted": 0,
       "clicked": false
     },

@@ -1,12 +1,12 @@
 {
   "days_covered": [
-    "2026-09-12",
     "2026-09-13",
     "2026-09-14",
     "2026-09-15",
     "2026-09-16",
     "2026-09-17",
-    "2026-09-18"
+    "2026-09-18",
+    "2026-09-19"
   ],
   "emails": {
     "06dinesh@gmail.com": [
@@ -141,6 +141,7 @@
     ],
     "aayushi.thawani@reelo.io": [
       "Amul Cafe",
+      "Bakebook Bakery",
       "Copper Chimney",
       "Funky Monkeys",
       "Golden chimney",
@@ -3051,6 +3052,9 @@
     "dumrepublicindia@gmail.com": [
       "Dum Republic"
     ],
+    "durgamallipamula@gmail.com": [
+      "United Food Palace"
+    ],
     "dwarkamaicafe@gmail.com": [
       "Dwarkamai Cafe"
     ],
@@ -4696,6 +4700,9 @@
     "jaleel@rehbarfoods.com": [
       "Cluckin"
     ],
+    "jamoahmedabad@gmail.com": [
+      "JAMO"
+    ],
     "jamuntreemfp@gmail.com": [
       "Kulhad King Fine Dine"
     ],
@@ -6001,6 +6008,7 @@
       "TAHIA"
     ],
     "marketing@ybfc.in": [
+      "Pop Tates",
       "YBFC"
     ],
     "marketing@zimagourmet.com": [
@@ -6572,6 +6580,9 @@
     ],
     "naveen.gorantla@litensity.com": [
       "Bigguys"
+    ],
+    "naveenjohn@kongsiteabar.in": [
+      "Kongsi Tea Bar"
     ],
     "navygaurav2@gmail.com": [
       "Kafenio Cafe and Bistro"
@@ -7170,6 +7181,7 @@
     "parth.prajapat@reelo.io": [
       "Jims Fresh",
       "Reelo",
+      "Reelo Cafe",
       "The Pizza Smith",
       "The Robot Restaurant"
     ],
@@ -9452,6 +9464,9 @@
     "spanda72536@gmail.com": [
       "kedias Restaurant"
     ],
+    "sparshmalviya13@gmail.com": [
+      "ayodhya restaurant"
+    ],
     "specialtycoffeehousein@gmail.com": [
       "Specialty Coffee House"
     ],
@@ -10784,6 +10799,9 @@
     "vinod.tom786@gmail.com": [
       "Toms Cafe"
     ],
+    "vinodjoshiabd@gmail.com": [
+      "Greenleaf Veg Cuisine"
+    ],
     "vinodmagaji81@gmail.com": [
       "Puff and Pastry Bakery"
     ],
@@ -11114,5 +11132,5 @@
       "Zorko Gwalior"
     ]
   },
-  "generated_at": "2026-09-19T03:27:15+05:30"
+  "generated_at": "2026-09-20T03:08:18+05:30"
 }
