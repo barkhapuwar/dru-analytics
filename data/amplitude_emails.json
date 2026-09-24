@@ -1,12 +1,12 @@
 {
   "days_covered": [
-    "2026-09-17",
     "2026-09-18",
     "2026-09-19",
     "2026-09-20",
     "2026-09-21",
     "2026-09-22",
-    "2026-09-23"
+    "2026-09-23",
+    "2026-09-24"
   ],
   "emails": {
     "06dinesh@gmail.com": [
@@ -19,7 +19,8 @@
       "11 11 COFFEE"
     ],
     "1131manager@hocblr.com": [
-      "1131 Bar and Kitchen"
+      "1131 Bar and Kitchen",
+      "Orah Brew Garden"
     ],
     "11julyrestaurant@gmail.com": [
       "11 july"
@@ -602,6 +603,9 @@
     ],
     "alethea.kynta@gmail.com": [
       "16 Street Bistro"
+    ],
+    "algowise9@gmail.com": [
+      "Balis punjabi dhaba"
     ],
     "aliaskar9910@gmail.com": [
       "CAFE ICE MAGIC"
@@ -1882,6 +1886,9 @@
     ],
     "bsbgoa@gmail.com": [
       "The Black Sheep Bistro"
+    ],
+    "btmbeijingbites00@gmail.com": [
+      "Beijing Bites"
     ],
     "btown.tus@gmail.com": [
       "Btown"
@@ -3212,6 +3219,9 @@
     "eshwar12598@gmail.com": [
       "Los Tacos"
     ],
+    "events.ixr@zoiworld.com": [
+      "ZOI"
+    ],
     "exe.assistant@chandanmukhwas.com": [
       "Chandan Mukhwas"
     ],
@@ -3606,6 +3616,9 @@
     "gm.loro@theavatarhotel.com": [
       "Loro Bar and Kitchen"
     ],
+    "gm.lthch@lemontreehotels.com": [
+      "Lemon Tree Chandausi"
+    ],
     "gm.nagpur@mondayhotels.com": [
       "Mosaic"
     ],
@@ -3924,6 +3937,9 @@
     ],
     "hatchus@eggersmadhouse.com": [
       "CAFE MADHOUSE"
+    ],
+    "hawkscap@gmail.com": [
+      "Balista"
     ],
     "hawkventures01@gmail.com": [
       "Get Desserted"
@@ -4716,6 +4732,10 @@
     "itsyummy@tariwala.com": [
       "Tariwala",
       "Tariwala Wall Street"
+    ],
+    "ivory.bake@gmail.com": [
+      "iCAKE",
+      "iCAKE YLK"
     ],
     "iyerbunglow@gmail.com": [
       "12o Clock Biryani",
@@ -6588,6 +6608,9 @@
     "naakshenterprises@gmail.com": [
       "JK Burgers"
     ],
+    "nabeel.ggc97@gmail.com": [
+      "Greens pizzeria"
+    ],
     "nabintafe@gmail.com": [
       "Aynamoti"
     ],
@@ -7587,7 +7610,8 @@
       "Hangout"
     ],
     "pratiggya@royalenfield.com": [
-      "Amanora Pune"
+      "Amanora Pune",
+      "Royal Enfield"
     ],
     "pratik.crazy@gmail.com": [
       "1990 by Crazy Bite"
@@ -7978,6 +8002,9 @@
     ],
     "rakeshsir1300@gmail.com": [
       "JK Burgers"
+    ],
+    "rakshya@blrbrewing.com": [
+      "BLR Brewing Co"
     ],
     "ram.gupta@miadiamante.com": [
       "Independence Brewing Co"
@@ -8486,6 +8513,9 @@
     ],
     "rushabdorkadi65@gmail.com": [
       "Bake and Brew"
+    ],
+    "rushiraj111@gmail.com": [
+      "Formula RC"
     ],
     "rustichouse272007@gmail.com": [
       "RUSTIC HOUSE"
@@ -10450,6 +10480,9 @@
     "thestyleloungekompally@gmail.com": [
       "Juice Salon"
     ],
+    "theswadrestauranthaldwani@gmail.com": [
+      "The Swad"
+    ],
     "thetasteelement1@gmail.com": [
       "The Taste Element"
     ],
@@ -11164,6 +11197,9 @@
       "Reelo Cafe",
       "Talab Cafe"
     ],
+    "yash.sharma+01@reelo.io": [
+      "McD"
+    ],
     "yash.sharma@reelo.io": [
       "Chug Biergarten",
       "Handi",
@@ -11280,5 +11316,5 @@
       "Zorko Gwalior"
     ]
   },
-  "generated_at": "2026-09-24T04:00:25+05:30"
+  "generated_at": "2026-09-25T04:13:02+05:30"
 }
