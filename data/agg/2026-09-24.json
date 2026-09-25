@@ -1,14 +1,14 @@
 {
   "date": "2026-09-24",
-  "fetched_at": "2026-09-25T04:09:44+05:30",
+  "fetched_at": "2026-09-26T04:07:55+05:30",
   "stable": false,
   "totals": {
     "sends": 1466,
     "brands": 1466,
-    "clicks": 105,
-    "ctr": 7.16,
+    "clicks": 106,
+    "ctr": 7.23,
     "sum_successful": 1995,
-    "sum_received": 1580
+    "sum_received": 1589
   },
   "by_signal": {
     "growth_driver": {
@@ -18,8 +18,8 @@
     },
     "significantly_down": {
       "sends": 249,
-      "clicks": 14,
-      "ctr": 5.62
+      "clicks": 15,
+      "ctr": 6.02
     },
     "historically_great": {
       "sends": 217,
@@ -80,8 +80,8 @@
     },
     "prod_dru_significantly_down_v2": {
       "sends": 249,
-      "clicks": 14,
-      "ctr": 5.62
+      "clicks": 15,
+      "ctr": 6.02
     },
     "prod_dru_historically_great_v2": {
       "sends": 217,
@@ -142,8 +142,8 @@
   "by_tone": {
     "v2": {
       "sends": 1465,
-      "clicks": 105,
-      "ctr": 7.17
+      "clicks": 106,
+      "ctr": 7.24
     },
     "v0": {
       "sends": 1,
