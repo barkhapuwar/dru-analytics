@@ -1,12 +1,12 @@
 {
   "days_covered": [
-    "2026-09-19",
     "2026-09-20",
     "2026-09-21",
     "2026-09-22",
     "2026-09-23",
     "2026-09-24",
-    "2026-09-25"
+    "2026-09-25",
+    "2026-09-26"
   ],
   "emails": {
     "06dinesh@gmail.com": [
@@ -147,8 +147,10 @@
       "Funky Monkeys",
       "Golden chimney",
       "KNS Burgers",
+      "Kalpaney",
       "Legacy Brewing Company",
       "Love and Cheesecake",
+      "MRA Bakery",
       "Qaffeine",
       "Royal Rasoi",
       "Sheikh Chang Singh",
@@ -608,6 +610,7 @@
       "16 Street Bistro"
     ],
     "algowise9@gmail.com": [
+      "Balis Punjabi Dhaba",
       "Balis punjabi dhaba"
     ],
     "aliaskar9910@gmail.com": [
@@ -1576,6 +1579,9 @@
     "beansnbrookscafe@yahoo.com": [
       "beans n brooks cafe"
     ],
+    "beautymanntrasalon@gmail.com": [
+      "Beautymanntra Salon"
+    ],
     "bedirahul15.rb@gmail.com": [
       "Get Desserted"
     ],
@@ -1696,6 +1702,9 @@
     ],
     "bigideahospitality@gmail.com": [
       "Kafe Desi"
+    ],
+    "bijoy@eatrepeatindia.com": [
+      "Eat Repeat India"
     ],
     "bijumjana800@gmail.com": [
       "Roastery X Colocal X PS Cheese"
@@ -3330,6 +3339,9 @@
     "firoz@fruitbae.com": [
       "FruitBae"
     ],
+    "firstwavefries.yelahanka@gmail.com": [
+      "First Wave Fries"
+    ],
     "fitandfuryaluva2@gmail.com": [
       "Fit and Fury"
     ],
@@ -3666,6 +3678,9 @@
     ],
     "gm@thekingsgroup.in": [
       "Kings Chic Signature"
+    ],
+    "gm@themodernsarai.com": [
+      "The Modern Sarai"
     ],
     "gm@unitedtelugukitchens.com": [
       "UTK Vijayawada"
@@ -5070,6 +5085,9 @@
     "kanishk@sevenone.co.in": [
       "Lazy Leopard"
     ],
+    "kanishka.kabra@reelo.io": [
+      "Sip Society Bar"
+    ],
     "kaosenterprise2023@gmail.com": [
       "Choice Snack Bar"
     ],
@@ -5688,6 +5706,9 @@
     ],
     "lokmansingh72@gmail.com": [
       "Arctic Scoopy Cafe"
+    ],
+    "lollorossoindia@gmail.com": [
+      "LOLLO ROSSO"
     ],
     "londoncoffeeagra@gmail.com": [
       "London coffee club"
@@ -6662,6 +6683,9 @@
     "nandini@ksdd.com": [
       "KSDD x Haristo Pizzeria"
     ],
+    "nani4374@gmail.com": [
+      "Naivedyam"
+    ],
     "nao.gk2@gmail.com": [
       "NAO"
     ],
@@ -6697,6 +6721,9 @@
     ],
     "naveen.gorantla@litensity.com": [
       "Bigguys"
+    ],
+    "naveen@ciboexports.com": [
+      "Meloghrano"
     ],
     "naveenjohn@kongsiteabar.in": [
       "Kongsi Tea Bar"
@@ -8801,6 +8828,9 @@
     ],
     "sana65kabra@gmail.com": [
       "Bene Pizza and Pastry"
+    ],
+    "sanaahsan.work@gmail.com": [
+      "Natura Cafe"
     ],
     "sanabilsanu777@gmail.com": [
       "Thakkara"
@@ -10933,6 +10963,9 @@
     "vidur@fescafe.in": [
       "FES Cafe and Desserts"
     ],
+    "vidya.pdine@gmail.com": [
+      "Zamana India"
+    ],
     "vihangmhatre@gmail.com": [
       "Farm view restaurant"
     ],
@@ -11343,5 +11376,5 @@
       "Zorko Gwalior"
     ]
   },
-  "generated_at": "2026-09-26T04:15:46+05:30"
+  "generated_at": "2026-09-27T03:38:07+05:30"
 }

@@ -1,6 +1,6 @@
 {
   "date": "2026-09-25",
-  "fetched_at": "2026-09-26T04:09:01+05:30",
+  "fetched_at": "2026-09-27T03:35:05+05:30",
   "stable": false,
   "notifications": [
     {
@@ -4124,7 +4124,7 @@
       "tone": "v0",
       "external_id": "69be5b966d350a76b7cedd31",
       "successful": 4,
-      "received": 2,
+      "received": 3,
       "converted": 0,
       "clicked": false
     },
@@ -4589,7 +4589,7 @@
       "tone": "v0",
       "external_id": "6a15941bb3a1b7dc22952964",
       "successful": 3,
-      "received": 2,
+      "received": 3,
       "converted": 0,
       "clicked": false
     },
@@ -9405,7 +9405,7 @@
       "external_id": "6a8968c9b9d7190d5e43c3b3",
       "successful": 3,
       "received": 3,
-      "converted": 1,
+      "converted": 2,
       "clicked": true
     },
     {
@@ -13844,7 +13844,7 @@
       "tone": "v0",
       "external_id": "697c9c9ae67c6514e5a39122",
       "successful": 1,
-      "received": 0,
+      "received": 1,
       "converted": 0,
       "clicked": false
     },
@@ -15434,7 +15434,7 @@
       "tone": "v0",
       "external_id": "62035fc520bd2720246e9d32",
       "successful": 3,
-      "received": 2,
+      "received": 3,
       "converted": 0,
       "clicked": false
     },
@@ -18045,8 +18045,8 @@
       "external_id": "682b2f128128f8131d7456c1",
       "successful": 1,
       "received": 1,
-      "converted": 0,
-      "clicked": false
+      "converted": 1,
+      "clicked": true
     },
     {
       "id": "c9f0c8de-d300-42b8-bb5f-4c7f6b2c985b",
