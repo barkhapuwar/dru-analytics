@@ -1,14 +1,14 @@
 {
   "date": "2026-09-28",
-  "fetched_at": "2026-10-01T04:39:20+05:30",
-  "stable": false,
+  "fetched_at": "2026-10-02T04:48:31+05:30",
+  "stable": true,
   "totals": {
     "sends": 1453,
     "brands": 1453,
     "clicks": 136,
     "ctr": 9.36,
     "sum_successful": 1968,
-    "sum_received": 1563
+    "sum_received": 1565
   },
   "by_signal": {
     "growth_driver": {

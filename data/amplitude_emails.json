@@ -1,12 +1,12 @@
 {
   "days_covered": [
-    "2026-09-24",
     "2026-09-25",
     "2026-09-26",
     "2026-09-27",
     "2026-09-28",
     "2026-09-29",
-    "2026-09-30"
+    "2026-09-30",
+    "2026-10-01"
   ],
   "emails": {
     "06dinesh@gmail.com": [
@@ -426,6 +426,9 @@
     ],
     "admin@fantasybakery.in": [
       "Fantasy Bakery"
+    ],
+    "admin@funkymonkeys.in": [
+      "Funky Monkeys"
     ],
     "admin@home360stores.com": [
       "Home 360"
@@ -1637,6 +1640,9 @@
     "bercos.rohini2009@gmail.com": [
       "Bercos"
     ],
+    "bercos74@reelo.in": [
+      "Bercos"
+    ],
     "bercosagra15@reel.in": [
       "Bercos"
     ],
@@ -1680,7 +1686,9 @@
       "The Chutney Culture"
     ],
     "bhargav.prajapati@reelo.io": [
-      "Magnetic Step"
+      "Magnetic Step",
+      "The Yummy Fork",
+      "Veera n Da Dhaba"
     ],
     "bhargav0037@gmail.com": [
       "Aarka bakers"
@@ -2522,6 +2530,8 @@
       "Spezia Bistro"
     ],
     "contact@allinhospitality.in": [
+      "All In Hospitality",
+      "Hylo",
       "Hylo Taproom by Igloo"
     ],
     "contact@basilfnb.com": [
@@ -3278,6 +3288,9 @@
     ],
     "eshwar12598@gmail.com": [
       "Los Tacos"
+    ],
+    "espmech@gmail.com": [
+      "The Hearth Kitchen"
     ],
     "europradhan@gmail.com": [
       "The Jungle Book RCB"
@@ -4853,6 +4866,7 @@
       "JK Burgers"
     ],
     "jack@gmail.com": [
+      "Jack Group",
       "Jack Resto"
     ],
     "jackie.guo@marybrowns.com": [
@@ -5629,6 +5643,9 @@
     "kulkarnisalil01@gmail.com": [
       "Plateau Restaurant"
     ],
+    "kumar10sap@gmail.com": [
+      "Melrosa cafe and creamery"
+    ],
     "kumarsharman66@gmail.com": [
       "TeaMax Cafe Sikar"
     ],
@@ -6175,6 +6192,9 @@
     "marketing@chokola.in": [
       "Choko La"
     ],
+    "marketing@churrolto.com": [
+      "Churrolto"
+    ],
     "marketing@credvest.com": [
       "Vanamo"
     ],
@@ -6559,6 +6579,9 @@
     ],
     "mohit@lanatureresort.com": [
       "La Nature Resort"
+    ],
+    "mohit@tavaasa.com": [
+      "RED COAL"
     ],
     "mohitg@nathusweets.com": [
       "Nathu Sweets"
@@ -7049,6 +7072,7 @@
       "DCube Desserts Cafe"
     ],
     "nirbachita@shovona.com": [
+      "Shanghai Flavours Of ChinaTown",
       "Shanghai x Saltanat"
     ],
     "nirmal.saha4@gmail.com": [
@@ -7090,6 +7114,9 @@
     ],
     "nishantmunjare4646@gmail.com": [
       "Food of Indians"
+    ],
+    "nishi.patel2475@gmail.com": [
+      "Aristo Cafe"
     ],
     "nishi999@gmail.com": [
       "Little West Pizza"
@@ -7159,6 +7186,9 @@
     ],
     "notomoro2018@gmail.com": [
       "Notomoro The Fern"
+    ],
+    "nourripatisserie@gmail.com": [
+      "Nourri Cafe Patisserie"
     ],
     "novaenterprisesxperia@gmail.com": [
       "JK Burgers"
@@ -9479,6 +9509,9 @@
     "shivam.hospitality13@gmail.com": [
       "Roastery X Colocal X PS Cheese"
     ],
+    "shivam.jaiswal1@yahoo.com": [
+      "Shandong"
+    ],
     "shivam.shukla120399@gmail.com": [
       "The Cookiegod"
     ],
@@ -9904,6 +9937,9 @@
     ],
     "srikanthn@dumont.in": [
       "Dumont Creamery"
+    ],
+    "srinisewan@gmail.com": [
+      "MeldHaus"
     ],
     "sritrivenifoods@gmail.com": [
       "JK Burgers"
@@ -10352,6 +10388,9 @@
     ],
     "tandoorishala@gmail.com": [
       "GROVERS TANDOORI SHALA"
+    ],
+    "tandooriswaag3@gmail.com": [
+      "Aroras Tandoori Swag"
     ],
     "tandoorstory@gmail.com": [
       "Tandoor Story"
@@ -11577,5 +11616,5 @@
       "Zorko Gwalior"
     ]
   },
-  "generated_at": "2026-10-01T04:44:13+05:30"
+  "generated_at": "2026-10-02T04:52:30+05:30"
 }
