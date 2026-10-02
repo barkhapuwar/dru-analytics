@@ -1,12 +1,12 @@
 {
   "days_covered": [
-    "2026-09-25",
     "2026-09-26",
     "2026-09-27",
     "2026-09-28",
     "2026-09-29",
     "2026-09-30",
-    "2026-10-01"
+    "2026-10-01",
+    "2026-10-02"
   ],
   "emails": {
     "06dinesh@gmail.com": [
@@ -1092,6 +1092,9 @@
     "anushka@taquitos.com": [
       "Taquitos"
     ],
+    "anushkafreshaisle@reelo.io": [
+      "Fresh Aisle Cafe"
+    ],
     "anwarashraf.official@gmail.com": [
       "Fit and Fury"
     ],
@@ -1554,6 +1557,9 @@
     "barath138@gmail.com": [
       "Ridha Pizzeria"
     ],
+    "barbados.loungebar@gmail.com": [
+      "barbados"
+    ],
     "barbequecompanygolaroad@gmail.com": [
       "BBQ COMPANY"
     ],
@@ -1728,6 +1734,9 @@
     ],
     "bidarcrowntown@gmail.com": [
       "SAATVIK"
+    ],
+    "bigblyenterprises@gmail.com": [
+      "The Waffle Bar Panjim"
     ],
     "biggieswithakc@gmail.com": [
       "Biggies Burger"
@@ -2432,6 +2441,9 @@
     ],
     "client.horizon@dotpe.in": [
       "RR Durbar"
+    ],
+    "clientservicing@therushrepublic.com": [
+      "eximo"
     ],
     "club17gkp@gmail.com": [
       "Club 17"
@@ -3316,6 +3328,9 @@
     "faizal@gazeebo.com": [
       "Gazeboo"
     ],
+    "faraz@mls.om": [
+      "MLS Steakhouse"
+    ],
     "farid.ansari6969@gmail.com": [
       "Burger khan"
     ],
@@ -3450,6 +3465,7 @@
     ],
     "fnb@thesahilhotel.com": [
       "Rivaaz Restaurant",
+      "Rivaaz x Bluet",
       "The Sahil Hotel"
     ],
     "fnbbellandur@biergarten.co.in": [
@@ -3520,6 +3536,9 @@
     ],
     "freashfoodsservices2020@gmail.com": [
       "JK Burgers"
+    ],
+    "freshaislecafe@freshaisle.in": [
+      "Fresh Aisle Cafe"
     ],
     "freshcartjamnagar@gmail.com": [
       "FreshKart"
@@ -4479,6 +4498,9 @@
     ],
     "info.layafresh@gmail.com": [
       "iyers Authentic"
+    ],
+    "info.m3m@underdoggs.com": [
+      "Underdoggs"
     ],
     "info.nagpal@gmail.com": [
       "Nagpal Chole Bhature"
@@ -6096,6 +6118,9 @@
     "mandar@xyxxcrew.com": [
       "XYXX Apparels"
     ],
+    "mandy.phogat129@gmail.com": [
+      "Moti Mahal Delux"
+    ],
     "mangwanisahil@gmail.com": [
       "Mr Sandwich"
     ],
@@ -7431,6 +7456,7 @@
       "12o clock biryani"
     ],
     "ovensnplatters@gmail.com": [
+      "Ovens N Platters",
       "Ovens and Platters"
     ],
     "overseas.rajat@gmail.com": [
@@ -8210,6 +8236,9 @@
     ],
     "rajourigarden@bercos.net": [
       "Bercos Rajouri Garden"
+    ],
+    "rajtradingcompany38@gmail.com": [
+      "Cafe Backyard Ropar"
     ],
     "rajukanna9121@gmail.com": [
       "CAFE ICE MAGIC"
@@ -9360,6 +9389,9 @@
     ],
     "shahirisrestaurant@gmail.com": [
       "Shahiris Restaurant"
+    ],
+    "shahnoor@mls.om": [
+      "MLS Steakhouse"
     ],
     "shaikhyusuf2003@gmail.com": [
       "THREE O CLOCK CAFE"
@@ -11616,5 +11648,5 @@
       "Zorko Gwalior"
     ]
   },
-  "generated_at": "2026-10-02T04:52:30+05:30"
+  "generated_at": "2026-10-03T04:42:05+05:30"
 }
