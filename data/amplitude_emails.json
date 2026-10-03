@@ -1,12 +1,12 @@
 {
   "days_covered": [
-    "2026-09-26",
     "2026-09-27",
     "2026-09-28",
     "2026-09-29",
     "2026-09-30",
     "2026-10-01",
-    "2026-10-02"
+    "2026-10-02",
+    "2026-10-03"
   ],
   "emails": {
     "06dinesh@gmail.com": [
@@ -1263,6 +1263,9 @@
     "aryan.t@jumboking.co.in": [
       "Jumboking"
     ],
+    "aryanagarwalrock@gmail.com": [
+      "Eden Hospitality"
+    ],
     "aryanbajaj30@gmail.com": [
       "AMBROS"
     ],
@@ -1457,6 +1460,9 @@
     "ayusharora@fountainhospitality.com": [
       "Fountain Hospitality"
     ],
+    "ayushlunkad.09@gmail.com": [
+      "Adihaah restrocafe"
+    ],
     "azadgrouphotels1940@gmail.com": [
       "1940 India by Azad"
     ],
@@ -1591,6 +1597,9 @@
     "bcmwebsolutions@gmail.com": [
       "Atrangi Kitchen"
     ],
+    "bd@arborbrewing.in": [
+      "Arbor Brewing Company"
+    ],
     "bdm@kakalkairuchi.com": [
       "Kakal Kairuchi"
     ],
@@ -1693,6 +1702,7 @@
     ],
     "bhargav.prajapati@reelo.io": [
       "Magnetic Step",
+      "Silver Oak Restro Cafe",
       "The Yummy Fork",
       "Veera n Da Dhaba"
     ],
@@ -2955,6 +2965,9 @@
     "dhir@chokola.com": [
       "Choko La"
     ],
+    "dhir@das.com": [
+      "DasaPrakash Mustard Madras"
+    ],
     "dhir@dorfbrewhouse.in": [
       "Dorf Brewhouse"
     ],
@@ -3236,6 +3249,10 @@
     ],
     "edwin@mbventures.co": [
       "Amara Desserts"
+    ],
+    "eethiagu@gmail.com": [
+      "Heist",
+      "Orange Restaurant"
     ],
     "eggiterian.delivery@gmail.com": [
       "Eggiterian Cafe"
@@ -5671,6 +5688,9 @@
     "kumarsharman66@gmail.com": [
       "TeaMax Cafe Sikar"
     ],
+    "kunal.gupta+210@reelo.io": [
+      "test"
+    ],
     "kunal.gupta+971@reelo.io": [
       "ArpanFlats"
     ],
@@ -5965,6 +5985,9 @@
     "maheshwarisharad318@gmail.com": [
       "Morpankh Kitchen"
     ],
+    "mahipalrajpurohit08@gmail.com": [
+      "The Asian Affairs"
+    ],
     "mahua.narayan@gmail.com": [
       "Ambrosia Resort and Spa"
     ],
@@ -6137,6 +6160,9 @@
     "manish.tandon6@gmail.com": [
       "Ruh by Ruchi Tandon",
       "Ruh by Ruchi Tandon Sect54"
+    ],
+    "manishchawla7777@gmail.com": [
+      "Meridian Sambhajinagar"
     ],
     "manishr43@gmail.com": [
       "Soki and Olive Garden"
@@ -7390,6 +7416,9 @@
     "operationshead@keenmustard.in": [
       "Serious Slice",
       "Serious Slice Indiranagar"
+    ],
+    "operationshead@ponrambiriyani.com": [
+      "Ponram Biriyani Chennai"
     ],
     "operationsmanager@46ounces.com": [
       "46 Ounces"
@@ -8962,6 +8991,9 @@
     ],
     "sakshamgarg001@gmail.com": [
       "Camiano Patisserie"
+    ],
+    "sakshisalvi@sfmpl.in": [
+      "Sandwizzaa"
     ],
     "saladcaf3@gmail.com": [
       "H3Y Salad Cafe"
@@ -11648,5 +11680,5 @@
       "Zorko Gwalior"
     ]
   },
-  "generated_at": "2026-10-03T04:42:05+05:30"
+  "generated_at": "2026-10-04T03:51:18+05:30"
 }
