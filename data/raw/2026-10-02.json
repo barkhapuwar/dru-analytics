@@ -1,6 +1,6 @@
 {
   "date": "2026-10-02",
-  "fetched_at": "2026-10-04T03:49:14+05:30",
+  "fetched_at": "2026-10-05T03:56:41+05:30",
   "stable": false,
   "notifications": [
     {
@@ -4440,8 +4440,8 @@
       "external_id": "66b45d3009a543326db70188",
       "successful": 1,
       "received": 1,
-      "converted": 0,
-      "clicked": false
+      "converted": 1,
+      "clicked": true
     },
     {
       "id": "476de0e2-9087-4ec1-ad8f-733dac8cedac",
@@ -14835,8 +14835,8 @@
       "external_id": "6a4dfeb6deebc30b5aa0e648",
       "successful": 2,
       "received": 2,
-      "converted": 0,
-      "clicked": false
+      "converted": 1,
+      "clicked": true
     },
     {
       "id": "7f7e576b-40ce-411a-bf02-307f50ac174c",

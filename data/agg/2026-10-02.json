@@ -1,12 +1,12 @@
 {
   "date": "2026-10-02",
-  "fetched_at": "2026-10-04T03:49:14+05:30",
+  "fetched_at": "2026-10-05T03:56:41+05:30",
   "stable": false,
   "totals": {
     "sends": 1488,
     "brands": 1488,
-    "clicks": 116,
-    "ctr": 7.8,
+    "clicks": 118,
+    "ctr": 7.93,
     "sum_successful": 2032,
     "sum_received": 1626
   },
@@ -28,13 +28,13 @@
     },
     "significantly_down": {
       "sends": 157,
-      "clicks": 13,
-      "ctr": 8.28
+      "clicks": 14,
+      "ctr": 8.92
     },
     "loyalty": {
       "sends": 145,
-      "clicks": 8,
-      "ctr": 5.52
+      "clicks": 9,
+      "ctr": 6.21
     },
     "aov": {
       "sends": 133,
@@ -90,13 +90,13 @@
     },
     "prod_dru_significantly_down_v1": {
       "sends": 156,
-      "clicks": 13,
-      "ctr": 8.33
+      "clicks": 14,
+      "ctr": 8.97
     },
     "prod_dru_loyalty_v1": {
       "sends": 145,
-      "clicks": 8,
-      "ctr": 5.52
+      "clicks": 9,
+      "ctr": 6.21
     },
     "prod_dru_aov_v1": {
       "sends": 133,
@@ -142,8 +142,8 @@
   "by_tone": {
     "v1": {
       "sends": 1487,
-      "clicks": 116,
-      "ctr": 7.8
+      "clicks": 118,
+      "ctr": 7.94
     },
     "v2": {
       "sends": 1,

@@ -1,12 +1,12 @@
 {
   "days_covered": [
-    "2026-09-27",
     "2026-09-28",
     "2026-09-29",
     "2026-09-30",
     "2026-10-01",
     "2026-10-02",
-    "2026-10-03"
+    "2026-10-03",
+    "2026-10-04"
   ],
   "emails": {
     "06dinesh@gmail.com": [
@@ -4510,6 +4510,9 @@
     "info.getdesserted@gmail.com": [
       "Get Desserted"
     ],
+    "info.goodtimesjaipur@gmail.com": [
+      "The Messy Door"
+    ],
     "info.grillkitchen@gmail.com": [
       "Grill Kitchen"
     ],
@@ -6707,6 +6710,9 @@
     "mrtandoor1103@gmail.com": [
       "Mr Tandoor"
     ],
+    "mrteacafe@gmail.com": [
+      "Mr Tea Cafe"
+    ],
     "mrteacafekota@gmail.com": [
       "Mr Tea Cafe"
     ],
@@ -6722,6 +6728,9 @@
     ],
     "msbk17.ankit@gmail.com": [
       "Mithai Mahal"
+    ],
+    "mscsneha1@icloud.com": [
+      "Tai Chi 8"
     ],
     "msgoanhospitality@gmail.com": [
       "Caravela Cafe And Bistro"
@@ -7249,6 +7258,9 @@
     ],
     "npventures06@gmail.com": [
       "Greendays"
+    ],
+    "nr_nashit@yahoo.com": [
+      "Chai co"
     ],
     "nraj18k@gmail.com": [
       "The Burger Cartel"
@@ -8549,7 +8561,8 @@
       "Rickys Cookies"
     ],
     "rishab.verma@rivehospitality.com": [
-      "THERAPY"
+      "THERAPY",
+      "Therapy"
     ],
     "rishab@zyphers.in": [
       "Zyphers"
@@ -8690,6 +8703,9 @@
     ],
     "rohitharikiran@gmail.com": [
       "Nouveau Cafe"
+    ],
+    "rohitpandey@sfmpl.in": [
+      "Sandwizzaa"
     ],
     "rohitsable2001@gmail.com": [
       "Pav Bhaji Panda"
@@ -11315,6 +11331,9 @@
     "vinayak@shankarbhavan.com": [
       "Shankar Bhavan"
     ],
+    "vinayak@thevcollective.in": [
+      "Chug Biergarten"
+    ],
     "vinayakannapurnallp@gmail.com": [
       "Eden Courtyard",
       "Eden Hospitality"
@@ -11680,5 +11699,5 @@
       "Zorko Gwalior"
     ]
   },
-  "generated_at": "2026-10-04T03:51:18+05:30"
+  "generated_at": "2026-10-05T04:04:38+05:30"
 }
