@@ -1,6 +1,6 @@
 {
   "date": "2026-10-04",
-  "generated_at": "2026-10-05T04:05:03+05:30",
+  "generated_at": "2026-10-06T06:37:01+05:30",
   "opened_ids": [
     981623593030,
     981631838367,
@@ -276,7 +276,7 @@
         "label": "confirmed on device 2026-10-04",
         "source": "OneSignal Confirmed Delivery \u2014 a device-side receipt. OneSignal's docs note it undercounts (offline devices, OS restrictions), so treat it as a floor.",
         "unit": "businesses",
-        "value": 1259
+        "value": 1265
       },
       "source": "OneSignal \u2014 the DRU push was delivered (accepted by APNs / FCM) on 2026-10-04. This is OneSignal's Delivered metric.",
       "unit": "businesses",
@@ -287,7 +287,7 @@
       "label": "Tapped the notification",
       "source": "OneSignal \u2014 the DRU push was clicked on 2026-10-04. Brand-level (converted > 0).",
       "unit": "businesses",
-      "value": 106
+      "value": 109
     },
     {
       "key": "opened",
