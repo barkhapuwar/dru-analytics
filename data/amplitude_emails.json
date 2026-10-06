@@ -1,12 +1,12 @@
 {
   "days_covered": [
-    "2026-09-29",
     "2026-09-30",
     "2026-10-01",
     "2026-10-02",
     "2026-10-03",
     "2026-10-04",
-    "2026-10-05"
+    "2026-10-05",
+    "2026-10-06"
   ],
   "emails": {
     "06dinesh@gmail.com": [
@@ -148,6 +148,7 @@
       "Bakebook Bakery",
       "Copper Chimney",
       "Funky Monkeys",
+      "Goat Brew",
       "Golden chimney",
       "KNS Burgers",
       "Kalpaney",
@@ -332,6 +333,7 @@
       "Chopstix"
     ],
     "adalatrestaurant@gmail.com": [
+      "Adalat Gorakhpur",
       "Adalat Restaurant"
     ],
     "adarshjhun@gmail.com": [
@@ -1761,6 +1763,9 @@
     "bhumin.patel@reelo.io": [
       "Bakers"
     ],
+    "bichitra.niyaaz@gmail.com": [
+      "Niyaaz"
+    ],
     "bidarcrowntown@gmail.com": [
       "SAATVIK"
     ],
@@ -2540,6 +2545,9 @@
     "colline.kgr@gmail.com": [
       "Colline Cafe"
     ],
+    "communication@nandancoffee.com": [
+      "Nandan Coffee"
+    ],
     "communications@twentysevenbakehouse.com": [
       "TwentySeven Bakehouse"
     ],
@@ -2945,6 +2953,9 @@
     "dharmendrarana49@gmail.com": [
       "Sarvasyam"
     ],
+    "dhavalpawar8000@gmail.com": [
+      "Wahh Ji Malai Chaap"
+    ],
     "dhawalajmera@oliverbrown.in": [
       "Oliver Brown"
     ],
@@ -3105,6 +3116,9 @@
     ],
     "dipender.s@jumboking.co.in": [
       "JK Burgers"
+    ],
+    "director@ganbeii.in": [
+      "Ganbeii"
     ],
     "director@qmvsolution.com": [
       "The Garden"
@@ -5214,6 +5228,9 @@
     "kailashparbathsr@gmail.com": [
       "Kailash Parbat HSR"
     ],
+    "kaithiprashanth8@gmail.com": [
+      "The Fusion Pizza"
+    ],
     "kaiwalya.soni@reelo.io": [
       "Virasat E Curry"
     ],
@@ -5442,6 +5459,9 @@
     ],
     "kgirish_25@yahoo.com": [
       "JK Burgers"
+    ],
+    "kgundyadka@gmail.com": [
+      "Mangosteen"
     ],
     "kgupta020902@gmail.com": [
       "Guptas Cafe"
@@ -6212,6 +6232,9 @@
     ],
     "manoj.bhoir@navtara.in": [
       "Navtara"
+    ],
+    "manoj.juvali@gmail.com": [
+      "Amaki"
     ],
     "manojr.kuttan@gmail.com": [
       "FruitBae"
@@ -7393,6 +7416,9 @@
     "one62onee@gmail.com": [
       "JK Burgers"
     ],
+    "onebitebharmour@gmail.com": [
+      "OneBite"
+    ],
     "ongoleogl1@dumont.in": [
       "Dumont Creamery Ongole"
     ],
@@ -7844,7 +7870,8 @@
       "Prakash food park"
     ],
     "prakritijain060601@gmail.com": [
-      "The Heritage Trail"
+      "The Heritage Trail",
+      "The Heritage Trail Cafe"
     ],
     "prakyathnaik@gmail.com": [
       "Punjabi Dhaba"
@@ -7978,6 +8005,9 @@
     ],
     "pridebysamrat.in@gmail.com": [
       "Pride By Samrat"
+    ],
+    "primerose1910@gmail.com": [
+      "Prime Rose"
     ],
     "prit@reelo.in": [
       "Misu"
@@ -8561,6 +8591,9 @@
     "restaurantterrace98@gmail.com": [
       "The Terrace Restaurant"
     ],
+    "restaurantvirsa77@gmail.com": [
+      "VIRSA"
+    ],
     "restgm@gaylord.co.in": [
       "Gaylord"
     ],
@@ -9087,6 +9120,9 @@
     "sales@miadiamante.com": [
       "Independence Brewing Co"
     ],
+    "sales@milkstation.co.in": [
+      "Ice Cream Junction"
+    ],
     "sales@tjfcafe.com": [
       "The Junk Free Cafe"
     ],
@@ -9210,6 +9246,9 @@
     ],
     "sandeepguptacore@gmail.com": [
       "The waffle tale"
+    ],
+    "sandeshlokare.vs@gmail.com": [
+      "Pav Bhaji Panda"
     ],
     "sandwizzaamanpada@sfmpl.in": [
       "Sandwizzaa"
@@ -9352,6 +9391,9 @@
     ],
     "sathish@bakersspring.com": [
       "Bakers Spring Ayanavaram"
+    ],
+    "sathwik7000@gmail.com": [
+      "ART COM"
     ],
     "satish.sattu4u@gmail.com": [
       "Moms Kitchen"
@@ -10727,6 +10769,9 @@
     "thedallissolan@gmail.com": [
       "The Dallis Coffee 1"
     ],
+    "thedeccanhouse01@gmail.com": [
+      "The Deccan House"
+    ],
     "thedevourss@gmail.com": [
       "WAB COFFEE CO"
     ],
@@ -10806,6 +10851,10 @@
     ],
     "thelilycourt@gmail.com": [
       "The Lily Court"
+    ],
+    "thelivingroomcoimbatore@gmail.com": [
+      "Malli",
+      "The LivingRoom"
     ],
     "theloyalists@lbf.co.in": [
       "The Loyalists LBF"
@@ -11755,5 +11804,5 @@
       "Zorko Gwalior"
     ]
   },
-  "generated_at": "2026-10-06T06:36:59+05:30"
+  "generated_at": "2026-10-07T04:46:29+05:30"
 }
