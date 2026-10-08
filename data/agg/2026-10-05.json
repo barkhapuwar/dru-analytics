@@ -1,7 +1,7 @@
 {
   "date": "2026-10-05",
-  "fetched_at": "2026-10-08T05:11:23+05:30",
-  "stable": false,
+  "fetched_at": "2026-10-09T05:20:48+05:30",
+  "stable": true,
   "totals": {
     "sends": 1459,
     "brands": 1459,
