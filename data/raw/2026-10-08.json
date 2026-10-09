@@ -1,6 +1,6 @@
 {
   "date": "2026-10-08",
-  "fetched_at": "2026-10-09T05:23:42+05:30",
+  "fetched_at": "2026-10-10T04:56:34+05:30",
   "stable": false,
   "notifications": [
     {
@@ -494,7 +494,7 @@
       "tone": "v1",
       "external_id": "6587af38d384362eb1de82f5",
       "successful": 1,
-      "received": 0,
+      "received": 1,
       "converted": 0,
       "clicked": false
     },
@@ -2099,7 +2099,7 @@
       "tone": "v1",
       "external_id": "66d70de08528527fe77cd6a2",
       "successful": 2,
-      "received": 1,
+      "received": 2,
       "converted": 0,
       "clicked": false
     },
@@ -4139,7 +4139,7 @@
       "tone": "v1",
       "external_id": "678a4f81ab9e9ee1202e51d2",
       "successful": 2,
-      "received": 1,
+      "received": 2,
       "converted": 0,
       "clicked": false
     },
@@ -19034,7 +19034,7 @@
       "tone": "v1",
       "external_id": "69a6be63eb8facd18b9f515a",
       "successful": 1,
-      "received": 0,
+      "received": 1,
       "converted": 0,
       "clicked": false
     },
@@ -19049,7 +19049,7 @@
       "tone": "v1",
       "external_id": "6a900ddafe77200cb3dbdcbf",
       "successful": 4,
-      "received": 3,
+      "received": 4,
       "converted": 1,
       "clicked": true
     },
@@ -19694,7 +19694,7 @@
       "tone": "v1",
       "external_id": "6a15941bb3a1b7dc22952964",
       "successful": 3,
-      "received": 2,
+      "received": 3,
       "converted": 0,
       "clicked": false
     },
@@ -20279,7 +20279,7 @@
       "tone": "v1",
       "external_id": "64330795c6fd5b7f9e189141",
       "successful": 3,
-      "received": 2,
+      "received": 3,
       "converted": 0,
       "clicked": false
     },
@@ -21150,8 +21150,8 @@
       "external_id": "627cd1b9edefe0ab00e2df9f",
       "successful": 1,
       "received": 1,
-      "converted": 0,
-      "clicked": false
+      "converted": 1,
+      "clicked": true
     },
     {
       "id": "5dd4cda2-9896-4060-9967-258b3480da6a",
@@ -21914,7 +21914,7 @@
       "tone": "v1",
       "external_id": "6a9ea8a9758c36089ff388a7",
       "successful": 1,
-      "received": 0,
+      "received": 1,
       "converted": 0,
       "clicked": false
     },
