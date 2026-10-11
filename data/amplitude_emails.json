@@ -1,12 +1,12 @@
 {
   "days_covered": [
-    "2026-10-04",
     "2026-10-05",
     "2026-10-06",
     "2026-10-07",
     "2026-10-08",
     "2026-10-09",
-    "2026-10-10"
+    "2026-10-10",
+    "2026-10-11"
   ],
   "emails": {
     "06dinesh@gmail.com": [
@@ -518,6 +518,9 @@
     "afroze@monopolyinc.com": [
       "Portland Grill and Cafe"
     ],
+    "aftr@gmail.com": [
+      "Aftr All Day Cafe"
+    ],
     "aftrcafe@gmail.com": [
       "Aftr All Day Cafe"
     ],
@@ -590,6 +593,9 @@
     ],
     "akash.mathur@reelo.io": [
       "Demo Account Akash"
+    ],
+    "akashchivate12@gmail.com": [
+      "Chivate Family Restaurant"
     ],
     "akashsrivastav230@gmail.com": [
       "Crisp and sugar"
@@ -2165,6 +2171,7 @@
       "Pirates Hive"
     ],
     "cafesavourstreet@gmail.com": [
+      "KYNORAH",
       "SAVOUR STREET CAFE"
     ],
     "cafevapibeats@gmail.com": [
@@ -3257,6 +3264,9 @@
     "durgamallipamula@gmail.com": [
       "United Food Palace"
     ],
+    "dvg@benne.com": [
+      "DVG Benne Dosa Vadodara"
+    ],
     "dwarkamaicafe@gmail.com": [
       "Dwarkamai Cafe"
     ],
@@ -4248,7 +4258,8 @@
       "JK Burgers"
     ],
     "hemantbodkhe007@gmail.com": [
-      "BISTRO by Pizzawala"
+      "BISTRO by Pizzawala",
+      "Pizzawala"
     ],
     "hemanth.sudev@gmail.com": [
       "Rotormans"
@@ -5286,6 +5297,9 @@
     "kakarbros@gmail.com": [
       "kakar Bros"
     ],
+    "kakoli.23jan@gmail.com": [
+      "Roastery X Colocal X PS Cheese"
+    ],
     "kalappatavanoji37@gmail.com": [
       "Desi Dhaba Resto"
     ],
@@ -5331,6 +5345,9 @@
     ],
     "kaosenterprise2023@gmail.com": [
       "Choice Snack Bar"
+    ],
+    "kapil.a@jumboking.co.in": [
+      "JK Burgers"
     ],
     "kapilsaxena1504@gmail.com": [
       "Little India"
@@ -6616,6 +6633,9 @@
     "mgr_mgroad@gratefulbread.in": [
       "Chianti Ristorante"
     ],
+    "michael@sfmpl.in": [
+      "Sandwizzaa"
+    ],
     "mihirshah31296@gmail.com": [
       "Dhanlaxmi Gruh Udhyog"
     ],
@@ -7394,6 +7414,7 @@
       "Greendays"
     ],
     "nr_nashit@yahoo.com": [
+      "Chai Chai Co",
       "Chai co"
     ],
     "nraj18k@gmail.com": [
@@ -7673,6 +7694,9 @@
     ],
     "panachecafe22@gmail.com": [
       "Panache Cafe"
+    ],
+    "panchamiventures25@gmail.com": [
+      "The Tea Toast Co"
     ],
     "panchvati@ninis.co.in": [
       "Ninis Kitchen Panchvati"
@@ -8586,6 +8610,9 @@
       "Roastery X Colocal X PS Cheese"
     ],
     "rchfaridabad@roasterycoffee.co.in": [
+      "Roastery X Colocal X PS Cheese"
+    ],
+    "rchfilmnagar@roasterycoffee.co.in": [
       "Roastery X Colocal X PS Cheese"
     ],
     "rchmeharchand@roasterycoffee.co.in": [
@@ -10106,6 +10133,9 @@
     ],
     "sn.bharath5@gmail.com": [
       "Mile High Roasters"
+    ],
+    "snackhack0202@gmail.com": [
+      "Taranovas Pizza"
     ],
     "snackstories.ca@gmail.com": [
       "Snack Stories"
@@ -11642,6 +11672,9 @@
     "virasatecurry@gmail.com": [
       "Virasat E Curry"
     ],
+    "virenkulkarni007@gmail.com": [
+      "Pav Bhaji Panda"
+    ],
     "virkarhrutam@gmail.com": [
       "Food Point"
     ],
@@ -11974,5 +12007,5 @@
       "Zorko Gwalior"
     ]
   },
-  "generated_at": "2026-10-11T04:21:37+05:30"
+  "generated_at": "2026-10-12T04:36:23+05:30"
 }
