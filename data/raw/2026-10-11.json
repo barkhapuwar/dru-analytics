@@ -1,6 +1,6 @@
 {
   "date": "2026-10-11",
-  "fetched_at": "2026-10-12T04:35:20+05:30",
+  "fetched_at": "2026-10-13T07:03:25+05:30",
   "stable": false,
   "notifications": [
     {
@@ -1079,7 +1079,7 @@
       "tone": "v1",
       "external_id": "6aaf9058135bdb0b0d8dd60f",
       "successful": 1,
-      "received": 0,
+      "received": 1,
       "converted": 0,
       "clicked": false
     },
@@ -2219,7 +2219,7 @@
       "tone": "v1",
       "external_id": "678de7a74e1b92e126cdcd56",
       "successful": 3,
-      "received": 1,
+      "received": 2,
       "converted": 0,
       "clicked": false
     },
@@ -2744,7 +2744,7 @@
       "tone": "v1",
       "external_id": "69f734c3fab186acaabfa2b1",
       "successful": 2,
-      "received": 2,
+      "received": 3,
       "converted": 0,
       "clicked": false
     },
@@ -3014,7 +3014,7 @@
       "tone": "v1",
       "external_id": "6a8c358461442612f3626e0a",
       "successful": 4,
-      "received": 3,
+      "received": 4,
       "converted": 0,
       "clicked": false
     },
@@ -7905,8 +7905,8 @@
       "external_id": "67616bd1ab7917bb4795ae91",
       "successful": 2,
       "received": 2,
-      "converted": 0,
-      "clicked": false
+      "converted": 1,
+      "clicked": true
     },
     {
       "id": "156f30b7-2c4d-4ad2-9450-b8446907cba9",
@@ -9014,7 +9014,7 @@
       "tone": "v1",
       "external_id": "682342837fb6436e77554977",
       "successful": 1,
-      "received": 0,
+      "received": 1,
       "converted": 0,
       "clicked": false
     },
@@ -11924,7 +11924,7 @@
       "tone": "v1",
       "external_id": "69906026d7573b16dc5441e2",
       "successful": 4,
-      "received": 2,
+      "received": 3,
       "converted": 1,
       "clicked": true
     },
@@ -12194,7 +12194,7 @@
       "tone": "v1",
       "external_id": "6696607ad388c1480566b39a",
       "successful": 3,
-      "received": 2,
+      "received": 4,
       "converted": 0,
       "clicked": false
     },
@@ -19889,7 +19889,7 @@
       "tone": "v1",
       "external_id": "67923ad301211ba6a87f1b46",
       "successful": 1,
-      "received": 0,
+      "received": 1,
       "converted": 0,
       "clicked": false
     },

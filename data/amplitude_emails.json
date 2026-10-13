@@ -1,12 +1,12 @@
 {
   "days_covered": [
-    "2026-10-05",
     "2026-10-06",
     "2026-10-07",
     "2026-10-08",
     "2026-10-09",
     "2026-10-10",
-    "2026-10-11"
+    "2026-10-11",
+    "2026-10-12"
   ],
   "emails": {
     "06dinesh@gmail.com": [
@@ -666,6 +666,9 @@
     ],
     "allora.pune@phoenixmills.com": [
       "Bell Coins"
+    ],
+    "allora.pune@phoenixmills.com_x": [
+      "CAFFE ALLORA"
     ],
     "alpana.jaiswal@mbchicken.in": [
       "MB Chicken"
@@ -1779,6 +1782,9 @@
     ],
     "bichitra.niyaaz@gmail.com": [
       "Niyaaz"
+    ],
+    "bickey.singh@tiwit.in": [
+      "1980s A Nostalgic"
     ],
     "bidarcrowntown@gmail.com": [
       "SAATVIK"
@@ -3976,6 +3982,9 @@
       "Hylo Taproom by Igloo",
       "The Burrow Cafe"
     ],
+    "granville@allinhospitality.in": [
+      "The Dimsum Room Kala Goda"
+    ],
     "gre.edencourtyard@gmail.com": [
       "Eden Hospitality"
     ],
@@ -4719,6 +4728,9 @@
     ],
     "info@dripface.coffee": [
       "Dripface Coffee"
+    ],
+    "info@dzurtjaipur.com": [
+      "Dzurt Jaipur"
     ],
     "info@eekavii.com": [
       "eeKavii"
@@ -8017,6 +8029,9 @@
     "pranav.test@gmail.com": [
       "Three Wise Monkey"
     ],
+    "pranavlfc1234@gmail.com": [
+      "Three Wise Monkey"
+    ],
     "pranavramesh02@gmail.com": [
       "Seven Brawl"
     ],
@@ -8138,6 +8153,9 @@
     "primerose1910@gmail.com": [
       "Prime Rose"
     ],
+    "prince.dhingra@lbf.co.in": [
+      "The Loyalists LBF"
+    ],
     "prinkisn00b@gmail.com": [
       "Bakers"
     ],
@@ -8211,6 +8229,9 @@
     ],
     "psunilkass@gmail.com": [
       "KASS"
+    ],
+    "pttayal@gmail.com": [
+      "Moti Mahal Delux"
     ],
     "pudur@12oclockbiriyani.com": [
       "12o clock biryani"
@@ -8675,6 +8696,9 @@
     "renu@theyellowstraw.com": [
       "The Yellow Straw"
     ],
+    "reports@spicesnflavours.com": [
+      "Spices and Flavours"
+    ],
     "rescueandrelieffoundation@gmail.com": [
       "Opportunity Cafe"
     ],
@@ -8960,6 +8984,10 @@
     ],
     "rootscafeccc@gmail.com": [
       "Roots"
+    ],
+    "roseemonts@gmail.com": [
+      "Moti Mahal Delux",
+      "Moti Mahal Since 1920"
     ],
     "roshinimexicanmadness@reelo.io": [
       "Mexican Madness"
@@ -9551,6 +9579,9 @@
     ],
     "sathish@bakersspring.com": [
       "Bakers Spring Ayanavaram"
+    ],
+    "sathish@craveologyfoods.com": [
+      "Annapoorani Veg Rest"
     ],
     "sathwik7000@gmail.com": [
       "ART COM"
@@ -10324,6 +10355,9 @@
     "ssinghnoida28@gmail.com": [
       "Batlohi"
     ],
+    "ssnehi.singh06@gmail.com": [
+      "HIPPIE AT HEART"
+    ],
     "ssshiwdikar_108@yahoo.com": [
       "JK Burgers"
     ],
@@ -10895,6 +10929,9 @@
     ],
     "theappetitemomosmulund@gmail.com": [
       "The Appetite Momos Mulund"
+    ],
+    "thebakingco.elchico@gmail.com": [
+      "The Baking Co by El Chico"
     ],
     "thebakingkaur@gmail.com": [
       "The Baking Kaur"
@@ -11828,6 +11865,9 @@
     "wfdiner@gmail.com": [
       "The Diner"
     ],
+    "whitefield@maiz.in": [
+      "Harvest Salad Co Bagmane"
+    ],
     "wildwestmex2026@gmail.com": [
       "Wild West"
     ],
@@ -12007,5 +12047,5 @@
       "Zorko Gwalior"
     ]
   },
-  "generated_at": "2026-10-12T04:36:23+05:30"
+  "generated_at": "2026-10-13T07:05:04+05:30"
 }
