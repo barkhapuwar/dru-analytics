@@ -1,12 +1,12 @@
 {
   "days_covered": [
-    "2026-10-06",
     "2026-10-07",
     "2026-10-08",
     "2026-10-09",
     "2026-10-10",
     "2026-10-11",
-    "2026-10-12"
+    "2026-10-12",
+    "2026-10-13"
   ],
   "emails": {
     "06dinesh@gmail.com": [
@@ -154,16 +154,20 @@
       "Goat Brew",
       "Golden chimney",
       "KNS Burgers",
+      "Kahani",
       "Kalpaney",
       "Legacy Brewing Company",
       "LovBites Cafe",
       "Love and Cheesecake",
       "MRA Bakery",
+      "Ora",
+      "Ora Kitchen and Bar",
       "Qaffeine",
       "Quarter Peter",
       "Royal Rasoi",
       "Sheikh Chang Singh",
       "Sly Granny",
+      "Topi Vappa Biriyani",
       "Uncle Donalds Pizza",
       "Zaatar India"
     ],
@@ -1933,6 +1937,9 @@
     ],
     "borivali.manager@rehbarfoods.com": [
       "Cluckin"
+    ],
+    "borivali@quattroristorante.com": [
+      "Gupta Brands"
     ],
     "botanicalcafeudr@gmail.com": [
       "Botanical cafe"
@@ -4108,6 +4115,9 @@
     "harikrishnanayak@gmail.com": [
       "Great Britain Waffle"
     ],
+    "harishreddy09@gmail.com": [
+      "AnTeRa Courtyard"
+    ],
     "harjas236@gmail.com": [
       "OTIK Cake Shop"
     ],
@@ -4150,6 +4160,7 @@
     "harshita.meharchandani@reelo.io": [
       "Dasaprakash",
       "Gymate Cafe",
+      "Mi Cocina",
       "Riyasat E Rana"
     ],
     "harshitc687@gmail.com": [
@@ -4985,6 +4996,9 @@
     "itshiva@spicelounge.in": [
       "Buffalo Wild Wings"
     ],
+    "itsmegaurav24@gmail.com": [
+      "Jai Shree Restaurant"
+    ],
     "itsupportfrenchloaf@orientalcuisines.in": [
       "French Loaf"
     ],
@@ -5352,6 +5366,8 @@
       "Lazy Leopard"
     ],
     "kanishka.kabra@reelo.io": [
+      "Ahura Kitchen",
+      "Complexion Makeovers",
       "Sip Society Bar",
       "UPTOWN"
     ],
@@ -6344,6 +6360,9 @@
     ],
     "manymomos31@gmail.com": [
       "Manymomos"
+    ],
+    "mapplesrestaurant@gmail.com": [
+      "Mappy"
     ],
     "marathahalli@onestalove.in": [
       "Onesta Marathalli"
@@ -7968,6 +7987,7 @@
       "The Dream Creamery"
     ],
     "prabhjoth@sozocakerycafe.com": [
+      "Alvo Fine Baking",
       "SOZO Cakery Cafe"
     ],
     "prachityagi106@gmail.com": [
@@ -8500,6 +8520,9 @@
     ],
     "rajourigarden@bercos.net": [
       "Bercos Rajouri Garden"
+    ],
+    "rajputanadarbar204@gmail.com": [
+      "Rajputana Darbar"
     ],
     "rajtradingcompany38@gmail.com": [
       "Cafe Backyard Ropar"
@@ -9245,6 +9268,9 @@
     "sakhamuri.094@gmail.com": [
       "Besta"
     ],
+    "sakina@dosaplaza.com": [
+      "Dosa Plaza Begusarai"
+    ],
     "sakinaava@reelo.io": [
       "AVA"
     ],
@@ -9407,6 +9433,7 @@
       "Lalan Singh Dhaba",
       "Loyal World Market",
       "Mitti Cafe",
+      "O Cakes",
       "Parkar Ice Cream Cafe",
       "RCP Group",
       "Sagar Ratna",
@@ -10235,6 +10262,7 @@
       "Wow Idli Dosa"
     ],
     "sony.sushmab@gmail.com": [
+      "Germinaa",
       "NMACC Arts Cafe"
     ],
     "sood_divya@yahoo.in": [
@@ -10987,6 +11015,9 @@
     "thedeccanhouse01@gmail.com": [
       "The Deccan House"
     ],
+    "thedelimumbai@gmail.com": [
+      "The Deli"
+    ],
     "thedevourss@gmail.com": [
       "WAB COFFEE CO"
     ],
@@ -11277,6 +11308,9 @@
     "tshgoregoan@gmail.com": [
       "The Sancha House"
     ],
+    "tsk@gmail.com": [
+      "The Secret Kitchen"
+    ],
     "tsmmotera2025@gmail.com": [
       "the shake maker"
     ],
@@ -11556,6 +11590,9 @@
     ],
     "vatsalraval2452001@gmail.com": [
       "Shakes and Snacks"
+    ],
+    "vatsdhruv@gmail.com": [
+      "Dosa plaza"
     ],
     "vaziri@omvilas.com": [
       "Vaziri"
@@ -12043,9 +12080,12 @@
     "zolarestro@gmail.com": [
       "Zola Restaurant and Cafe"
     ],
+    "zorko.buxar@gmail.com": [
+      "Zorko Brand Food Lovers"
+    ],
     "zorko.citycenter@gmail.com": [
       "Zorko Gwalior"
     ]
   },
-  "generated_at": "2026-10-13T07:05:04+05:30"
+  "generated_at": "2026-10-14T04:56:40+05:30"
 }
