@@ -1,12 +1,12 @@
 {
   "days_covered": [
-    "2026-10-07",
     "2026-10-08",
     "2026-10-09",
     "2026-10-10",
     "2026-10-11",
     "2026-10-12",
-    "2026-10-13"
+    "2026-10-13",
+    "2026-10-14"
   ],
   "emails": {
     "06dinesh@gmail.com": [
@@ -805,6 +805,9 @@
     ],
     "amitrana@frozenfun.com": [
       "Frozen Fun"
+    ],
+    "ammachischayakkada@gmail.com": [
+      "Ninans Steakhouse"
     ],
     "amod@underdoggs.com": [
       "Underdoggs"
@@ -1920,6 +1923,9 @@
     "bohemianhospitality@gmail.com": [
       "Chug Biergarten"
     ],
+    "bohofiestallp@gmail.com": [
+      "Uncle Peters Pancakes"
+    ],
     "bojicafe.ahmedabad@gmail.com": [
       "Boji Cafe"
     ],
@@ -2649,6 +2655,7 @@
       "The Farmers Store"
     ],
     "contact@unfltrcoffee.com": [
+      "UNFLTR Coffee",
       "Unfltr Coffee"
     ],
     "contactnaironfire@gmail.com": [
@@ -8220,6 +8227,9 @@
     "priyanka.pathak@hocco.in": [
       "Hella Good Pizzeria SBR"
     ],
+    "priyanka.y@maiz.in": [
+      "Harvest Salad Co"
+    ],
     "priyankaguptaa1911@gmail.com": [
       "Dunkel Braun"
     ],
@@ -10189,6 +10199,9 @@
     "smoothiefactoryambala@gmail.com": [
       "Smoothie Factory"
     ],
+    "smsanjuhockey@gmail.com": [
+      "TANS PATISSERIE"
+    ],
     "sn.bharath5@gmail.com": [
       "Mile High Roasters"
     ],
@@ -10221,6 +10234,9 @@
     ],
     "social.wiseowl@gmail.com": [
       "WISE OWL THE COFFEE SHOP"
+    ],
+    "social@agourmesserie.com": [
+      "A Gourmesserie"
     ],
     "sohamalwa10@gmail.com": [
       "Fusion Grill"
@@ -10392,6 +10408,9 @@
     "stanishq182004@gmail.com": [
       "JK Burgers"
     ],
+    "statementspice52@gmail.com": [
+      "STATEMENT SPICE"
+    ],
     "steviamyrthong383@gmail.com": [
       "16 Street Bistro"
     ],
@@ -10469,6 +10488,9 @@
     ],
     "suhaschopade01@gmail.com": [
       "Hotel Sanskruti"
+    ],
+    "suhitreats@gmail.com": [
+      "Downtown Pizza"
     ],
     "sujata@squadramedia.com": [
       "Terrace Bar and Kitchen"
@@ -11818,6 +11840,9 @@
     "vishwassweetsinfo@gmail.com": [
       "Vishwas Sweets"
     ],
+    "visionrwefoods@gmail.com": [
+      "Uns Cafe Dining"
+    ],
     "vitthal.jumboking@gmail.com": [
       "JK Burgers"
     ],
@@ -12087,5 +12112,5 @@
       "Zorko Gwalior"
     ]
   },
-  "generated_at": "2026-10-14T04:56:40+05:30"
+  "generated_at": "2026-10-15T04:01:45+05:30"
 }

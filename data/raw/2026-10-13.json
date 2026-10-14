@@ -1,6 +1,6 @@
 {
   "date": "2026-10-13",
-  "fetched_at": "2026-10-14T04:55:46+05:30",
+  "fetched_at": "2026-10-15T03:59:21+05:30",
   "stable": false,
   "notifications": [
     {
@@ -2654,7 +2654,7 @@
       "tone": "v0",
       "external_id": "64330795c6fd5b7f9e189141",
       "successful": 3,
-      "received": 2,
+      "received": 3,
       "converted": 0,
       "clicked": false
     },
@@ -4679,7 +4679,7 @@
       "tone": "v0",
       "external_id": "6a96afae1d4d2c08b1605710",
       "successful": 1,
-      "received": 0,
+      "received": 2,
       "converted": 0,
       "clicked": false
     },
@@ -10964,7 +10964,7 @@
       "tone": "v0",
       "external_id": "6a312c77a017c0a2b510a137",
       "successful": 1,
-      "received": 0,
+      "received": 1,
       "converted": 0,
       "clicked": false
     },
@@ -15165,8 +15165,8 @@
       "external_id": "69a2cdaa8a3213fb9dc79461",
       "successful": 1,
       "received": 1,
-      "converted": 0,
-      "clicked": false
+      "converted": 1,
+      "clicked": true
     },
     {
       "id": "bc7eb136-f7c8-4af1-91aa-16ab0b4c2aa7",
@@ -15464,7 +15464,7 @@
       "tone": "v0",
       "external_id": "672c5a582fa163eedaa85914",
       "successful": 1,
-      "received": 0,
+      "received": 1,
       "converted": 0,
       "clicked": false
     },
@@ -19379,7 +19379,7 @@
       "tone": "v0",
       "external_id": "66d70de08528527fe77cd6a2",
       "successful": 2,
-      "received": 1,
+      "received": 2,
       "converted": 0,
       "clicked": false
     },
@@ -20624,7 +20624,7 @@
       "tone": "v0",
       "external_id": "69fc2872cf3838b9337c5a9f",
       "successful": 1,
-      "received": 0,
+      "received": 1,
       "converted": 0,
       "clicked": false
     },
@@ -21584,7 +21584,7 @@
       "tone": "v0",
       "external_id": "6a9d48d55bd025093d62e4c2",
       "successful": 1,
-      "received": 0,
+      "received": 1,
       "converted": 0,
       "clicked": false
     },
@@ -21825,8 +21825,8 @@
       "external_id": "6a265d0b5510395289b4d98f",
       "successful": 2,
       "received": 2,
-      "converted": 0,
-      "clicked": false
+      "converted": 1,
+      "clicked": true
     }
   ]
 }
