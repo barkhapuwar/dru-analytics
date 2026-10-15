@@ -1,12 +1,12 @@
 {
   "days_covered": [
-    "2026-10-08",
     "2026-10-09",
     "2026-10-10",
     "2026-10-11",
     "2026-10-12",
     "2026-10-13",
-    "2026-10-14"
+    "2026-10-14",
+    "2026-10-15"
   ],
   "emails": {
     "06dinesh@gmail.com": [
@@ -153,6 +153,7 @@
       "Funky Monkeys",
       "Goat Brew",
       "Golden chimney",
+      "Hoot Craftwork",
       "KNS Burgers",
       "Kahani",
       "Kalpaney",
@@ -169,6 +170,7 @@
       "Sly Granny",
       "Topi Vappa Biriyani",
       "Uncle Donalds Pizza",
+      "Vamans",
       "Zaatar India"
     ],
     "aayushibajaj3@gmail.com": [
@@ -1037,6 +1039,9 @@
     ],
     "ansuyaskitchen@gmail.com": [
       "Ansuyas Kitchen"
+    ],
+    "antocmathew82@gmail.com": [
+      "Thakkara"
     ],
     "antomsp1988@gmail.com": [
       "Talk Of The Town"
@@ -2108,6 +2113,9 @@
     "cafe@yourstrulycoffee.in": [
       "Yours Truly"
     ],
+    "cafeauren@gmail.com": [
+      "Auren"
+    ],
     "cafebabulnath@quattroristorante.com": [
       "Gupta Brands"
     ],
@@ -2818,6 +2826,9 @@
     "danishmobil@yahoo.com": [
       "Real Italian pizza"
     ],
+    "danishsarfaraz01@gmail.com": [
+      "Meatster Cafe"
+    ],
     "danonnapizzeria@gmail.com": [
       "Danonna Pizzeria"
     ],
@@ -2841,6 +2852,9 @@
     ],
     "daynitebakes@gmail.com": [
       "Unchas49"
+    ],
+    "dbelem00@gmail.com": [
+      "Beanlore Coffee Roasters"
     ],
     "dc@drincupcoffee.com": [
       "Drincup cafe Sambhajinagar"
@@ -3730,6 +3744,9 @@
     "gaurav155@gmail.com": [
       "Taj bar and Restaurant"
     ],
+    "gaurav@reelo.in": [
+      "Bercos"
+    ],
     "gauravmadnani@gmail.com": [
       "Cake n Cafe"
     ],
@@ -4182,6 +4199,9 @@
     ],
     "hashirharid1@gmail.com": [
       "CAFE ADDICT"
+    ],
+    "hashstixsector89@gmail.com": [
+      "Hashstix Sec 89"
     ],
     "hatchus@eggersmadhouse.com": [
       "CAFE MADHOUSE"
@@ -4776,6 +4796,9 @@
     ],
     "info@hotelgalaxyn.in": [
       "Hotel Galaxy N"
+    ],
+    "info@hotelthearcadia.com": [
+      "Arcadia Hotels"
     ],
     "info@hotelwestend.com": [
       "Hotel the Westend"
@@ -5519,6 +5542,9 @@
     ],
     "keralarustic@gmail.com": [
       "Rustic Kerala"
+    ],
+    "kerzeena.wadia@phoenixmills.com": [
+      "Bell Coins"
     ],
     "kesariyasiliguri@gmail.com": [
       "Kesariya"
@@ -7063,6 +7089,9 @@
     "naidugarikodipulao@gmail.com": [
       "Naidu Gari Kunda Biryani"
     ],
+    "najidw@hotmail.com": [
+      "Pepperpot Restaurant"
+    ],
     "nakshienterprise22@gmail.com": [
       "Sankalp Nilambar"
     ],
@@ -7963,6 +7992,9 @@
     "poojaskilldev@gmail.com": [
       "Burff And Berries"
     ],
+    "powai.manager@rehbarfoods.com": [
+      "Cluckin"
+    ],
     "powai@thenutcracker.in": [
       "The Nutcracker"
     ],
@@ -8557,6 +8589,9 @@
     ],
     "ram.gupta@miadiamante.com": [
       "Independence Brewing Co"
+    ],
+    "ram@besta.co.in": [
+      "Besta"
     ],
     "raman@whizfoods.com": [
       "The Belgian Fries Co"
@@ -10740,6 +10775,9 @@
     "swati@sandowitch.com": [
       "Sandowitch"
     ],
+    "swatimumbai2009@gmail.com": [
+      "Pav Bhaji Panda"
+    ],
     "swatishivtare9@gmail.com": [
       "JK Burgers"
     ],
@@ -10873,6 +10911,9 @@
     ],
     "tariq.wani@meraakikitchen.com": [
       "Meraaki Kitchen"
+    ],
+    "tariq8904@gmail.com": [
+      "table 1502"
     ],
     "tarique.khan124@gmail.com": [
       "Handiwali Biryani"
@@ -11713,6 +11754,12 @@
     "vikram@jtcworld.net": [
       "Missprint Jaipur"
     ],
+    "vikramasokan1511@gmail.com": [
+      "Wunder Waffle St"
+    ],
+    "vikramasokan@rocketmail.com": [
+      "Bao Bao"
+    ],
     "vikramsangle4@gmail.com": [
       "Aangan Family Restaurant"
     ],
@@ -11928,6 +11975,7 @@
       "The Diner"
     ],
     "whitefield@maiz.in": [
+      "Harvest Salad Co",
       "Harvest Salad Co Bagmane"
     ],
     "wildwestmex2026@gmail.com": [
@@ -12112,5 +12160,5 @@
       "Zorko Gwalior"
     ]
   },
-  "generated_at": "2026-10-15T04:01:45+05:30"
+  "generated_at": "2026-10-16T04:22:55+05:30"
 }
