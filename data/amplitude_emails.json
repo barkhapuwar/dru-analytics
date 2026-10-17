@@ -1,12 +1,12 @@
 {
   "days_covered": [
-    "2026-10-10",
     "2026-10-11",
     "2026-10-12",
     "2026-10-13",
     "2026-10-14",
     "2026-10-15",
-    "2026-10-16"
+    "2026-10-16",
+    "2026-10-17"
   ],
   "emails": {
     "06dinesh@gmail.com": [
@@ -150,6 +150,7 @@
       "Amul Cafe",
       "Bakebook Bakery",
       "Copper Chimney",
+      "Deccan Brews Cafe",
       "Funky Monkeys",
       "Goat Brew",
       "Golden chimney",
@@ -1752,6 +1753,8 @@
       "The Chutney Culture"
     ],
     "bhargav.prajapati@reelo.io": [
+      "Ashwins Chaat N Snac",
+      "Cafe Morjelo",
       "Magnetic Step",
       "Silver Oak Restro Cafe",
       "The Yummy Fork",
@@ -4623,6 +4626,9 @@
     "imam49152@gmail.com": [
       "Asli bharat bakery"
     ],
+    "imkanti07@gmail.com": [
+      "UK Waffle Co"
+    ],
     "imlisarai.restaurant@gmail.com": [
       "Imli Sarai"
     ],
@@ -5647,6 +5653,9 @@
       "Elgin Cafe",
       "Grab And Go by Elgin",
       "Grab And Go by Grain"
+    ],
+    "khurja.zaika@gmail.com": [
+      "Zaika Restaurant"
     ],
     "khushalisolanki@yahoo.com": [
       "Cocoa Drama"
@@ -7848,6 +7857,9 @@
     "parin@reelo.in": [
       "Misu"
     ],
+    "parishankara93@gmail.com": [
+      "Siya Cafe"
+    ],
     "parmita_barua@yahoo.com": [
       "Nippon dough"
     ],
@@ -8462,7 +8474,8 @@
       "JK Burgers"
     ],
     "radhikaatal@dumont.in": [
-      "Dumont Creamery"
+      "Dumont Creamery",
+      "Dumont India"
     ],
     "radhikanaik92@gmail.com": [
       "Radhika Tiffin Room"
@@ -8517,6 +8530,9 @@
     ],
     "rahuldharani1011@gmail.com": [
       "Berry Dream"
+    ],
+    "rahuldilipdesai@gmail.com": [
+      "Papa Pita"
     ],
     "rahulhadwani@gmail.com": [
       "Natural Fresh Icecream"
@@ -9528,6 +9544,7 @@
       "Lalan Singh Dhaba",
       "Loyal World Market",
       "Mitti Cafe",
+      "Mocha",
       "O Cakes",
       "Parkar Ice Cream Cafe",
       "RCP Group",
@@ -12223,5 +12240,5 @@
       "Zorko Gwalior"
     ]
   },
-  "generated_at": "2026-10-17T03:47:50+05:30"
+  "generated_at": "2026-10-18T03:15:44+05:30"
 }
