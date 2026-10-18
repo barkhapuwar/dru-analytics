@@ -1,12 +1,12 @@
 {
   "days_covered": [
-    "2026-10-11",
     "2026-10-12",
     "2026-10-13",
     "2026-10-14",
     "2026-10-15",
     "2026-10-16",
-    "2026-10-17"
+    "2026-10-17",
+    "2026-10-18"
   ],
   "emails": {
     "06dinesh@gmail.com": [
@@ -4831,6 +4831,9 @@
     "info@grandpizzaslice.com": [
       "Grand Pizza Slice"
     ],
+    "info@horizonhotel.in": [
+      "Hotel Horizon"
+    ],
     "info@hotelgalaxyn.in": [
       "Hotel Galaxy N"
     ],
@@ -9533,6 +9536,7 @@
       "Chawlas 2 Since 1960",
       "DVG BENNE DOSA",
       "Dum Handi Biryani",
+      "Fatty Monk",
       "G Laban",
       "Gola Sizzlers",
       "Green Leaf Vegetarian Cuisine",
@@ -10598,7 +10602,8 @@
       "Hotel Sanskruti"
     ],
     "suhitreats@gmail.com": [
-      "Downtown Pizza"
+      "Downtown Pizza",
+      "Downtown Pizza CO"
     ],
     "sujata@squadramedia.com": [
       "Terrace Bar and Kitchen"
@@ -12240,5 +12245,5 @@
       "Zorko Gwalior"
     ]
   },
-  "generated_at": "2026-10-18T03:15:44+05:30"
+  "generated_at": "2026-10-19T03:19:04+05:30"
 }
