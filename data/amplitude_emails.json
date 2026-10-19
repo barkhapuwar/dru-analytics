@@ -1,12 +1,12 @@
 {
   "days_covered": [
-    "2026-10-12",
     "2026-10-13",
     "2026-10-14",
     "2026-10-15",
     "2026-10-16",
     "2026-10-17",
-    "2026-10-18"
+    "2026-10-18",
+    "2026-10-19"
   ],
   "emails": {
     "06dinesh@gmail.com": [
@@ -483,6 +483,9 @@
     ],
     "admin@ojascafe.in": [
       "Ojas Cafe"
+    ],
+    "admin@parallelcafeblr.com": [
+      "Prallle Cafe"
     ],
     "admin@pmksan.com": [
       "PMK Scans"
@@ -1225,6 +1228,9 @@
     ],
     "arjunkhandelwal07@gmail.com": [
       "The Pawfee House"
+    ],
+    "arjunprijith97@gmail.com": [
+      "Das Bakers"
     ],
     "arjunrmurthy@gmail.com": [
       "Lakehouse cafe"
@@ -4206,6 +4212,9 @@
     "harshadkoli@frozenfun.com": [
       "Frozen Fun"
     ],
+    "harshagarwal520@gmail.com": [
+      "Hotel Bobina"
+    ],
     "harshchand37@gmail.com": [
       "Dilli92"
     ],
@@ -5606,6 +5615,9 @@
     ],
     "ketan@dorfbrewhouse.in": [
       "Dorf Brewhouse"
+    ],
+    "ketan@kiara.com": [
+      "Kiara Soul Kitchen"
     ],
     "ketankumar491999@gmail.com": [
       "Vinnys kitchen"
@@ -7475,6 +7487,9 @@
     "nk340161@gmail.com": [
       "Roastery X Colocal X PS Cheese"
     ],
+    "nkkamboj7@gmail.com": [
+      "The Social Bistro"
+    ],
     "nluthra@me.com": [
       "MASSIVE RESTAURANTS"
     ],
@@ -9242,6 +9257,9 @@
     "sabhajeet.bharne1904@gmail.com": [
       "Bharne"
     ],
+    "sabya.banerjee@lbf.co.in": [
+      "The Loyalists LBF"
+    ],
     "sach2k2@gmail.com": [
       "Pav Bhaji Panda"
     ],
@@ -9533,6 +9551,7 @@
       "Burgerman",
       "Burgonomics",
       "Cafeteria Co",
+      "Chala Basuya",
       "Chawlas 2 Since 1960",
       "DVG BENNE DOSA",
       "Dum Handi Biryani",
@@ -9847,6 +9866,9 @@
     "shaabrowffle@gmail.com": [
       "Shaa Browffle",
       "Shaa Cafe Creme"
+    ],
+    "shaad@reelo.in": [
+      "Bercos"
     ],
     "shaan@jaipurmodern.com": [
       "Jaipur MODERN Kitchen"
@@ -11123,6 +11145,9 @@
     "thebotreeindia@gmail.com": [
       "Bo Tree Ayurvedas"
     ],
+    "thebrewtoniicco@gmail.com": [
+      "Brewtoniic Cafe"
+    ],
     "thebungalowjaipur@gmail.com": [
       "The Bungalow"
     ],
@@ -11805,6 +11830,12 @@
     "viholyuvrajsinh@gmail.com": [
       "The Backhouse"
     ],
+    "viibeecafe@gmail.com": [
+      "Viibee the cafe"
+    ],
+    "vijay@dumont.in": [
+      "Dumont India"
+    ],
     "vijay@oormumbai.com": [
       "OOR"
     ],
@@ -12245,5 +12276,5 @@
       "Zorko Gwalior"
     ]
   },
-  "generated_at": "2026-10-19T03:19:04+05:30"
+  "generated_at": "2026-10-20T04:38:55+05:30"
 }
