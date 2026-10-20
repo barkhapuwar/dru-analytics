@@ -1,12 +1,12 @@
 {
   "days_covered": [
-    "2026-10-13",
     "2026-10-14",
     "2026-10-15",
     "2026-10-16",
     "2026-10-17",
     "2026-10-18",
-    "2026-10-19"
+    "2026-10-19",
+    "2026-10-20"
   ],
   "emails": {
     "06dinesh@gmail.com": [
@@ -814,6 +814,7 @@
       "Frozen Fun"
     ],
     "ammachischayakkada@gmail.com": [
+      "ACB",
       "Ninans Steakhouse"
     ],
     "amod@underdoggs.com": [
@@ -2418,6 +2419,9 @@
     "chakradhar@hospitalityatithi.com": [
       "The Namak Co"
     ],
+    "chamanpreet.singh14@gmail.com": [
+      "Gautams O Dine Ynr"
+    ],
     "chaminda@spagofoods.com": [
       "Magnolia Bakery"
     ],
@@ -3655,6 +3659,9 @@
     ],
     "foodmitahara@gmail.com": [
       "Beyrut"
+    ],
+    "foodmonkeybombay@gmail.com": [
+      "Food Monkey"
     ],
     "foodnarmada@gmail.com": [
       "Real Paprika"
@@ -5307,6 +5314,9 @@
     ],
     "joseph.dsouza@phoenixmills.com": [
       "Bell Coins"
+    ],
+    "joshoventures@gmail.com": [
+      "Chataako"
     ],
     "jpnagar@onestalove.in": [
       "Onesta JP Nagar"
@@ -7606,6 +7616,9 @@
     "officialdevesh01@gmail.com": [
       "Squarro Pizza"
     ],
+    "officialrajesh777@gmail.com": [
+      "Cafe 21"
+    ],
     "ogbrewsandbakes@gmail.com": [
       "OG Brews and Bakes"
     ],
@@ -7974,6 +7987,9 @@
     ],
     "pc1@honeyanddough.in": [
       "Honey and Dough"
+    ],
+    "pc@themodernsarai.com": [
+      "The Modern Sarai"
     ],
     "peachycafe.ind@gmail.com": [
       "Peachy"
@@ -11875,6 +11891,9 @@
     "vikramsangle4@gmail.com": [
       "Aangan Family Restaurant"
     ],
+    "viktor@mls.om": [
+      "MLS Steakhouse"
+    ],
     "vileparleeast@sfmpl.in": [
       "Sandwizzaa"
     ],
@@ -12276,5 +12295,5 @@
       "Zorko Gwalior"
     ]
   },
-  "generated_at": "2026-10-20T04:38:55+05:30"
+  "generated_at": "2026-10-21T04:03:52+05:30"
 }
