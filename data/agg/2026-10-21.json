@@ -1,20 +1,20 @@
 {
   "date": "2026-10-21",
-  "fetched_at": "2026-10-22T04:08:06+05:30",
+  "fetched_at": "2026-10-23T04:06:02+05:30",
   "stable": false,
   "totals": {
     "sends": 1496,
     "brands": 1496,
-    "clicks": 98,
-    "ctr": 6.55,
+    "clicks": 100,
+    "ctr": 6.68,
     "sum_successful": 2041,
-    "sum_received": 1610
+    "sum_received": 1620
   },
   "by_signal": {
     "significantly_up": {
       "sends": 533,
-      "clicks": 32,
-      "ctr": 6.0
+      "clicks": 33,
+      "ctr": 6.19
     },
     "historically_great": {
       "sends": 460,
@@ -48,8 +48,8 @@
     },
     "customer_capture": {
       "sends": 24,
-      "clicks": 2,
-      "ctr": 8.33
+      "clicks": 3,
+      "ctr": 12.5
     },
     "auto_campaign": {
       "sends": 13,
@@ -75,8 +75,8 @@
   "by_template": {
     "prod_dru_significantly_up_v2": {
       "sends": 533,
-      "clicks": 32,
-      "ctr": 6.0
+      "clicks": 33,
+      "ctr": 6.19
     },
     "prod_dru_historically_great_v2": {
       "sends": 460,
@@ -110,8 +110,8 @@
     },
     "prod_dru_customer_capture_v2": {
       "sends": 24,
-      "clicks": 2,
-      "ctr": 8.33
+      "clicks": 3,
+      "ctr": 12.5
     },
     "prod_dru_auto_campaign_v2": {
       "sends": 13,
@@ -137,8 +137,8 @@
   "by_tone": {
     "v2": {
       "sends": 1496,
-      "clicks": 98,
-      "ctr": 6.55
+      "clicks": 100,
+      "ctr": 6.68
     }
   },
   "quality": {

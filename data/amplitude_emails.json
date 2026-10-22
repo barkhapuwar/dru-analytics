@@ -1,12 +1,12 @@
 {
   "days_covered": [
-    "2026-10-15",
     "2026-10-16",
     "2026-10-17",
     "2026-10-18",
     "2026-10-19",
     "2026-10-20",
-    "2026-10-21"
+    "2026-10-21",
+    "2026-10-22"
   ],
   "emails": {
     "06dinesh@gmail.com": [
@@ -171,6 +171,7 @@
       "Sly Granny",
       "The Dessert Stop",
       "Topi Vappa Biriyani",
+      "TwistOn",
       "Uncle Donalds Pizza",
       "Vamans",
       "Zaatar India"
@@ -462,6 +463,9 @@
     "admin@hoteljiva.com": [
       "JIVA"
     ],
+    "admin@huesofred.in": [
+      "Big Bison"
+    ],
     "admin@jimisburger.in": [
       "JIMIS BURGER"
     ],
@@ -543,6 +547,9 @@
     ],
     "agarwaldev9140@gmail.com": [
       "Khadak singh da dhaba"
+    ],
+    "agrawalank88@gmail.com": [
+      "The Beer Cafe"
     ],
     "ahuja.sagar@gmail.com": [
       "Adige Dosa House"
@@ -1697,6 +1704,9 @@
     ],
     "beercafe@reelo.io": [
       "The Beer Cafe"
+    ],
+    "beerlintpb@gmail.com": [
+      "Beerlin"
     ],
     "beeyoungbrewgarden@gmail.com": [
       "BeeYoung Brewgarden"
@@ -3526,11 +3536,17 @@
     "fb@purpleleafhotel.com": [
       "Purple Leaf Hotel"
     ],
+    "fbanalysis@nikbakers.com": [
+      "NIK BAKERS"
+    ],
     "fbcontroller@nikbakers.com": [
       "NIK BAKERS"
     ],
     "fbjaipur2019@gmail.com": [
       "French Bakers"
+    ],
+    "fbm@bizzhotel.in": [
+      "Bizz The Hotel"
     ],
     "fbm@magnumdoha.com": [
       "Magnum Hospitality"
@@ -3592,6 +3608,9 @@
     "fitandfuryaluva2@gmail.com": [
       "Fit and Fury"
     ],
+    "fitbowlbeeramguda@gmail.com": [
+      "Fitbowl Bistro Brew"
+    ],
     "fivemadmen.5mm@gmail.com": [
       "Five Mad Men"
     ],
@@ -3609,6 +3628,9 @@
     ],
     "flavorhospitality@gmail.com": [
       "Flavor The Restaurant"
+    ],
+    "flavorushenterprise2026@gmail.com": [
+      "HL Frankie"
     ],
     "florianclubofficial@gmail.com": [
       "Florian Club"
@@ -3931,6 +3953,9 @@
     "gm@honeyanddough.in": [
       "Honey and Dough"
     ],
+    "gm@hotelgalaxyn.in": [
+      "Hotel Galaxy N"
+    ],
     "gm@khmerkitchen.in": [
       "Khmer Kitchen"
     ],
@@ -4063,6 +4088,7 @@
       "The Burrow Cafe"
     ],
     "granville@allinhospitality.in": [
+      "The Dimsum Room",
       "The Dimsum Room Izakaya",
       "The Dimsum Room Kala Goda"
     ],
@@ -4162,6 +4188,9 @@
     "hanish_arora@yahoo.in": [
       "My kind of place"
     ],
+    "hanishafoods@gmail.com": [
+      "Tandooriwala"
+    ],
     "hansarkhaitan@saketpromoters.com": [
       "House of Kiaan Inn"
     ],
@@ -4179,6 +4208,9 @@
     ],
     "harendra.kakapo@gmail.com": [
       "KAKAPO"
+    ],
+    "hari.priyanka@intentfarm.com": [
+      "Dumont India"
     ],
     "haricksondsouza@gmail.com": [
       "August Cafe Khar"
@@ -4558,6 +4590,9 @@
     "hr.thakkaragroupofcompanies@gmail.com": [
       "Thakkara"
     ],
+    "hr.vfc1@gmail.com": [
+      "Village Food Courts"
+    ],
     "hr24_86@yahoo.co.in": [
       "NAAN FUSION"
     ],
@@ -4702,6 +4737,9 @@
     ],
     "info.cafesserie@gmail.com": [
       "Cafesserie II"
+    ],
+    "info.dakshincafe@gmail.com": [
+      "Dakshin Cafe"
     ],
     "info.getdesserted@gmail.com": [
       "Get Desserted"
@@ -5886,6 +5924,9 @@
     ],
     "kripihospitality@gmail.com": [
       "SANSAI"
+    ],
+    "krishan@zomato.io": [
+      "zomato"
     ],
     "krishang@navbharatrestaurant.com": [
       "Nav Bharat Restaurant"
@@ -8211,6 +8252,9 @@
     "pranayreddy9392@gmail.com": [
       "The Coffee Kartel"
     ],
+    "pranaysathvik8@gmail.com": [
+      "Smash Society"
+    ],
     "praneet.gaur@lbf.co.in": [
       "The Loyalists LBF"
     ],
@@ -8451,6 +8495,9 @@
     "pursuitlabs0413@gmail.com": [
       "Telugu Kitchen Classics"
     ],
+    "pvansh209@gmail.com": [
+      "HL Frankie"
+    ],
     "pxdwarka@yahoo.com": [
       "Pasta Xpress Dwarka"
     ],
@@ -8552,6 +8599,9 @@
     ],
     "rahilqureshi0327@gmail.com": [
       "Bombay Naan Restaurant"
+    ],
+    "rahul.patidar3601@gmail.com": [
+      "Anandam Garden and resort"
     ],
     "rahul.silla@litensity.com": [
       "DCube Desserts Cafe"
@@ -8716,6 +8766,9 @@
     ],
     "ranamondal06@outlook.com": [
       "Zamana India"
+    ],
+    "rangberryapparel@gmail.com": [
+      "RANGBERRY Designer Store"
     ],
     "ranicreation@yahoo.in": [
       "Rani creation"
@@ -8954,6 +9007,9 @@
     "revti.chandan@whizfoods.com": [
       "The Belgian Fries Co"
     ],
+    "revurpramodh@gmail.com": [
+      "Revuru Eateries"
+    ],
     "rgm@indish.ae": [
       "Indish Restaurant"
     ],
@@ -9049,6 +9105,9 @@
     ],
     "rkn.gopi@gmail.com": [
       "Shambys Pizza"
+    ],
+    "rkpetshop@gmail.com": [
+      "RK Pets"
     ],
     "rkranjan330@gmail.com": [
       "Madhurum  restaurant"
@@ -9686,6 +9745,9 @@
     "sanjiv.kumar@fridaysindia.in": [
       "TGI Fridays"
     ],
+    "sanjivkumar89@gmail.com": [
+      "Krishna Sweet"
+    ],
     "sanjog.rai@miadiamante.com": [
       "Independence Brewing Co"
     ],
@@ -10060,6 +10122,9 @@
     "shikhar.gupta.10696@gmail.com": [
       "XOXO Patisserie"
     ],
+    "shinde.riyo@gmail.com": [
+      "Cafe Storia"
+    ],
     "shipras7387@gmail.com": [
       "SHIPRAS FOODS"
     ],
@@ -10388,6 +10453,9 @@
     "sncrm@lotusindustries.org": [
       "Sweet Nation"
     ],
+    "snehalss9495@gmail.com": [
+      "The Bombae Bar"
+    ],
     "snehashish@thegridbangalore.com": [
       "The Grid"
     ],
@@ -10407,7 +10475,8 @@
       "WISE OWL THE COFFEE SHOP"
     ],
     "social@agourmesserie.com": [
-      "A Gourmesserie"
+      "A Gourmesserie",
+      "A Gourmesserie PRLDNGR"
     ],
     "sohamalwa10@gmail.com": [
       "Fusion Grill"
@@ -10475,6 +10544,9 @@
     ],
     "soumya@anonymousdigital.com": [
       "Hanglaatherium"
+    ],
+    "souravnag@kcpl.in": [
+      "Milli Milli"
     ],
     "spanda72536@gmail.com": [
       "kedias Restaurant"
@@ -11187,6 +11259,9 @@
     ],
     "thebotreeindia@gmail.com": [
       "Bo Tree Ayurvedas"
+    ],
+    "thebrewbarrels@gmail.com": [
+      "Microbrewery and Kitchen"
     ],
     "thebrewtoniicco@gmail.com": [
       "Brewtoniic Cafe"
@@ -12325,5 +12400,5 @@
       "Zorko Gwalior"
     ]
   },
-  "generated_at": "2026-10-22T04:08:45+05:30"
+  "generated_at": "2026-10-23T04:07:45+05:30"
 }
