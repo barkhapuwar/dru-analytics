@@ -1,6 +1,6 @@
 {
   "date": "2026-10-22",
-  "fetched_at": "2026-10-24T03:59:03+05:30",
+  "fetched_at": "2026-10-25T03:15:18+05:30",
   "stable": false,
   "totals": {
     "sends": 1508,
@@ -8,7 +8,7 @@
     "clicks": 113,
     "ctr": 7.49,
     "sum_successful": 2056,
-    "sum_received": 1628
+    "sum_received": 1633
   },
   "by_signal": {
     "growth_driver": {
