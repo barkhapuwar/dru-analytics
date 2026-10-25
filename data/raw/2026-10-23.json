@@ -1,6 +1,6 @@
 {
   "date": "2026-10-23",
-  "fetched_at": "2026-10-25T03:16:23+05:30",
+  "fetched_at": "2026-10-26T03:29:27+05:30",
   "stable": false,
   "notifications": [
     {
@@ -3224,7 +3224,7 @@
       "tone": "v1",
       "external_id": "6696607ad388c1480566b39a",
       "successful": 4,
-      "received": 3,
+      "received": 4,
       "converted": 0,
       "clicked": false
     },
@@ -7409,7 +7409,7 @@
       "tone": "v1",
       "external_id": "69439e78f3e3f6ddc59f9375",
       "successful": 3,
-      "received": 0,
+      "received": 1,
       "converted": 0,
       "clicked": false
     },

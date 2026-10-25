@@ -1,12 +1,12 @@
 {
   "days_covered": [
-    "2026-10-18",
     "2026-10-19",
     "2026-10-20",
     "2026-10-21",
     "2026-10-22",
     "2026-10-23",
-    "2026-10-24"
+    "2026-10-24",
+    "2026-10-25"
   ],
   "emails": {
     "06dinesh@gmail.com": [
@@ -699,6 +699,9 @@
     ],
     "allora.pune@phoenixmills.com_x": [
       "CAFFE ALLORA"
+    ],
+    "alokrai.qd@gmail.com": [
+      "QD All day diner"
     ],
     "alpana.jaiswal@mbchicken.in": [
       "MB Chicken"
@@ -2863,7 +2866,8 @@
       "Manko"
     ],
     "currypattabatter@gmail.com": [
-      "Curry Patta"
+      "Curry Patta",
+      "CurryPatta"
     ],
     "customercare@chandanmukhwas.com": [
       "Chandan Mukhwas"
@@ -7195,6 +7199,9 @@
     "mukesh.s@nalashaa.com": [
       "Mithaicana"
     ],
+    "mukeshaggarwal394@gmail.com": [
+      "New Chappan Bhog"
+    ],
     "mukeshbazergyan1@gmail.com": [
       "Suresh mishthan Bhandar"
     ],
@@ -9977,6 +9984,9 @@
     "sathwik7000@gmail.com": [
       "ART COM"
     ],
+    "satisfactioninfra@gmail.com": [
+      "Biryani Darbar"
+    ],
     "satish.sattu4u@gmail.com": [
       "Moms Kitchen"
     ],
@@ -10321,6 +10331,9 @@
     ],
     "shopnobanerjee11@gmail.com": [
       "Hanglaatherium"
+    ],
+    "shoppedaily@gmail.com": [
+      "Daily Shoppe"
     ],
     "shormos.info@gmail.com": [
       "Shormos"
@@ -10817,6 +10830,9 @@
     ],
     "sub91steller@gmail.com": [
       "Sub 91"
+    ],
+    "subashrajan90@gmail.com": [
+      "COVAI LITTLE ITALY"
     ],
     "subhamabo@gmail.com": [
       "Salado"
@@ -11843,6 +11859,9 @@
     "umeshdesireddy@gmail.com": [
       "Mayuri"
     ],
+    "uni.reelo@ioc.com": [
+      "Alley Pally Cafe"
+    ],
     "uni@burgonomics.com": [
       "Burgonomics"
     ],
@@ -12557,5 +12576,5 @@
       "Zorko Gwalior"
     ]
   },
-  "generated_at": "2026-10-25T03:21:29+05:30"
+  "generated_at": "2026-10-26T03:45:17+05:30"
 }
