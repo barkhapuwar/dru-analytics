@@ -1,12 +1,12 @@
 {
   "days_covered": [
-    "2026-10-20",
     "2026-10-21",
     "2026-10-22",
     "2026-10-23",
     "2026-10-24",
     "2026-10-25",
-    "2026-10-26"
+    "2026-10-26",
+    "2026-10-27"
   ],
   "emails": {
     "06dinesh@gmail.com": [
@@ -1081,6 +1081,10 @@
     "anu.anantapur@gmail.com": [
       "Tierra Cafe"
     ],
+    "anu3531@gmail.com": [
+      "MAHANADI DHABA",
+      "MAHANADI RESTAURANT"
+    ],
     "anugrah.konde@himeshfoods.com": [
       "Mad Over Donuts"
     ],
@@ -1318,6 +1322,7 @@
       "Arthniti"
     ],
     "artisticofoods@gmail.com": [
+      "QMP Andheri",
       "Queen Margheritas"
     ],
     "arun.aanandhan@ombc.in": [
@@ -2821,6 +2826,9 @@
     "craveculture.cafe@gmail.com": [
       "Crave Culture Cafe"
     ],
+    "crazygadgets.orlem@gmail.com": [
+      "Crazy Gadgets"
+    ],
     "creativitytri@gmail.com": [
       "Empire Salon"
     ],
@@ -3058,6 +3066,9 @@
     "delicatedelights84@gmail.com": [
       "Delicate Delights"
     ],
+    "delivery@beer.cafe": [
+      "Thrsty"
+    ],
     "der.ronak@sankalponline.com": [
       "Sankalp Group"
     ],
@@ -3209,6 +3220,9 @@
     ],
     "dhir@mirabelle.in": [
       "Mirabelle"
+    ],
+    "dhir@myeon.com": [
+      "Myeon Hub"
     ],
     "dhir@pangeo.in": [
       "Pangeo"
@@ -5117,6 +5131,9 @@
     "info@zoroy.com": [
       "ZOROY Luxury Chocolate"
     ],
+    "infonamaamedia@gmail.com": [
+      "Wellness Touch n Salon"
+    ],
     "infonutsweet@gmail.com": [
       "Nutsweet"
     ],
@@ -6178,6 +6195,9 @@
     "lachiconline.com@gmail.com": [
       "LaChic"
     ],
+    "lagloriabvn@gmail.com": [
+      "La Gloria Pizzeria"
+    ],
     "lakhantakaria@gmail.com": [
       "PIKU MALL"
     ],
@@ -6555,6 +6575,9 @@
     ],
     "managerkhmerkitchen@gmail.com": [
       "Khmer Kitchen"
+    ],
+    "managerthetraderscafe@gmail.com": [
+      "The Traders Cafe"
     ],
     "manan@coffeeking.in": [
       "Coffee King"
@@ -8977,6 +9000,9 @@
     "rathi.mohit24@gmail.com": [
       "Royal Rasoi"
     ],
+    "rathichinmay14@gmail.com": [
+      "Fomo"
+    ],
     "raunak@zyphers.com": [
       "Zyphers"
     ],
@@ -9053,6 +9079,9 @@
     ],
     "reachs.subbarao@gmail.com": [
       "SAMBARPOT"
+    ],
+    "reachsanjayraj@gmail.com": [
+      "The Biryani Loop"
     ],
     "realtourtravels@gmail.com": [
       "Firangi Street"
@@ -10299,6 +10328,9 @@
     "shihabtt@gmail.com": [
       "Kadalas Cafe"
     ],
+    "shikha.vyas@reelo.io": [
+      "Harajuku Tokyo Cafe"
+    ],
     "shikha@spezia.in": [
       "Spezia Bistro"
     ],
@@ -10961,6 +10993,9 @@
     ],
     "sukalyan@roasterycoffee.co.in": [
       "Roastery X Colocal X PS Cheese"
+    ],
+    "sumangal.agarwal@supperme.com": [
+      "Supper Me"
     ],
     "sumanth.cuppala@gmail.com": [
       "Masaledar"
@@ -12628,5 +12663,5 @@
       "Zorko Gwalior"
     ]
   },
-  "generated_at": "2026-10-27T04:51:18+05:30"
+  "generated_at": "2026-10-28T04:38:09+05:30"
 }
