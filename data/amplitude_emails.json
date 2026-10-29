@@ -1,12 +1,12 @@
 {
   "days_covered": [
-    "2026-10-22",
     "2026-10-23",
     "2026-10-24",
     "2026-10-25",
     "2026-10-26",
     "2026-10-27",
-    "2026-10-28"
+    "2026-10-28",
+    "2026-10-29"
   ],
   "emails": {
     "06dinesh@gmail.com": [
@@ -59,6 +59,9 @@
     ],
     "38dataentery@gmail.com": [
       "38 Barracks"
+    ],
+    "5ggardenrestaurants@gmail.com": [
+      "5G Family Garden"
     ],
     "7034muhammed@gmail.com": [
       "Falooda Nation"
@@ -927,6 +930,9 @@
     "anil.dulet@beer.cafe": [
       "The Beer Cafe"
     ],
+    "anil.dulet@bira91.com": [
+      "BIRA 91 TAPROOM"
+    ],
     "anil.s@jumboking.co.in": [
       "JK Burgers"
     ],
@@ -1379,6 +1385,9 @@
     ],
     "asad@chopit.net": [
       "Chopit"
+    ],
+    "asadatiq02241@gmail.com": [
+      "RCB"
     ],
     "ascentenjoy@gmail.com": [
       "Miss Doozy"
@@ -3819,6 +3828,9 @@
     "founder.lilac@gmail.com": [
       "Lilac and Crust"
     ],
+    "founder@primefoodandbeverage.com": [
+      "Shazzy"
+    ],
     "founder@zoaindia.com": [
       "ZOA"
     ],
@@ -4327,6 +4339,9 @@
     ],
     "harikrishnanayak@gmail.com": [
       "Great Britain Waffle"
+    ],
+    "harish.kumar@waefnb.com": [
+      "Pret A Boir"
     ],
     "harishreddy09@gmail.com": [
       "AnTeRa Courtyard"
@@ -5195,6 +5210,9 @@
       "Little Bistro cafe",
       "The Little Bistro"
     ],
+    "ishika.batra@reelo.io": [
+      "demo account"
+    ],
     "ishwar@adhiraandappa.in": [
       "Adhira and Appa"
     ],
@@ -5493,6 +5511,9 @@
     ],
     "jnarsimha@gmail.com": [
       "NAVEEN HANDLOOMS"
+    ],
+    "john.amfries@gmail.com": [
+      "AMFRIES"
     ],
     "jollychristian@sankalponline.com": [
       "Sankalp Group"
@@ -8056,6 +8077,9 @@
     "paidaprem20@gmail.com": [
       "Art of kitchen"
     ],
+    "pajisamritsaridhaba@gmail.com": [
+      "Pajis Amritsari Dhaba"
+    ],
     "palak@adhiraandappa.in": [
       "Adhira and Appa"
     ],
@@ -9716,6 +9740,9 @@
     "sakhamuri.094@gmail.com": [
       "Besta"
     ],
+    "sakina@aurea.com": [
+      "AUREA Elevated Dine In"
+    ],
     "sakina@dosaplaza.com": [
       "Dosa Plaza Begusarai"
     ],
@@ -10092,6 +10119,9 @@
     "satvikenterprise22@gmail.com": [
       "Shivas Coffee Bar Sec 11"
     ],
+    "satwikagrofoods@gmail.com": [
+      "Yankees"
+    ],
     "saulebygng@gmail.com": [
       "Saule"
     ],
@@ -10261,6 +10291,9 @@
     ],
     "shankar@sweetginger.in": [
       "The Tshirt Shop"
+    ],
+    "shankarrestaurantandbakers1@gmail.com": [
+      "Shankar Restaurant 2"
     ],
     "shankhadipbera2@gmail.com": [
       "Roastery X Colocal X PS Cheese"
@@ -11236,6 +11269,9 @@
     "svme1415@gmail.com": [
       "Attarinti Vantakaalu"
     ],
+    "svsfoodworks@gmail.com": [
+      "Wok and Beyond"
+    ],
     "swaadexotica@gmail.com": [
       "Swad Exotica Ratlam"
     ],
@@ -12126,6 +12162,7 @@
       "Earth Cafe"
     ],
     "vansh.foodies@gmail.com": [
+      "Five Star Cafe",
       "Five star cafe"
     ],
     "vanshul@roundtummyhospitality.com": [
@@ -12177,6 +12214,8 @@
       "Hazael Patisserie"
     ],
     "veeresh7.karadi@gmail.com": [
+      "Biggies Burger",
+      "Laphing Tea Factory",
       "Veer Clothing"
     ],
     "veeta_singh@yahoo.com": [
@@ -12287,6 +12326,9 @@
     ],
     "vinamrav@vartakfoods.in": [
       "Once More Bakery"
+    ],
+    "vinay@aurea.com": [
+      "AUREA Elevated Dine In"
     ],
     "vinayak@shankarbhavan.com": [
       "Shankar Bhavan"
@@ -12580,6 +12622,7 @@
       "The Gaffars legacy"
     ],
     "yashashwirai27@gmail.com": [
+      "KaRa by KnY",
       "kara by k y"
     ],
     "yashcg21@gmail.com": [
@@ -12694,5 +12737,5 @@
       "Zorko Gwalior"
     ]
   },
-  "generated_at": "2026-10-29T04:58:10+05:30"
+  "generated_at": "2026-10-30T05:04:26+05:30"
 }

@@ -1,6 +1,6 @@
 {
   "date": "2026-10-28",
-  "fetched_at": "2026-10-29T04:57:02+05:30",
+  "fetched_at": "2026-10-30T05:00:53+05:30",
   "stable": false,
   "notifications": [
     {
@@ -720,8 +720,8 @@
       "external_id": "663b624fdba80b28cfa36f29",
       "successful": 1,
       "received": 1,
-      "converted": 0,
-      "clicked": false
+      "converted": 1,
+      "clicked": true
     },
     {
       "id": "c6b02294-6931-4b18-8460-1f554dc88fb6",
@@ -4739,7 +4739,7 @@
       "tone": "v0",
       "external_id": "656e939ef5a31d860a7365e6",
       "successful": 1,
-      "received": 0,
+      "received": 1,
       "converted": 0,
       "clicked": false
     },
@@ -4859,7 +4859,7 @@
       "tone": "v0",
       "external_id": "68cd0d2d4831269007adf4f5",
       "successful": 3,
-      "received": 2,
+      "received": 3,
       "converted": 0,
       "clicked": false
     },
@@ -5624,7 +5624,7 @@
       "tone": "v0",
       "external_id": "6a55f4d16979090be6147f4d",
       "successful": 3,
-      "received": 1,
+      "received": 2,
       "converted": 0,
       "clicked": false
     },
@@ -8489,7 +8489,7 @@
       "tone": "v0",
       "external_id": "6831a18c0d41c8e0d147c174",
       "successful": 1,
-      "received": 0,
+      "received": 1,
       "converted": 0,
       "clicked": false
     },
@@ -10769,7 +10769,7 @@
       "tone": "v0",
       "external_id": "6a044e0be370eeacac76e4f9",
       "successful": 1,
-      "received": 0,
+      "received": 1,
       "converted": 0,
       "clicked": false
     },
@@ -16319,7 +16319,7 @@
       "tone": "v0",
       "external_id": "6a8ed87187f7d2124ec7faa3",
       "successful": 4,
-      "received": 3,
+      "received": 4,
       "converted": 1,
       "clicked": true
     },
@@ -21524,7 +21524,7 @@
       "tone": "v0",
       "external_id": "6a9ea8a9758c36089ff388a7",
       "successful": 1,
-      "received": 0,
+      "received": 1,
       "converted": 0,
       "clicked": false
     },
@@ -21839,7 +21839,7 @@
       "tone": "v0",
       "external_id": "6a6703660a793a083e691563",
       "successful": 1,
-      "received": 0,
+      "received": 1,
       "converted": 0,
       "clicked": false
     },
@@ -22754,7 +22754,7 @@
       "tone": "v0",
       "external_id": "69312f55b05c43fe072c77dd",
       "successful": 2,
-      "received": 1,
+      "received": 2,
       "converted": 0,
       "clicked": false
     },
