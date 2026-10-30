@@ -1,12 +1,12 @@
 {
   "days_covered": [
-    "2026-10-23",
     "2026-10-24",
     "2026-10-25",
     "2026-10-26",
     "2026-10-27",
     "2026-10-28",
-    "2026-10-29"
+    "2026-10-29",
+    "2026-10-30"
   ],
   "emails": {
     "06dinesh@gmail.com": [
@@ -172,6 +172,7 @@
       "Royal Rasoi",
       "Sheikh Chang Singh",
       "Sly Granny",
+      "Suka Brew and Kitchen",
       "The Brown",
       "The Dessert Stop",
       "Topi Vappa Biriyani",
@@ -888,6 +889,9 @@
     "anand@thewingman.in": [
       "Mr Wingman"
     ],
+    "anandhomestore@gmail.com": [
+      "Anand Home Store"
+    ],
     "anandjewelhouse23@gmail.com": [
       "Anand Jewel House"
     ],
@@ -1368,6 +1372,10 @@
     "aryan.t@jumboking.co.in": [
       "Jumboking"
     ],
+    "aryanagarwal150903@gmail.com": [
+      "Eden Hospitality",
+      "Forktree Hospitality"
+    ],
     "aryanagarwalrock@gmail.com": [
       "Eden Hospitality"
     ],
@@ -1400,6 +1408,9 @@
     ],
     "asha@the-sorrento.com": [
       "The Sorrento"
+    ],
+    "ashachauhann1@gmail.com": [
+      "Baisi Brigade"
     ],
     "ashish@adhiraandappa.in": [
       "Adhira and Appa"
@@ -2591,6 +2602,9 @@
     "chimmulaajith@gmail.com": [
       "Flavours Of Andhra"
     ],
+    "chinchwad@mayur.in": [
+      "Mayur Restaurant"
+    ],
     "chinmay.prasarkar@lbf.co.in": [
       "The Loyalists LBF"
     ],
@@ -3178,6 +3192,9 @@
     ],
     "dheer@downing.com": [
       "10 Downing Street"
+    ],
+    "dheer@yumtumchina.com": [
+      "Yum Tum China"
     ],
     "dheerajprakash057@gmail.com": [
       "Tealand"
@@ -5252,6 +5269,9 @@
     "it@mls.om": [
       "MLS Steakhouse"
     ],
+    "it@ninis.co.in": [
+      "Ninis"
+    ],
     "it@onestalove.in": [
       "Onesta"
     ],
@@ -6742,6 +6762,7 @@
       "Biggies Burger"
     ],
     "marketing@blrbrewing.com": [
+      "Beanlore",
       "Beanlore Coffee Roasters"
     ],
     "marketing@brewbakes.co": [
@@ -6978,6 +6999,7 @@
       "Meltora Vikaspuri"
     ],
     "merchantfoods@gmail.com": [
+      "AIG  ICF SD",
       "Alice in Gelatoland"
     ],
     "merixhospitality@gmail.com": [
@@ -7262,6 +7284,9 @@
     ],
     "msprestaurants@gmail.com": [
       "Talk Of The Town"
+    ],
+    "mtl1masaledaar@gmail.com": [
+      "Masaledar"
     ],
     "mubakc@gmail.com": [
       "Seabass Seafoods"
@@ -8562,6 +8587,9 @@
     "preethampuneeth@gmail.com": [
       "Maara Restro Bar"
     ],
+    "preethi99neharika@gmail.com": [
+      "Bao Bao"
+    ],
     "premnathsekar700@gmail.com": [
       "Foodmall"
     ],
@@ -9532,6 +9560,9 @@
     "ruchit1992@gmail.com": [
       "Dough n Doppio"
     ],
+    "ruchyeta@loveandcheesecake.com": [
+      "Love and Cheesecake"
+    ],
     "rudrachauhan55231@gmail.com": [
       "Bhature Walas"
     ],
@@ -9569,6 +9600,9 @@
     ],
     "ryoperations@kcpl.in": [
       "Reality"
+    ],
+    "s.jariwal@gmail.com": [
+      "Vadakam"
     ],
     "s.kalyangupta@gmail.com": [
       "Gumagumalu Authentic"
@@ -9664,6 +9698,9 @@
     ],
     "sahilchadha786@gmail.com": [
       "Sohan Provision Store"
+    ],
+    "sahilkaushal572@gmail.com": [
+      "Grill Masters"
     ],
     "sahirsachthey@gmail.com": [
       "Food Story"
@@ -12107,6 +12144,9 @@
     "vachi.tsm@gmail.com": [
       "Vachi Shri Sweets Cafe"
     ],
+    "vadakam.kol@gmail.com": [
+      "Vadakam"
+    ],
     "vadodaraninis@gmail.com": [
       "Ninis Kitchen Vadodara"
     ],
@@ -12338,7 +12378,8 @@
     ],
     "vinayakannapurnallp@gmail.com": [
       "Eden Courtyard",
-      "Eden Hospitality"
+      "Eden Hospitality",
+      "Forktree Hospitality"
     ],
     "vinaykamal@yahoo.com": [
       "Moksha The Social Club"
@@ -12737,5 +12778,5 @@
       "Zorko Gwalior"
     ]
   },
-  "generated_at": "2026-10-30T05:04:26+05:30"
+  "generated_at": "2026-10-31T04:40:01+05:30"
 }
