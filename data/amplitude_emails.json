@@ -1,12 +1,12 @@
 {
   "days_covered": [
-    "2026-10-24",
     "2026-10-25",
     "2026-10-26",
     "2026-10-27",
     "2026-10-28",
     "2026-10-29",
-    "2026-10-30"
+    "2026-10-30",
+    "2026-10-31"
   ],
   "emails": {
     "06dinesh@gmail.com": [
@@ -40,6 +40,9 @@
     ],
     "1995rksfoods@gmail.com": [
       "1995"
+    ],
+    "25bakehouse7@gmail.com": [
+      "25 7 Bakehouse"
     ],
     "25mainstreetcafe@gmail.com": [
       "25 Main Street Cafe"
@@ -152,6 +155,7 @@
     "aayushi.thawani@reelo.io": [
       "Amul Cafe",
       "Bakebook Bakery",
+      "Batashe Chaatwala",
       "Copper Chimney",
       "Deccan Brews Cafe",
       "Funky Monkeys",
@@ -1628,6 +1632,10 @@
     ],
     "badgamia.ankush@gmail.com": [
       "The Asian Wok Cafe"
+    ],
+    "badmashvadapavwala@gmail.com": [
+      "Badmash Vadapav Wala",
+      "Monkey Cafe"
     ],
     "bagawadekaustubh@gmail.com": [
       "Charles deck"
@@ -5469,6 +5477,10 @@
     "jhanavivivinventures@gmail.com": [
       "Kailash Parbat Vizag"
     ],
+    "jigar.daryanani1@gmail.com": [
+      "Badmash Vadapav Wala",
+      "Monkey Cafe"
+    ],
     "jigneshsinhkh@gmail.com": [
       "Only Dosa house"
     ],
@@ -5761,6 +5773,9 @@
     ],
     "karigarirestaurant@gmail.com": [
       "Karigari Restaurant"
+    ],
+    "karkarsanni125@gmail.com": [
+      "Subito"
     ],
     "karm@hrkhospitality.com": [
       "Humble Krumble"
@@ -6637,6 +6652,9 @@
     ],
     "manasdhabha@gmail.com": [
       "Hotel Manas Dhabha"
+    ],
+    "manasdv1@gmail.com": [
+      "Desi Vibes Spectrum"
     ],
     "manasi.gaikwad2001@gmail.com": [
       "JK Burgers"
@@ -8150,7 +8168,8 @@
       "PARDISE PASTRY N ICE CREAM"
     ],
     "paradisebeauty003@gmail.com": [
-      "Aru Wellness"
+      "Aru Wellness",
+      "VLCC Wellness"
     ],
     "paranandahospitality@gmail.com": [
       "GAG Coffee Co"
@@ -9926,6 +9945,7 @@
       "A Gourmesserie",
       "A1 Chips",
       "Amrutam",
+      "Asha Cinema and Cafe",
       "Azure Dine",
       "Barbeque Nation",
       "Bright Hospitality",
@@ -10903,6 +10923,9 @@
     ],
     "spsrainu@gmail.com": [
       "Brewtally Honest"
+    ],
+    "spudatofoods@gmail.com": [
+      "Spudato"
     ],
     "sradhya.sha@gmail.com": [
       "Shaam e malang"
@@ -12229,6 +12252,9 @@
     "vasanthkumar1703@gmail.com": [
       "THE SPOT FOR FOODIES"
     ],
+    "vasu.v@litensity.com": [
+      "Bigguys"
+    ],
     "vasudha@houseofwok.in": [
       "House of Wok"
     ],
@@ -12531,6 +12557,9 @@
     "vpatil0709@gmail.com": [
       "South Indian Cafe"
     ],
+    "vpnfood2026@gmail.com": [
+      "Uncle Donalds Pizza Sg"
+    ],
     "vrajdesai0012@gmail.com": [
       "Cafe Beats Khadki"
     ],
@@ -12778,5 +12807,5 @@
       "Zorko Gwalior"
     ]
   },
-  "generated_at": "2026-10-31T04:40:01+05:30"
+  "generated_at": "2026-11-01T04:13:46+05:30"
 }
