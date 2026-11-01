@@ -1,12 +1,12 @@
 {
   "days_covered": [
-    "2026-10-25",
     "2026-10-26",
     "2026-10-27",
     "2026-10-28",
     "2026-10-29",
     "2026-10-30",
-    "2026-10-31"
+    "2026-10-31",
+    "2026-11-01"
   ],
   "emails": {
     "06dinesh@gmail.com": [
@@ -550,6 +550,9 @@
     ],
     "adwait09@gmail.com": [
       "Atithi Pure Veg"
+    ],
+    "afnanali1979@gmail.com": [
+      "Pepperpot Restaurant"
     ],
     "afroze@monopolyinc.com": [
       "Portland Grill and Cafe"
@@ -1991,6 +1994,7 @@
       "Bizz The Hotel"
     ],
     "bjnexus.ai@gmail.com": [
+      "RR Durbar",
       "Swagramam"
     ],
     "bkc@thenutcracker.in": [
@@ -5669,7 +5673,8 @@
       "The OG Burger"
     ],
     "kalyanpur@aru.in": [
-      "Aru Wellness"
+      "Aru Wellness",
+      "VLCC Wellness"
     ],
     "kamakshi@frothytales.com": [
       "The Bier Library"
@@ -6511,6 +6516,9 @@
     ],
     "mahua.narayan@gmail.com": [
       "Ambrosia Resort and Spa"
+    ],
+    "mail-durga.m@litensity.com": [
+      "Bigguys"
     ],
     "mail.masterpick@gmail.com": [
       "Master Pick"
@@ -9304,6 +9312,9 @@
     "rgupta1962@gmail.com": [
       "Pets and Us"
     ],
+    "rharsh2121@gmail.com": [
+      "Taste king"
+    ],
     "rheemapramanick@gmail.com": [
       "Golden Parkk Hotel"
     ],
@@ -9884,6 +9895,9 @@
       "Sambharsa",
       "Sambharsa Vaishali Nagar"
     ],
+    "sambharsagreencity@gmail.com": [
+      "Sambharsa"
+    ],
     "sambharsapune22vighnraja@gmail.com": [
       "Sambharsa"
     ],
@@ -10187,6 +10201,9 @@
     ],
     "saurabh@mangosteen.co.in": [
       "Mangosteen"
+    ],
+    "saurabh@thehubofeureka.com": [
+      "The Brown"
     ],
     "sauravchauhan1024@gmail.com": [
       "Grand Rajvanshi"
@@ -11318,7 +11335,8 @@
       "The Bistrograph"
     ],
     "suvrodeepta@coderteq.com": [
-      "Eden Hospitality"
+      "Eden Hospitality",
+      "Forktree Hospitality"
     ],
     "svburgermart@gmail.com": [
       "JK Burgers"
@@ -12807,5 +12825,5 @@
       "Zorko Gwalior"
     ]
   },
-  "generated_at": "2026-11-01T04:13:46+05:30"
+  "generated_at": "2026-11-02T04:49:46+05:30"
 }
