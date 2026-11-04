@@ -1,12 +1,12 @@
 {
   "days_covered": [
-    "2026-10-27",
     "2026-10-28",
     "2026-10-29",
     "2026-10-30",
     "2026-10-31",
     "2026-11-01",
-    "2026-11-02"
+    "2026-11-02",
+    "2026-11-03"
   ],
   "emails": {
     "06dinesh@gmail.com": [
@@ -165,6 +165,7 @@
       "KNS Burgers",
       "Kahani",
       "Kalpaney",
+      "Kooru",
       "Legacy Brewing Company",
       "LovBites Cafe",
       "Love and Cheesecake",
@@ -1964,9 +1965,11 @@
       "Khoj"
     ],
     "binni.jadaun@reelo.io": [
+      "Ande ka Adda",
       "Avyan Bakehouse",
       "Pizza Merrano",
-      "The Crunch Affair"
+      "The Crunch Affair",
+      "sambhar and more"
     ],
     "biprojit.nath@outlook.com": [
       "Sattvam"
@@ -2069,6 +2072,9 @@
     ],
     "bollashospitality@gmail.com": [
       "Brau Galie"
+    ],
+    "bombaybobacompany@gmail.com": [
+      "BombayBoba Company"
     ],
     "bondsohail07@gmail.com": [
       "KA34 Cafe and Restaurant"
@@ -2181,6 +2187,9 @@
     ],
     "burgermafia.2023@gmail.com": [
       "Burger Mafia"
+    ],
+    "burghasm@gmail.com": [
+      "Mr Monk"
     ],
     "burnoutventures@gmail.com": [
       "BURNOUT Restaurant Games",
@@ -2531,6 +2540,9 @@
     ],
     "chaatdihatti347@gmail.com": [
       "chaat di hatti"
+    ],
+    "chaatmafiaservice@gmail.com": [
+      "Mr Monk"
     ],
     "chachacha.pmcblr@phoenixmills.com": [
       "Bell Coins"
@@ -4658,6 +4670,9 @@
     "hlfvastral@gmail.com": [
       "HL Frankie"
     ],
+    "hmpatel.group@gmail.com": [
+      "Hotel H"
+    ],
     "hnayaka.business@gmail.com": [
       "Bhagini Group"
     ],
@@ -5070,6 +5085,9 @@
     ],
     "info@goodhotels.co.in": [
       "Good Hotels"
+    ],
+    "info@goodoldtimescafeandbar.com": [
+      "Good Old Times Cafe Bar"
     ],
     "info@grandpizzaslice.com": [
       "Grand Pizza Slice"
@@ -10009,6 +10027,7 @@
       "Cafeteria Co",
       "Chala Basuya",
       "Chawlas 2 Since 1960",
+      "Chelvis Coffee",
       "DVG BENNE DOSA",
       "Dasshi Dimsum and sushi bar",
       "Dum Handi Biryani",
@@ -10029,6 +10048,7 @@
       "O Cakes",
       "Parkar Ice Cream Cafe",
       "RCP Group",
+      "Rai Chicken",
       "Sagar Ratna",
       "Shiv Ice Cream",
       "Si Nonnas",
@@ -10714,6 +10734,9 @@
     ],
     "siddiqmusaliar@gmail.com": [
       "Tearoute"
+    ],
+    "signature@kingschic.com": [
+      "Kings Chic Signature"
     ],
     "sigreefoods@gmail.com": [
       "Pure Veg Shawarma",
@@ -11599,6 +11622,9 @@
     "tech@sunitaonline.com": [
       "Odette Restaurant"
     ],
+    "tej.titans@gmail.com": [
+      "FUMI"
+    ],
     "tejas.suryawanshi93@gmail.com": [
       "Suryawanshi Restaurant"
     ],
@@ -11951,6 +11977,9 @@
     "thirunagar@12oclockbiriyani.com": [
       "12o Clock Biryani",
       "12o clock biryani"
+    ],
+    "thomasmathew2611995@gmail.com": [
+      "Momo Rimboche"
     ],
     "threadtara2025@gmail.com": [
       "Thread Tara"
@@ -12496,6 +12525,9 @@
     "vinodmagaji81@gmail.com": [
       "Puff and Pastry Bakery"
     ],
+    "vipin.janardhan@himeshfoods.com": [
+      "Mad Over Donuts"
+    ],
     "viposharma@gmail.com": [
       "Indian Coffee Factory"
     ],
@@ -12872,5 +12904,5 @@
       "Zorko Gwalior"
     ]
   },
-  "generated_at": "2026-11-03T07:23:08+05:30"
+  "generated_at": "2026-11-04T05:37:55+05:30"
 }
