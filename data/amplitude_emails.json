@@ -1,12 +1,12 @@
 {
   "days_covered": [
-    "2026-10-28",
     "2026-10-29",
     "2026-10-30",
     "2026-10-31",
     "2026-11-01",
     "2026-11-02",
-    "2026-11-03"
+    "2026-11-03",
+    "2026-11-04"
   ],
   "emails": {
     "06dinesh@gmail.com": [
@@ -275,6 +275,9 @@
     ],
     "abhishekuniyalauli@gmail.com": [
       "Auli Cafe"
+    ],
+    "abhishekvekariya@gmail.com": [
+      "Ovens N Platters"
     ],
     "abhitesh.sharma@lbf.co.in": [
       "The Loyalists LBF"
@@ -811,6 +814,9 @@
     ],
     "amit.kalgutkar@miadiamante.com": [
       "Independence Brewing Co"
+    ],
+    "amit.nirgude@gmail.com": [
+      "Fish Curry Rice"
     ],
     "amit.rana@interglobe.com": [
       "China Club"
@@ -1586,6 +1592,9 @@
     "avinash@kompany.co.in": [
       "Kalpaney"
     ],
+    "avinash@kuchina.co.in": [
+      "Kuchina"
+    ],
     "avis.rodrigues@2pintsbrewing.com": [
       "2 Pints Brewing"
     ],
@@ -1781,6 +1790,7 @@
       "Beanlore Coffee Roasters"
     ],
     "beansnberryco@gmail.com": [
+      "BeanBerry",
       "Beans N Berry"
     ],
     "beansnbrookscafe@yahoo.com": [
@@ -4566,6 +4576,9 @@
     "hello@tazatable.com": [
       "Taza Table"
     ],
+    "hello@thehotdogproject.com": [
+      "The Hotdog Project"
+    ],
     "hello@zoaindia.com": [
       "ZOA"
     ],
@@ -5941,6 +5954,9 @@
     ],
     "kevalsoni2309@gmail.com": [
       "Virasat E Curry"
+    ],
+    "kevinmange03@gmail.com": [
+      "August Cafe Khar"
     ],
     "kf.goregaon@gmail.com": [
       "JK Burgers"
@@ -7449,6 +7465,9 @@
     "muvzipataylor@gmail.com": [
       "Olive Street Food Cafe"
     ],
+    "mviren.11.11@gmail.com": [
+      "Toptron"
+    ],
     "mvs@beer.cafe": [
       "Burger Brewery"
     ],
@@ -8100,6 +8119,9 @@
     ],
     "operationsmanager@46ounces.com": [
       "46 Ounces"
+    ],
+    "operationss@ponrambiriyani.com": [
+      "Dindigul Ponram Biriyani"
     ],
     "ops.flavourheaven@gmail.com": [
       "Delicia"
@@ -9000,6 +9022,7 @@
       "Sbarro New York Pizza"
     ],
     "rajarshi@speciality.co.in": [
+      "MLC ANDHERI WEST",
       "Speciality"
     ],
     "rajasi.l@maiz.in": [
@@ -9029,6 +9052,7 @@
       "Niyaaz"
     ],
     "rajib.c555@gmail.com": [
+      "KLUBB 10",
       "Klubb Stories"
     ],
     "rajjat.chopra@mbchicken.in": [
@@ -9042,6 +9066,10 @@
     ],
     "rajkumardotm7@gmail.com": [
       "Vasans Parambariya"
+    ],
+    "rajmeiers@gmail.com": [
+      "Tamarind Sky  Restro",
+      "Tamarind Sky Restro"
     ],
     "rajnesh@frothytales.com": [
       "The Bier Library"
@@ -10869,6 +10897,9 @@
     "sncrm@lotusindustries.org": [
       "Sweet Nation"
     ],
+    "sneha.bajaj801@gmail.com": [
+      "Dine And Spice"
+    ],
     "snehalss9495@gmail.com": [
       "The Bombae Bar"
     ],
@@ -11404,6 +11435,9 @@
     "suvrodeepta@coderteq.com": [
       "Eden Hospitality",
       "Forktree Hospitality"
+    ],
+    "svaasacafe@gmail.com": [
+      "Svaasa Rooftop Cafe"
     ],
     "svburgermart@gmail.com": [
       "JK Burgers"
@@ -12370,6 +12404,9 @@
     "vedika.mehta94@gmail.com": [
       "Bisque Bakery"
     ],
+    "vediora102@gmail.com": [
+      "Spice Grill Flame"
+    ],
     "veeresh.karadi@reelo.io": [
       "Hazael Patisserie"
     ],
@@ -12904,5 +12941,5 @@
       "Zorko Gwalior"
     ]
   },
-  "generated_at": "2026-11-04T05:37:55+05:30"
+  "generated_at": "2026-11-05T06:03:52+05:30"
 }

@@ -1,6 +1,6 @@
 {
   "date": "2026-11-02",
-  "generated_at": "2026-11-04T05:38:00+05:30",
+  "generated_at": "2026-11-05T06:04:15+05:30",
   "opened_ids": [
     981617894126,
     981624369098,
@@ -262,7 +262,7 @@
       "label": "Tapped the notification",
       "source": "OneSignal \u2014 the DRU push was clicked on 2026-11-02. Brand-level (converted > 0).",
       "unit": "businesses",
-      "value": 131
+      "value": 132
     },
     {
       "key": "opened",
