@@ -1,12 +1,12 @@
 {
   "days_covered": [
-    "2026-10-29",
     "2026-10-30",
     "2026-10-31",
     "2026-11-01",
     "2026-11-02",
     "2026-11-03",
-    "2026-11-04"
+    "2026-11-04",
+    "2026-11-05"
   ],
   "emails": {
     "06dinesh@gmail.com": [
@@ -373,6 +373,9 @@
       "Adalat Gorakhpur",
       "Adalat Restaurant"
     ],
+    "adarshchordia@yahoo.com": [
+      "Cravations"
+    ],
     "adarshjhun@gmail.com": [
       "Style Threads"
     ],
@@ -712,6 +715,9 @@
     ],
     "alkakakkad11@gmail.com": [
       "Martinoz Pizza"
+    ],
+    "allarohithnaidu@gmail.com": [
+      "BeanBoard"
     ],
     "allor.pmclr@phoenixmills.com": [
       "Bell Coins"
@@ -1886,6 +1892,7 @@
       "Baisi Brigade",
       "Cafe Morjelo",
       "Magnetic Step",
+      "Sarnobaats Restaurant",
       "Silver Oak Restro Cafe",
       "The Yummy Fork",
       "Veera n Da Dhaba"
@@ -2084,6 +2091,7 @@
       "Brau Galie"
     ],
     "bombaybobacompany@gmail.com": [
+      "Bombay Boba and Co",
       "BombayBoba Company"
     ],
     "bondsohail07@gmail.com": [
@@ -2692,6 +2700,9 @@
     ],
     "cibhu2010@gmail.com": [
       "Caffe 11 11"
+    ],
+    "cibofoods.jaipur@gmail.com": [
+      "SHOFU The Momo Man"
     ],
     "citylight@coffeeculture.co.in": [
       "Coffee Culture"
@@ -5517,6 +5528,9 @@
     "jeanwagmore@gmail.com": [
       "Coffeebees"
     ],
+    "jeehukumpub@gmail.com": [
+      "Jee Hukum Pub"
+    ],
     "jeet.bharne1904@gmail.com": [
       "Bharne"
     ],
@@ -6429,6 +6443,9 @@
     "linju@gmail.com": [
       "1940 India by Azad"
     ],
+    "little.haddocks@gmail.com": [
+      "Little Haddock"
+    ],
     "littlewokbox@gmail.com": [
       "Little Wok Box"
     ],
@@ -6470,6 +6487,9 @@
     ],
     "londoncoffeeagra@gmail.com": [
       "London coffee club"
+    ],
+    "londonpizza01@gmail.com": [
+      "London Pizza"
     ],
     "londonstreetcafe21@gmail.com": [
       "London Street Cafe"
@@ -6757,6 +6777,9 @@
     "maniram@ponrambiriyani.com": [
       "Ponram Biriyani",
       "Ponram Biriyani Chennai"
+    ],
+    "maniram@ponrammbiriyani.com": [
+      "Ponram Biriyani"
     ],
     "manish.pinjani@gmail.com": [
       "Chulbul Dhaba"
@@ -8267,7 +8290,8 @@
       "Misu"
     ],
     "parishankara93@gmail.com": [
-      "Siya Cafe"
+      "Siya Cafe",
+      "Tealogy cafe"
     ],
     "parmita_barua@yahoo.com": [
       "Nippon dough"
@@ -8420,6 +8444,9 @@
     ],
     "pirohsr@pirokitchens.com": [
       "PiRo"
+    ],
+    "pistasorestaurant@gmail.com": [
+      "Pistaso"
     ],
     "piyali@hanglaatherium.com": [
       "Hanglaatherium"
@@ -9565,6 +9592,12 @@
     "rohit1@staranise.com": [
       "Star Anise Patisserie"
     ],
+    "rohit@hippieatheart.com": [
+      "HIPPIE AT HEART"
+    ],
+    "rohit@thecharcoalkitchen.com": [
+      "Char and Co"
+    ],
     "rohitbane@gmail.com": [
       "Has South Bombay"
     ],
@@ -10230,6 +10263,9 @@
     "saraybytanoor@gmail.com": [
       "Saray by Tanoor"
     ],
+    "sardarfoods.gandhinagar@gmail.com": [
+      "Masala Gourmet"
+    ],
     "sarishfoods@gmail.com": [
       "Dhungaar The Smoky Secret"
     ],
@@ -10434,6 +10470,9 @@
     "shalimar.indiranagar@gmail.com": [
       "Shalimar Indiranagar"
     ],
+    "shalinirala10@gmail.com": [
+      "Cafe By The Lane Behala"
+    ],
     "shamal@fruitbae.com": [
       "FruitBae"
     ],
@@ -10547,6 +10586,9 @@
     ],
     "shikha.vyas@reelo.io": [
       "Harajuku Tokyo Cafe"
+    ],
+    "shikha.yogam@gmail.com": [
+      "Smoking Bihari"
     ],
     "shikha@spezia.in": [
       "Spezia Bistro"
@@ -12204,6 +12246,9 @@
     "uni@kesariya.com": [
       "Kesariya"
     ],
+    "uni@laparisbakers.com": [
+      "LA Paris Bakers"
+    ],
     "uni@reelo.iii": [
       "Tribe"
     ],
@@ -12703,6 +12748,9 @@
     "vs4112165@gmail.com": [
       "Just My Slice"
     ],
+    "vvjadhav2021@gmail.com": [
+      "Samvene The Bagel Cafe"
+    ],
     "vvraghava68@gmail.com": [
       "Hotel Park N"
     ],
@@ -12941,5 +12989,5 @@
       "Zorko Gwalior"
     ]
   },
-  "generated_at": "2026-11-05T06:03:52+05:30"
+  "generated_at": "2026-11-06T06:05:23+05:30"
 }
