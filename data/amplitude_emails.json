@@ -1,12 +1,12 @@
 {
   "days_covered": [
-    "2026-10-31",
     "2026-11-01",
     "2026-11-02",
     "2026-11-03",
     "2026-11-04",
     "2026-11-05",
-    "2026-11-06"
+    "2026-11-06",
+    "2026-11-07"
   ],
   "emails": {
     "06dinesh@gmail.com": [
@@ -6601,6 +6601,7 @@
       "BLR Brewing Co"
     ],
     "maheshbalakrishnan777@gmail.com": [
+      "Beanlore",
       "Beanlore Coffee Roasters"
     ],
     "maheshmahajan123@gmail.com": [
@@ -9230,7 +9231,8 @@
       "Royal Rasoi"
     ],
     "rathichinmay14@gmail.com": [
-      "Fomo"
+      "Fomo",
+      "Jee Hukum Pub"
     ],
     "raunak@zyphers.com": [
       "Zyphers"
@@ -9759,6 +9761,9 @@
     ],
     "rustichouse272007@gmail.com": [
       "RUSTIC HOUSE"
+    ],
+    "rutvihirani09@gmail.com": [
+      "Breadlab"
     ],
     "rutwik95@gmail.com": [
       "Tipsy Turk"
@@ -11228,6 +11233,9 @@
     ],
     "subithasukumaranss@gmail.com": [
       "Live 7 Supermarket"
+    ],
+    "suchknaidu@gmail.com": [
+      "JK Burgers"
     ],
     "sudhan.raja@stallionenter.net": [
       "The Copper Plate"
@@ -13013,5 +13021,5 @@
       "Zorko Gwalior"
     ]
   },
-  "generated_at": "2026-11-07T05:31:15+05:30"
+  "generated_at": "2026-11-08T04:28:07+05:30"
 }
