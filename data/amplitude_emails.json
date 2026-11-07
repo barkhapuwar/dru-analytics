@@ -1,12 +1,12 @@
 {
   "days_covered": [
-    "2026-10-30",
     "2026-10-31",
     "2026-11-01",
     "2026-11-02",
     "2026-11-03",
     "2026-11-04",
-    "2026-11-05"
+    "2026-11-05",
+    "2026-11-06"
   ],
   "emails": {
     "06dinesh@gmail.com": [
@@ -1204,6 +1204,9 @@
     "anushka@cafebythebae.com": [
       "Cafe by the Bae"
     ],
+    "anushka@chaichaico.com": [
+      "Chai Chai Co"
+    ],
     "anushka@ootathindi.com": [
       "Oota Thindi"
     ],
@@ -1936,6 +1939,9 @@
     "bhumin.patel@reelo.io": [
       "Bakers"
     ],
+    "bhumin2001@gmail.com": [
+      "Bakers"
+    ],
     "bichitra.niyaaz@gmail.com": [
       "Niyaaz"
     ],
@@ -2333,6 +2339,9 @@
     "cafegarden165@gmail.com": [
       "GARDEN CAFE"
     ],
+    "cafeguftagu.srinagar@gmail.com": [
+      "Cafe Guftagu"
+    ],
     "cafeharne@gmail.com": [
       "Cafe Harne"
     ],
@@ -2657,7 +2666,8 @@
       "Flavours Of Andhra"
     ],
     "chinchwad@mayur.in": [
-      "Mayur Restaurant"
+      "Mayur Restaurant",
+      "Mayur Thali Chinchwad"
     ],
     "chinmay.prasarkar@lbf.co.in": [
       "The Loyalists LBF"
@@ -3137,11 +3147,13 @@
       "Coffee Dude",
       "Dhe Puttu",
       "Dvg Benne Dosa",
+      "Echoes",
       "Karachi Bakery",
       "Kings Kulfi",
       "MOETS",
       "Makers of Milkshakes",
       "Mast Biryani",
+      "Neeru Bar and Kitchen",
       "Pind Punjab",
       "THE RESIDENCY",
       "Tempt"
@@ -4395,6 +4407,9 @@
     "hansarkhaitan@saketpromoters.com": [
       "House of Kiaan Inn"
     ],
+    "hantil@gmail.com": [
+      "5Monkey Bistro"
+    ],
     "happinesssdelishop@gmail.com": [
       "Happiness Deli"
     ],
@@ -4553,6 +4568,9 @@
     ],
     "hello@foodaholics.org": [
       "Oliver Brown"
+    ],
+    "hello@freshies.in": [
+      "Freshies Fruit Icecreams"
     ],
     "hello@heydgreen.com": [
       "Freshlymade"
@@ -12255,6 +12273,9 @@
     "uni@reelo.ioi": [
       "Molecule Mathura"
     ],
+    "uni@reelo.ioi.com": [
+      "Cafe Crema"
+    ],
     "uni@reelo.ioooo": [
       "Afro House"
     ],
@@ -12424,6 +12445,9 @@
     ],
     "vasanthkumar1703@gmail.com": [
       "THE SPOT FOR FOODIES"
+    ],
+    "vastravilla2018@gmail.com": [
+      "Gentleman click"
     ],
     "vasu.v@litensity.com": [
       "Bigguys"
@@ -12989,5 +13013,5 @@
       "Zorko Gwalior"
     ]
   },
-  "generated_at": "2026-11-06T06:05:23+05:30"
+  "generated_at": "2026-11-07T05:31:15+05:30"
 }
