@@ -1,12 +1,12 @@
 {
   "days_covered": [
-    "2026-11-01",
     "2026-11-02",
     "2026-11-03",
     "2026-11-04",
     "2026-11-05",
     "2026-11-06",
-    "2026-11-07"
+    "2026-11-07",
+    "2026-11-08"
   ],
   "emails": {
     "06dinesh@gmail.com": [
@@ -4491,8 +4491,10 @@
     "harshita.meharchandani@reelo.io": [
       "Dasaprakash",
       "Gymate Cafe",
+      "Labanista",
       "Mi Cocina",
-      "Riyasat E Rana"
+      "Riyasat E Rana",
+      "Smitas Lakeview"
     ],
     "harshitc687@gmail.com": [
       "Black Brickk",
@@ -4648,6 +4650,9 @@
     ],
     "hi@rd.cafe": [
       "RD Cafe"
+    ],
+    "hicake119@gmail.com": [
+      "Hi CAKE"
     ],
     "hima.kanumuru@gmail.com": [
       "63 degress"
@@ -8758,6 +8763,9 @@
     ],
     "prit@reelo.in": [
       "Misu"
+    ],
+    "pritam.barik5030@gmail.com": [
+      "Indriya Restaurant"
     ],
     "pritamgrandpizzaslice@gmail.com": [
       "Grand Pizza Slice"
@@ -13021,5 +13029,5 @@
       "Zorko Gwalior"
     ]
   },
-  "generated_at": "2026-11-08T04:28:07+05:30"
+  "generated_at": "2026-11-09T04:35:05+05:30"
 }
