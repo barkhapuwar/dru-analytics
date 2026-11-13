@@ -1,12 +1,12 @@
 {
   "days_covered": [
-    "2026-11-05",
     "2026-11-06",
     "2026-11-07",
     "2026-11-08",
     "2026-11-09",
     "2026-11-10",
-    "2026-11-11"
+    "2026-11-11",
+    "2026-11-12"
   ],
   "emails": {
     "06dinesh@gmail.com": [
@@ -156,6 +156,7 @@
       "Amul Cafe",
       "Bakebook Bakery",
       "Batashe Chaatwala",
+      "Browns Bakery",
       "Copper Chimney",
       "Deccan Brews Cafe",
       "Funky Monkeys",
@@ -1902,6 +1903,7 @@
       "Ashwins Chaat N Snac",
       "Baisi Brigade",
       "Cafe Morjelo",
+      "Luv Restaurant",
       "Magnetic Step",
       "Sarnobaats Restaurant",
       "Silver Oak Restro Cafe",
@@ -1996,6 +1998,7 @@
       "Khoj"
     ],
     "binni.jadaun@reelo.io": [
+      "51 Rainbow",
       "Ande ka Adda",
       "Avyan Bakehouse",
       "Pizza Merrano",
@@ -7321,6 +7324,9 @@
     "mohammed.kasim@reelo.io": [
       "Follow 72"
     ],
+    "mohammed1.imran@reelo.io": [
+      "Eat Nino Group"
+    ],
     "mohammedrafi2104@gmail.com": [
       "Thakkara"
     ],
@@ -9094,6 +9100,9 @@
     ],
     "rahuls6196@gmail.com": [
       "Royal Palace"
+    ],
+    "raiyasathhospitality@gmail.com": [
+      "Raiya"
     ],
     "raj.chhabriya@shreesaigroup.co.in": [
       "House Of Blends"
@@ -13079,5 +13088,5 @@
       "Zorko Gwalior"
     ]
   },
-  "generated_at": "2026-11-12T07:26:42+05:30"
+  "generated_at": "2026-11-13T06:23:53+05:30"
 }
