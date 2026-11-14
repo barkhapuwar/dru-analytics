@@ -1,12 +1,12 @@
 {
   "days_covered": [
-    "2026-11-06",
     "2026-11-07",
     "2026-11-08",
     "2026-11-09",
     "2026-11-10",
     "2026-11-11",
-    "2026-11-12"
+    "2026-11-12",
+    "2026-11-13"
   ],
   "emails": {
     "06dinesh@gmail.com": [
@@ -162,6 +162,7 @@
       "Funky Monkeys",
       "Goat Brew",
       "Golden chimney",
+      "Haus of Desserts",
       "Hoot Craftwork",
       "KNS Burgers",
       "Kahani",
@@ -246,6 +247,7 @@
       "biggies burger"
     ],
     "abhishek.anand162001@gmail.com": [
+      "DasaPrakash",
       "DasaPrakash Mustard Madras",
       "Mustard Madras"
     ],
@@ -1526,7 +1528,8 @@
       "Coffee Culture"
     ],
     "assistantmanager2va@gmail.com": [
-      "Eden Hospitality"
+      "Eden Hospitality",
+      "Forktree Hospitality"
     ],
     "aswinssweetsonline@gmail.com": [
       "Aswins sweets and snacks"
@@ -3169,6 +3172,7 @@
       "Mast Biryani",
       "Neeru Bar and Kitchen",
       "Pind Punjab",
+      "Rajni Dosa",
       "THE RESIDENCY",
       "Tempt"
     ],
@@ -4602,6 +4606,9 @@
     ],
     "hello@freshies.in": [
       "Freshies Fruit Icecreams"
+    ],
+    "hello@gatohouse.in": [
+      "Gato House"
     ],
     "hello@heydgreen.com": [
       "Freshlymade"
@@ -6595,6 +6602,9 @@
     "m3m.broadway@reelo.net": [
       "Bercos"
     ],
+    "mad4barbque@gmail.com": [
+      "Mad 4 bar b que"
+    ],
     "madeinandhrarestaurant@gmail.com": [
       "Made In Andhra Restaurant"
     ],
@@ -7092,6 +7102,9 @@
     ],
     "matracoffeeindia@gmail.com": [
       "Matra Coffee and Kitchen"
+    ],
+    "maxx3436@gmail.com": [
+      "Capital Pure Veg"
     ],
     "may13.ghatkopar@gmail.com": [
       "JK Burgers"
@@ -9774,6 +9787,9 @@
     "rsdharma07@gmail.com": [
       "KAPS ICECREAM CAFE"
     ],
+    "rsenapati.srm@gmail.com": [
+      "Topnotch"
+    ],
     "rsenterprises2032@gmail.com": [
       "chulha chowki"
     ],
@@ -12089,6 +12105,9 @@
     "thesohog@gmail.com": [
       "The Soho Garden"
     ],
+    "thesouthernspoon2026@gmail.com": [
+      "The Southern Spoon"
+    ],
     "thesouthislandcafe@gmail.com": [
       "The South Island"
     ],
@@ -13088,5 +13107,5 @@
       "Zorko Gwalior"
     ]
   },
-  "generated_at": "2026-11-13T06:23:53+05:30"
+  "generated_at": "2026-11-14T06:01:50+05:30"
 }
