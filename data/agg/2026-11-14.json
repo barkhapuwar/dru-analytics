@@ -1,6 +1,6 @@
 {
   "date": "2026-11-14",
-  "fetched_at": "2026-11-15T04:46:44+05:30",
+  "fetched_at": "2026-11-16T05:00:08+05:30",
   "stable": false,
   "totals": {
     "sends": 1475,
@@ -8,7 +8,7 @@
     "clicks": 112,
     "ctr": 7.59,
     "sum_successful": 2024,
-    "sum_received": 1538
+    "sum_received": 1544
   },
   "by_signal": {
     "growth_driver": {
@@ -156,7 +156,7 @@
     "missing_external_id": 0,
     "brands_with_multiple_sends": 0,
     "max_sends_to_one_brand": 1,
-    "received_gt_successful": 5,
+    "received_gt_successful": 6,
     "converted_gt_received": 2
   }
 }

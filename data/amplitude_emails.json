@@ -1,12 +1,12 @@
 {
   "days_covered": [
-    "2026-11-08",
     "2026-11-09",
     "2026-11-10",
     "2026-11-11",
     "2026-11-12",
     "2026-11-13",
-    "2026-11-14"
+    "2026-11-14",
+    "2026-11-15"
   ],
   "emails": {
     "06dinesh@gmail.com": [
@@ -592,6 +592,9 @@
     ],
     "agrawalank88@gmail.com": [
       "The Beer Cafe"
+    ],
+    "agrawaldhruv001@gmail.com": [
+      "Delhi chai cafe"
     ],
     "ahuja.sagar@gmail.com": [
       "Adige Dosa House"
@@ -1399,6 +1402,9 @@
     ],
     "arunb859@gmail.com": [
       "IDLI GHAR BAPUNAGAR"
+    ],
+    "arunsugadhan@gmail.com": [
+      "Magnum Hospitality"
     ],
     "arupambaidya@outlook.com": [
       "Parva"
@@ -3333,6 +3339,7 @@
       "Choko La"
     ],
     "dhir@das.com": [
+      "DasaPrakash",
       "DasaPrakash Mustard Madras"
     ],
     "dhir@dorfbrewhouse.in": [
@@ -13124,5 +13131,5 @@
       "Zorko Gwalior"
     ]
   },
-  "generated_at": "2026-11-15T04:47:29+05:30"
+  "generated_at": "2026-11-16T05:28:19+05:30"
 }
