@@ -1,12 +1,12 @@
 {
   "days_covered": [
-    "2026-11-09",
     "2026-11-10",
     "2026-11-11",
     "2026-11-12",
     "2026-11-13",
     "2026-11-14",
-    "2026-11-15"
+    "2026-11-15",
+    "2026-11-16"
   ],
   "emails": {
     "06dinesh@gmail.com": [
@@ -123,6 +123,9 @@
     ],
     "aarkabakery@gmail.com": [
       "Aarka bakers"
+    ],
+    "aaron@knockout.com": [
+      "Knockout Sports Bar"
     ],
     "aaron@oibrewco.com": [
       "Oi Brewing Company"
@@ -1582,6 +1585,9 @@
     "audits@99pancakes.in": [
       "99 Pancakes"
     ],
+    "aurafarm170702@gmail.com": [
+      "Cafe Aura Farm"
+    ],
     "auralaserclinic@gmail.com": [
       "Aura Laser & Cosmetic Clinic"
     ],
@@ -1627,6 +1633,9 @@
     ],
     "avinash@kuchina.co.in": [
       "Kuchina"
+    ],
+    "aviralverma1996@gmail.com": [
+      "Oasis by Aaravya"
     ],
     "avis.rodrigues@2pintsbrewing.com": [
       "2 Pints Brewing"
@@ -1917,6 +1926,7 @@
     "bhargav.prajapati@reelo.io": [
       "Ashwins Chaat N Snac",
       "Baisi Brigade",
+      "Bekos",
       "Cafe Morjelo",
       "Luv Restaurant",
       "Magnetic Step",
@@ -3118,6 +3128,9 @@
     "ddenterprises0909@gmail.com": [
       "JK Burgers"
     ],
+    "deardhavalpatel@gmail.com": [
+      "Sankalp Group"
+    ],
     "debarunbasuroy1993@gmail.com": [
       "House of Tea"
     ],
@@ -3187,6 +3200,7 @@
       "Pind Punjab",
       "Rajni Dosa",
       "THE RESIDENCY",
+      "Tandooriwala",
       "Tempt",
       "Three O Clock",
       "Zaro Bakehouse"
@@ -5451,6 +5465,9 @@
     "itsmegaurav24@gmail.com": [
       "Jai Shree Restaurant"
     ],
+    "itsroshanation@gmail.com": [
+      "Bastea Cafe"
+    ],
     "itsupportfrenchloaf@orientalcuisines.in": [
       "French Loaf"
     ],
@@ -5906,6 +5923,9 @@
     ],
     "karanshishir@gmail.com": [
       "JK Burgers"
+    ],
+    "karapakkammas5@dumont.in": [
+      "Dumont India"
     ],
     "karibufood709@gmail.com": [
       "Karibu"
@@ -7152,6 +7172,9 @@
     ],
     "mbsavory13@gmail.com": [
       "Dhaba A punjabi Theme"
+    ],
+    "mbthakor1984@gmail.com": [
+      "Sankalp Group"
     ],
     "mbutale2910@gmail.com": [
       "Anupam Hotel"
@@ -10207,6 +10230,7 @@
       "Azure Dine",
       "Barbeque Nation",
       "Bright Hospitality",
+      "Broetza Pizza",
       "Burgerman",
       "Burgonomics",
       "Cafeteria Co",
@@ -10315,7 +10339,8 @@
       "Sanjha Chulha Restaurant"
     ],
     "sanjiv.kumar@fridaysindia.in": [
-      "TGI Fridays"
+      "TGI Fridays",
+      "TGI Fridays India"
     ],
     "sanjivkumar89@gmail.com": [
       "Krishna Sweet"
@@ -10731,6 +10756,9 @@
     ],
     "shiv.rohanreddy@gmail.com": [
       "Trick Bar"
+    ],
+    "shivahaira2@gmail.com": [
+      "Sankalp Group"
     ],
     "shivajiparksandwizzaa@sfmpl.in": [
       "Sandwizzaa"
@@ -12031,6 +12059,9 @@
     "thehouseofmakeba.vadodara@gmail.com": [
       "The House of Makeba"
     ],
+    "thehouseofmakeba.vaishnodevi@gmail.com": [
+      "The House of Makeba"
+    ],
     "thehouseofmori@gmail.com": [
       "House Of Mori"
     ],
@@ -13131,5 +13162,5 @@
       "Zorko Gwalior"
     ]
   },
-  "generated_at": "2026-11-16T05:28:19+05:30"
+  "generated_at": "2026-11-17T08:23:03+05:30"
 }
