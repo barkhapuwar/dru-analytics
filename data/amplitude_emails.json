@@ -1,12 +1,12 @@
 {
   "days_covered": [
-    "2026-11-10",
     "2026-11-11",
     "2026-11-12",
     "2026-11-13",
     "2026-11-14",
     "2026-11-15",
-    "2026-11-16"
+    "2026-11-16",
+    "2026-11-17"
   ],
   "emails": {
     "06dinesh@gmail.com": [
@@ -2142,6 +2142,9 @@
     "bonntonn.kolkata@gmail.com": [
       "Bonn Tonn"
     ],
+    "bonsavour3@gmail.com": [
+      "JK Burgers"
+    ],
     "bopal1kabhib@gmail.com": [
       "Kabhi B Bakery"
     ],
@@ -3461,6 +3464,9 @@
     ],
     "dimple.trivedi@eatrepeatindia.com": [
       "Eat Repeat India"
+    ],
+    "dimplekeswani0904@gmail.com": [
+      "Forktree Hospitality"
     ],
     "diner.byd@gmail.com": [
       "Behind Yellow Doors Diner",
@@ -4816,6 +4822,9 @@
     "hospitalitypnj@gmail.com": [
       "The Nest Restro and Club"
     ],
+    "hospitalityraas@gmail.com": [
+      "Eilly"
+    ],
     "hospitalityregal@gmail.com": [
       "Sabka Club"
     ],
@@ -5791,6 +5800,7 @@
       "Tatva Restaurant and Cafe"
     ],
     "k.t.sudhan91@gmail.com": [
+      "Summer House Creameries",
       "SummerHouse Creameries"
     ],
     "kaavigourmetfoods.india@gmail.com": [
@@ -5910,6 +5920,9 @@
     ],
     "karan@foodbazar.com": [
       "Food Bazar"
+    ],
+    "karanagarwal@anushamfb.com": [
+      "OM Agarwal bhavan"
     ],
     "karandedhairyasheel@gmail.com": [
       "The Panacotta Cafe",
@@ -6122,7 +6135,8 @@
       "Zaika Restaurant"
     ],
     "khushalisolanki@yahoo.com": [
-      "Cocoa Drama"
+      "Cocoa Drama",
+      "Cocoa Dramma"
     ],
     "khushanifoods@gmail.com": [
       "Mast Marathi"
@@ -6618,6 +6632,10 @@
     ],
     "loveleena@grandkatani.com": [
       "Grand Dhaba TDI"
+    ],
+    "loveovercoffeeagra@gmail.com": [
+      "Love Over Coffee Agra",
+      "Love Over Coffee Kargil"
     ],
     "lovepreetsinghgodara@gmail.com": [
       "Moga Punjabi Haveli",
@@ -7896,6 +7914,9 @@
     "nikhilsavlani@gmail.com": [
       "Chokar Dhani"
     ],
+    "nikhilsthopte@gmail.com": [
+      "Sarnobaats Restaurant"
+    ],
     "nikhiltaank1995@gmail.com": [
       "King Chilly"
     ],
@@ -9151,6 +9172,9 @@
     "rahulkotyan@paashh.com": [
       "Paashh"
     ],
+    "rahulkumar68913@gmail.com": [
+      "Pizza Avenue"
+    ],
     "rahulmartonly@gmail.com": [
       "Rahul mart"
     ],
@@ -9865,6 +9889,9 @@
       "Ruhani",
       "Ruhani x Tammasha"
     ],
+    "rumela1504@gmail.com": [
+      "Pinchang"
+    ],
     "rumirupji@gmail.com": [
       "Wheatleaf Desi cuisine"
     ],
@@ -10256,6 +10283,7 @@
       "Mocha",
       "O Cakes",
       "Parkar Ice Cream Cafe",
+      "Prince Isanpurwala",
       "RCP Group",
       "Rai Chicken",
       "Sagar Ratna",
@@ -13162,5 +13190,5 @@
       "Zorko Gwalior"
     ]
   },
-  "generated_at": "2026-11-17T08:23:03+05:30"
+  "generated_at": "2026-11-18T07:23:11+05:30"
 }
