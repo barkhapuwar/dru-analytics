@@ -1,12 +1,12 @@
 {
   "days_covered": [
-    "2026-11-13",
     "2026-11-14",
     "2026-11-15",
     "2026-11-16",
     "2026-11-17",
     "2026-11-18",
-    "2026-11-19"
+    "2026-11-19",
+    "2026-11-20"
   ],
   "emails": {
     "06dinesh@gmail.com": [
@@ -184,6 +184,7 @@
       "Sheikh Chang Singh",
       "Sly Granny",
       "Suka Brew and Kitchen",
+      "Sultan House of Biryani",
       "Sundays",
       "The Brown",
       "The Dessert Stop",
@@ -191,6 +192,7 @@
       "Toredo Cafe",
       "TwistOn",
       "Uncle Donalds Pizza",
+      "Vaikunth Cafe",
       "Vamans",
       "Zaatar India"
     ],
@@ -938,6 +940,9 @@
     ],
     "anand@thewingman.in": [
       "Mr Wingman"
+    ],
+    "anandamgardenresort@gmail.com": [
+      "Anandam Garden and resort"
     ],
     "anandhomestore@gmail.com": [
       "Anand Home Store"
@@ -3336,7 +3341,8 @@
       "Ayame Youniverse"
     ],
     "dheer@downing.com": [
-      "10 Downing Street"
+      "10 Downing Street",
+      "10Downing Street Begumpet"
     ],
     "dheer@yumtumchina.com": [
       "Yum Tum China"
@@ -6423,6 +6429,9 @@
     "kshitij@jamieoliverrestaurants.in": [
       "Jamie Oliver Restaurant India"
     ],
+    "kshitij@viksithospitality.com": [
+      "Izumi"
+    ],
     "kulbir.brar31@gmail.com": [
       "Sub 91"
     ],
@@ -7669,6 +7678,9 @@
     "munotg@gmail.com": [
       "Earth7"
     ],
+    "murali@alvo.com": [
+      "Alvo Fine Baking"
+    ],
     "muraree.choudhary@lbf.co.in": [
       "The Loyalists LBF"
     ],
@@ -7683,6 +7695,21 @@
     ],
     "mustafa@cafebaha.com": [
       "Baha Coffee LLP"
+    ],
+    "mustardmadras.epicuria@gmail.com": [
+      "Mustard Madras"
+    ],
+    "mustardmadras1@gmail.com": [
+      "Mustard Madras"
+    ],
+    "mustardmadras29@gmail.com": [
+      "Mustard Madras"
+    ],
+    "mustardmadras@gmail.com": [
+      "Mustard Madras"
+    ],
+    "mustardmadrascyber@gmail.com": [
+      "Mustard Madras"
     ],
     "mustardmadrasnoida@gmail.com": [
       "Mustard Madras"
@@ -8639,6 +8666,9 @@
       "Smiley Points"
     ],
     "pg.hoi@lbf.co.in": [
+      "The Loyalists LBF"
+    ],
+    "pg.pacific@lbf.co.in": [
       "The Loyalists LBF"
     ],
     "phanirajkk@gmail.com": [
@@ -10353,6 +10383,8 @@
       "Chala Basuya",
       "Chawlas 2 Since 1960",
       "Chelvis Coffee",
+      "Club Elrow",
+      "DANIEL PATISSIER",
       "DVG BENNE DOSA",
       "Dasshi Dimsum and sushi bar",
       "Dum Handi Biryani",
@@ -10375,6 +10407,7 @@
       "Prince Isanpurwala",
       "RCP Group",
       "Rai Chicken",
+      "SVM Group of Hotels",
       "Sagar Ratna",
       "Sandeep Global Ventures",
       "Shiv Ice Cream",
@@ -10460,7 +10493,8 @@
       "TGI Fridays India"
     ],
     "sanjivkumar89@gmail.com": [
-      "Krishna Sweet"
+      "Krishna Sweet",
+      "Krishna Sweets"
     ],
     "sanjog.rai@miadiamante.com": [
       "Independence Brewing Co"
@@ -11350,6 +11384,9 @@
     "spperavali@rrdurbar.com": [
       "RR Durbar"
     ],
+    "sppillai01@gmail.com": [
+      "Sankalp Group"
+    ],
     "sprshahuja44@gmail.com": [
       "Orphic Bakes By Sparsh"
     ],
@@ -11497,6 +11534,9 @@
     ],
     "sudhanshu.lafarine@gmail.com": [
       "La Farine Patisserie"
+    ],
+    "sudhanshu.menon@gmail.com": [
+      "South Indian Cafe"
     ],
     "sudhanshuverma026@gmail.com": [
       "Pizza Kitchen"
@@ -11962,6 +12002,9 @@
     ],
     "tcr.ayodhya@gmail.com": [
       "The Chocolate Room"
+    ],
+    "tealogyclub@gmail.com": [
+      "Tealogy Cafe Ahmedabad"
     ],
     "tealogysurat1@gmail.com": [
       "Tealogy Cafe Adajan"
@@ -12534,6 +12577,7 @@
       "Mayuri"
     ],
     "umiyaventuresoperations@gmail.com": [
+      "Big Scoop Cafe Nikol",
       "Umiya Ventures"
     ],
     "uni.reelo@ioc.com": [
@@ -12565,6 +12609,9 @@
     ],
     "uni@reelo.ioooo": [
       "Afro House"
+    ],
+    "uni@reelochug.com": [
+      "Chug Biergarten"
     ],
     "unicornfoods20@gmail.com": [
       "The House of Makeba"
@@ -13309,5 +13356,5 @@
       "Zorko Gwalior"
     ]
   },
-  "generated_at": "2026-11-20T06:58:18+05:30"
+  "generated_at": "2026-11-21T06:29:00+05:30"
 }
