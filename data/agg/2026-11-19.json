@@ -1,6 +1,6 @@
 {
   "date": "2026-11-19",
-  "fetched_at": "2026-11-21T06:26:41+05:30",
+  "fetched_at": "2026-11-22T05:24:07+05:30",
   "stable": false,
   "totals": {
     "sends": 1465,
@@ -8,7 +8,7 @@
     "clicks": 89,
     "ctr": 6.08,
     "sum_successful": 2011,
-    "sum_received": 1543
+    "sum_received": 1545
   },
   "by_signal": {
     "significantly_down": {
