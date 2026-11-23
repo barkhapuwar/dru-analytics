@@ -1,12 +1,12 @@
 {
   "days_covered": [
-    "2026-11-15",
     "2026-11-16",
     "2026-11-17",
     "2026-11-18",
     "2026-11-19",
     "2026-11-20",
-    "2026-11-21"
+    "2026-11-21",
+    "2026-11-22"
   ],
   "emails": {
     "06dinesh@gmail.com": [
@@ -3438,6 +3438,9 @@
     ],
     "dhirjackmex@gmail.com": [
       "JackMex"
+    ],
+    "dhirsharma@allseasons.com": [
+      "All seasons restaurant"
     ],
     "dholeshreeyash@gmail.com": [
       "Tathastu veg"
@@ -7520,6 +7523,9 @@
     "moiracoffeehouse@gmail.com": [
       "Moira Coffee House"
     ],
+    "mokshivora11@gmail.com": [
+      "Harajuku Tokyo Cafe"
+    ],
     "moleculemathura@gmail.com": [
       "Molecule Mathura"
     ],
@@ -9604,6 +9610,9 @@
     ],
     "renu@theyellowstraw.com": [
       "The Yellow Straw"
+    ],
+    "reports@navtara.in": [
+      "Navtara"
     ],
     "reports@spicesnflavours.com": [
       "Spices and Flavours"
@@ -13095,6 +13104,9 @@
     "vivektalez@gmail.com": [
       "Talez"
     ],
+    "vivekvalsans@gmail.com": [
+      "Thakkara"
+    ],
     "vk@wageshwari.in": [
       "Om Snacks"
     ],
@@ -13262,6 +13274,7 @@
       "LALA BADRI PRASAD JWLR"
     ],
     "yashpmotwani@gmail.com": [
+      "Masala Delight",
       "Masala Delight Mira Road"
     ],
     "yasmuthu@gmail.com": [
@@ -13369,5 +13382,5 @@
       "Zorko Gwalior"
     ]
   },
-  "generated_at": "2026-11-22T05:26:59+05:30"
+  "generated_at": "2026-11-23T05:59:12+05:30"
 }
