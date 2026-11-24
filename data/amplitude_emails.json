@@ -1,12 +1,12 @@
 {
   "days_covered": [
-    "2026-11-16",
     "2026-11-17",
     "2026-11-18",
     "2026-11-19",
     "2026-11-20",
     "2026-11-21",
-    "2026-11-22"
+    "2026-11-22",
+    "2026-11-23"
   ],
   "emails": {
     "06dinesh@gmail.com": [
@@ -111,6 +111,9 @@
     ],
     "aalam.900101@gmail.com": [
       "Alibaba Cafe"
+    ],
+    "aamchijodhpur@gmail.com": [
+      "AAMCHI JODHPUR"
     ],
     "aanosh@nativekatha.com": [
       "Native Katha"
@@ -1866,6 +1869,9 @@
     "beercafe@reelo.io": [
       "The Beer Cafe"
     ],
+    "beercartelsales@gmail.com": [
+      "The Beer Cartel"
+    ],
     "beerlintpb@gmail.com": [
       "Beerlin"
     ],
@@ -3418,6 +3424,9 @@
     "dhir@shelly.com": [
       "Shellys Deli"
     ],
+    "dhir@shivascoffeebar.com": [
+      "Shivas Coffee Bar Sec 11"
+    ],
     "dhir@thebiryan.com": [
       "The Biryan"
     ],
@@ -4094,6 +4103,9 @@
     ],
     "ganga@coffeemechanics.co.in": [
       "Coffee Mechanics"
+    ],
+    "gardencityfoods@hotmail.com": [
+      "Sankalp Group"
     ],
     "garvbhadada@gmail.com": [
       "The kafe"
@@ -5356,6 +5368,7 @@
       "Bufala Pizzeria"
     ],
     "info@southindian.cafe": [
+      "Dakshin Sutra",
       "South Indian Cafe"
     ],
     "info@spagofoods.com": [
@@ -6053,6 +6066,9 @@
     ],
     "karthikt@yaathumconcepts.com": [
       "Trevizo"
+    ],
+    "kartik.sainsate@reelo.io": [
+      "Tossin Pizza"
     ],
     "kartik4410@gmail.com": [
       "Shreeji Restaurant"
@@ -8907,6 +8923,9 @@
     "prashant.archinks@gmail.com": [
       "Goodgaon"
     ],
+    "prashant.issar@phoenixmills.com": [
+      "Bell Coins"
+    ],
     "prashant.saw@frothytales.com": [
       "The Bier Library"
     ],
@@ -9774,10 +9793,14 @@
     "ritik8111@gmail.com": [
       "Palkhi Veg Restaurant"
     ],
+    "ritz.2507@gmail.com": [
+      "Chala Basuya"
+    ],
     "riya@dorfbrewhouse.in": [
       "Dorf Brewhouse"
     ],
     "riya@zingrestaurants.com": [
+      "In My Room",
       "Rang De Basanti Dhaba"
     ],
     "riyashasan87@gmail.com": [
@@ -11084,6 +11107,9 @@
     ],
     "shubhambhardwaj7@gmail.com": [
       "Cart Meal"
+    ],
+    "shubhamkumarsingh2112@gmail.com": [
+      "SUBGRILL"
     ],
     "shubhamtotal99@gmail.com": [
       "GHASI RAM SONS"
@@ -12623,6 +12649,9 @@
     "uni@reelo.iii": [
       "Tribe"
     ],
+    "uni@reelo.io": [
+      "kebarbiq"
+    ],
     "uni@reelo.ioi": [
       "Molecule Mathura"
     ],
@@ -12870,6 +12899,9 @@
     ],
     "vermatushar709@gmail.com": [
       "PizzaHolic"
+    ],
+    "vibhakar.sharma@beer.cafe": [
+      "The Beer Cafe"
     ],
     "vibhakar@bira91.com": [
       "BIRA 91 TAPROOM"
@@ -13382,5 +13414,5 @@
       "Zorko Gwalior"
     ]
   },
-  "generated_at": "2026-11-23T05:59:12+05:30"
+  "generated_at": "2026-11-24T09:59:00+05:30"
 }
