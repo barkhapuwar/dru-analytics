@@ -1,12 +1,12 @@
 {
   "days_covered": [
-    "2026-11-17",
     "2026-11-18",
     "2026-11-19",
     "2026-11-20",
     "2026-11-21",
     "2026-11-22",
-    "2026-11-23"
+    "2026-11-23",
+    "2026-11-24"
   ],
   "emails": {
     "06dinesh@gmail.com": [
@@ -163,6 +163,7 @@
       "Bakebook Bakery",
       "Batashe Chaatwala",
       "Browns Bakery",
+      "Camo",
       "Copper Chimney",
       "Deccan Brews Cafe",
       "Funky Monkeys",
@@ -646,6 +647,7 @@
       "Cafe Bistro"
     ],
     "ajinkya.k@unicornbrewingcompany.com": [
+      "The Pegasus Lounge",
       "Unicorn Brewing Company"
     ],
     "ajit.das@lbf.co.in": [
@@ -1311,6 +1313,9 @@
     "archana@rcube.net.in": [
       "Miss Nora"
     ],
+    "archronak@gmail.com": [
+      "Rustom Rice"
+    ],
     "ardeeteam@gmail.com": [
       "Jims Fresh",
       "Jims Fresh by Ardee"
@@ -1503,6 +1508,9 @@
     ],
     "ashkarjack7@gmail.com": [
       "Thakkara"
+    ],
+    "ashnaydevelopers@gmail.com": [
+      "House Of Mori"
     ],
     "ashok9200@gmail.com": [
       "Vrandavan"
@@ -2671,11 +2679,17 @@
     "chandkheda@ninis.co.in": [
       "Ninis Kitchen Chandkheda"
     ],
+    "chandnaniamit@gmail.com": [
+      "Sequoia Cafe"
+    ],
     "chandra@nalashaa.com": [
       "Mithaicana"
     ],
     "chandrashekher@sfmpl.in": [
       "Sandwizzaa"
+    ],
+    "chandresh.supperme@gmail.com": [
+      "Supper Me"
     ],
     "chandrimadas111@gmail.com": [
       "Glamour 4U"
@@ -4037,6 +4051,9 @@
     "fourfortuneshospitality@gmail.com": [
       "The Cloud Deck"
     ],
+    "foursagahospitalityllp@gmail.com": [
+      "Cafe Buddys Espresso"
+    ],
     "foursparksmys@gmail.com": [
       "PizzaYolo"
     ],
@@ -4543,6 +4560,7 @@
       "HappyOn Play"
     ],
     "hardeepdude@gmail.com": [
+      "Dakshin Sutra",
       "South Indian Cafe"
     ],
     "harekrishnaenterprise44033@gmail.com": [
@@ -8517,6 +8535,9 @@
       "Taste o pia",
       "Utopia"
     ],
+    "pankaj.supperme@gmail.com": [
+      "Supper Me"
+    ],
     "pankaj@kalpdrumhospitality.com": [
       "Ks"
     ],
@@ -8585,6 +8606,9 @@
     ],
     "passionloungewear@gmail.com": [
       "Passion Lounge Wear"
+    ],
+    "pastagutosa100@gmail.com": [
+      "Gutosa Pasta"
     ],
     "pastaog1.india@gmail.com": [
       "Pasta OG"
@@ -8831,6 +8855,9 @@
     ],
     "pradeepmukherjee4189@gmail.com": [
       "JK Burgers"
+    ],
+    "prajapatic697@gmail.com": [
+      "The House Siddh Pizzeria"
     ],
     "prajjwaldeo@yahoo.com": [
       "KIARA RESTAURANT AND CAFE"
@@ -10019,7 +10046,8 @@
       "Coffee Planet"
     ],
     "rtscafealigarh@gmail.com": [
-      "RTS Cafe"
+      "RTS Cafe",
+      "RTS Cafe Aligarh"
     ],
     "ruchikaguliani@gmail.com": [
       "Handi Xpress"
@@ -11392,6 +11420,9 @@
     "souravnag@kcpl.in": [
       "Milli Milli"
     ],
+    "southcity.supperme@gmail.com": [
+      "Supper Me"
+    ],
     "spanda72536@gmail.com": [
       "kedias Restaurant"
     ],
@@ -12431,6 +12462,9 @@
     "thinesh.k@talbotiq.com": [
       "Namaste India and PomodOro"
     ],
+    "thirumala.181869@gmail.com": [
+      "Thirumala Petrol Bunk"
+    ],
     "thirunagar@12oclockbiriyani.com": [
       "12o Clock Biryani",
       "12o clock biryani"
@@ -13076,6 +13110,9 @@
     "vishaltajpuria@thecherrytreebakery.com": [
       "The Cherry Tree"
     ],
+    "vishavrana@gmail.com": [
+      "The Postcard Coffee"
+    ],
     "visheshsingla66@gmail.com": [
       "The South Island"
     ],
@@ -13414,5 +13451,5 @@
       "Zorko Gwalior"
     ]
   },
-  "generated_at": "2026-11-24T09:59:00+05:30"
+  "generated_at": "2026-11-25T08:41:02+05:30"
 }
