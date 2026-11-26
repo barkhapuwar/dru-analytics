@@ -1,12 +1,12 @@
 {
   "days_covered": [
-    "2026-11-18",
     "2026-11-19",
     "2026-11-20",
     "2026-11-21",
     "2026-11-22",
     "2026-11-23",
-    "2026-11-24"
+    "2026-11-24",
+    "2026-11-25"
   ],
   "emails": {
     "06dinesh@gmail.com": [
@@ -1313,6 +1313,9 @@
     "archana@rcube.net.in": [
       "Miss Nora"
     ],
+    "architdhupar@yahoo.co.in": [
+      "Mr Shawmo"
+    ],
     "archronak@gmail.com": [
       "Rustom Rice"
     ],
@@ -2229,6 +2232,9 @@
     ],
     "brewmillecity@gmail.com": [
       "Brew Mill"
+    ],
+    "brewwichcafe@gmail.com": [
+      "BREWWICH"
     ],
     "brijeshmohta@yahoo.com": [
       "Espresso"
@@ -3675,6 +3681,9 @@
     "e2gomanagerpune@effingut.com": [
       "Effingut"
     ],
+    "ea.md@jagdish-farshan.com": [
+      "Jagdish Farshan"
+    ],
     "ea2@nikbakers.com": [
       "NIK BAKERS"
     ],
@@ -4211,6 +4220,9 @@
     ],
     "gffrestaurantspvtltd@gmail.com": [
       "Global Food Factory"
+    ],
+    "ghiblicafeindia@gmail.com": [
+      "Ghibli cafe"
     ],
     "gianiindirapuram07@gmail.com": [
       "Giani Indirapuram"
@@ -5036,6 +5048,9 @@
     "husaintaheer@gmail.com": [
       "LAZEEZ HAKEEM"
     ],
+    "hvvthancosharlur@gmail.com": [
+      "Thancos Natural Ice Cream"
+    ],
     "hybcafe@outlook.com": [
       "HYB Cafe"
     ],
@@ -5602,6 +5617,9 @@
     "jagroop2498@gmail.com": [
       "Nature farm"
     ],
+    "jagroop@amarpreet.in": [
+      "Snowberry"
+    ],
     "jagroopmann2004@gmail.com": [
       "SNOWBERRY GOLF COURSE ROAD"
     ],
@@ -6035,6 +6053,9 @@
       "Karigari Restaurant"
     ],
     "karigari.chandigarh@gmail.com": [
+      "Karigari Restaurant"
+    ],
+    "karigari.manesar@gmail.com": [
       "Karigari Restaurant"
     ],
     "karigari.meerut@gmail.com": [
@@ -7793,6 +7814,9 @@
     ],
     "myselfsaurabhgupta@gmail.com": [
       "Xoberry Ice cream"
+    ],
+    "naad@viksithospitality.com": [
+      "Naad Coffee"
     ],
     "naafia2804@gmail.com": [
       "CR7"
@@ -10359,6 +10383,9 @@
     "salil.love@gmail.com": [
       "Elegance"
     ],
+    "salmansayyed288@gmail.com": [
+      "Snow Waffle"
+    ],
     "salmanshaikh@sfmpl.in": [
       "Sandwizzaa"
     ],
@@ -10469,6 +10496,7 @@
       "O Cakes",
       "Parkar Ice Cream Cafe",
       "Prince Isanpurwala",
+      "Project Health",
       "RCP Group",
       "Rai Chicken",
       "SVM Group of Hotels",
@@ -12520,6 +12548,9 @@
     "trafficmarcommdesk@gmail.com": [
       "Traffic"
     ],
+    "training.aquajava@gmail.com": [
+      "Aqua Java"
+    ],
     "training@fridaysindia.com": [
       "TGIF India"
     ],
@@ -12950,7 +12981,8 @@
       "safe sky kitchen"
     ],
     "vidur@fescafe.in": [
-      "FES Cafe and Desserts"
+      "FES Cafe and Desserts",
+      "FES Cookies"
     ],
     "vidya.pdine@gmail.com": [
       "Zamana India"
@@ -13017,6 +13049,9 @@
     ],
     "vinay@aurea.com": [
       "AUREA Elevated Dine In"
+    ],
+    "vinayak@funkymonkeys.in": [
+      "Funky Monkeys"
     ],
     "vinayak@shankarbhavan.com": [
       "Shankar Bhavan"
@@ -13451,5 +13486,5 @@
       "Zorko Gwalior"
     ]
   },
-  "generated_at": "2026-11-25T08:41:02+05:30"
+  "generated_at": "2026-11-26T07:54:25+05:30"
 }
