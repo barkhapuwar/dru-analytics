@@ -1,12 +1,12 @@
 {
   "days_covered": [
-    "2026-11-19",
     "2026-11-20",
     "2026-11-21",
     "2026-11-22",
     "2026-11-23",
     "2026-11-24",
-    "2026-11-25"
+    "2026-11-25",
+    "2026-11-26"
   ],
   "emails": {
     "06dinesh@gmail.com": [
@@ -674,6 +674,9 @@
     "akash.mathur@reelo.io": [
       "Demo Account Akash"
     ],
+    "akash@zomoz.co.in": [
+      "Zomoz"
+    ],
     "akashchivate12@gmail.com": [
       "Chivate Family Restaurant"
     ],
@@ -967,6 +970,9 @@
     ],
     "andherilokhandwala@sfmpl.in": [
       "Sandwizzaa"
+    ],
+    "andiesmohali@gmail.com": [
+      "Andies Restaurant"
     ],
     "aneeza.mistry@gmail.com": [
       "Aegyo Cafe"
@@ -2059,6 +2065,7 @@
       "51 Rainbow",
       "Ande ka Adda",
       "Avyan Bakehouse",
+      "Melt N Brew",
       "Pizza Merrano",
       "The Crunch Affair",
       "sambhar and more"
@@ -9917,6 +9924,9 @@
     "rmz@maiz.in": [
       "Harvest Salad Co"
     ],
+    "rnfoodandbeverage159@gmail.com": [
+      "Tealogy Cafe"
+    ],
     "roasterycoffeehouse11@gmail.com": [
       "Roastery X Colocal X PS Cheese"
     ],
@@ -9989,6 +9999,9 @@
     ],
     "ronak.jain8177@gmail.com": [
       "Urban Chill"
+    ],
+    "ronak8200210474@gmail.com": [
+      "Hasmukh Khaman"
     ],
     "ronak@finxcommune.com": [
       "Finx Commune"
@@ -13486,5 +13499,5 @@
       "Zorko Gwalior"
     ]
   },
-  "generated_at": "2026-11-26T07:54:25+05:30"
+  "generated_at": "2026-11-27T07:54:45+05:30"
 }

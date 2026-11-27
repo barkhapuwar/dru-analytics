@@ -1,6 +1,6 @@
 {
   "date": "2026-11-25",
-  "fetched_at": "2026-11-26T07:53:44+05:30",
+  "fetched_at": "2026-11-27T07:52:17+05:30",
   "stable": false,
   "notifications": [
     {
@@ -644,7 +644,7 @@
       "tone": "v0",
       "external_id": "6831a18c0d41c8e0d147c174",
       "successful": 1,
-      "received": 0,
+      "received": 1,
       "converted": 0,
       "clicked": false
     },
@@ -6209,7 +6209,7 @@
       "tone": "v0",
       "external_id": "6993196c6d8846b1e32538dc",
       "successful": 1,
-      "received": 0,
+      "received": 1,
       "converted": 0,
       "clicked": false
     },
@@ -8624,7 +8624,7 @@
       "tone": "v0",
       "external_id": "6a15941bb3a1b7dc22952964",
       "successful": 2,
-      "received": 1,
+      "received": 2,
       "converted": 0,
       "clicked": false
     },
@@ -11744,7 +11744,7 @@
       "tone": "v0",
       "external_id": "6a895ce1b9d7190d5e3dec06",
       "successful": 1,
-      "received": 0,
+      "received": 1,
       "converted": 0,
       "clicked": false
     },
@@ -12179,7 +12179,7 @@
       "tone": "v0",
       "external_id": "6a73f388aad39f09f73f542c",
       "successful": 2,
-      "received": 0,
+      "received": 1,
       "converted": 0,
       "clicked": false
     },
@@ -12449,7 +12449,7 @@
       "tone": "v0",
       "external_id": "68662bcbdb565d698d5589a8",
       "successful": 1,
-      "received": 0,
+      "received": 4,
       "converted": 0,
       "clicked": false
     },
@@ -13394,7 +13394,7 @@
       "tone": "v0",
       "external_id": "66451cec3164a490144b03b1",
       "successful": 7,
-      "received": 4,
+      "received": 5,
       "converted": 0,
       "clicked": false
     },
@@ -16184,7 +16184,7 @@
       "tone": "v0",
       "external_id": "6a8c358461442612f3626e0a",
       "successful": 6,
-      "received": 5,
+      "received": 6,
       "converted": 1,
       "clicked": true
     },
@@ -17144,7 +17144,7 @@
       "tone": "v0",
       "external_id": "6a1d774c24d49045f1debe4f",
       "successful": 2,
-      "received": 1,
+      "received": 2,
       "converted": 0,
       "clicked": false
     },
