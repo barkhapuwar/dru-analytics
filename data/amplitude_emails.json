@@ -1,12 +1,12 @@
 {
   "days_covered": [
-    "2026-11-20",
     "2026-11-21",
     "2026-11-22",
     "2026-11-23",
     "2026-11-24",
     "2026-11-25",
-    "2026-11-26"
+    "2026-11-26",
+    "2026-11-27"
   ],
   "emails": {
     "06dinesh@gmail.com": [
@@ -132,6 +132,9 @@
     ],
     "aaron@oibrewco.com": [
       "Oi Brewing Company"
+    ],
+    "aaron@slzrstudio.com": [
+      "Knockout Sports Bar"
     ],
     "aarvifoods.official@gmail.com": [
       "Silbatti Restaurant"
@@ -476,6 +479,9 @@
     ],
     "aditya@moustachescapes.com": [
       "Moustache"
+    ],
+    "adityaagarwal.dm44@gmail.com": [
+      "CrewCrave"
     ],
     "adityakkumar71@gmail.com": [
       "The Kitchen",
@@ -1959,6 +1965,9 @@
     "bharathdoss100@gmail.com": [
       "Bites of Heaven"
     ],
+    "bharatinnocott@gmail.com": [
+      "Sankalp Group"
+    ],
     "bharatjain905@gmail.com": [
       "The Chutney Culture"
     ],
@@ -2065,6 +2074,7 @@
       "51 Rainbow",
       "Ande ka Adda",
       "Avyan Bakehouse",
+      "Little Italy",
       "Melt N Brew",
       "Pizza Merrano",
       "The Crunch Affair",
@@ -3475,6 +3485,9 @@
     "dhirjackmex@gmail.com": [
       "JackMex"
     ],
+    "dhirkohlidhaba@reelo.io": [
+      "Kohli Dhaba"
+    ],
     "dhirsharma@allseasons.com": [
       "All seasons restaurant"
     ],
@@ -4063,6 +4076,9 @@
     ],
     "founder@zoaindia.com": [
       "ZOA"
+    ],
+    "founders@riseworks.co.in": [
+      "Mezziki"
     ],
     "fourfortuneshospitality@gmail.com": [
       "The Cloud Deck"
@@ -7384,6 +7400,9 @@
     "melthouseindia@gmail.com": [
       "Melt House"
     ],
+    "meltnbrewindia@gmail.com": [
+      "Melt N Brew"
+    ],
     "meltoravikaspuri@gmail.com": [
       "Meltora Vikaspuri"
     ],
@@ -9886,6 +9905,7 @@
       "Madhurum  restaurant"
     ],
     "rkschanchal@gmail.com": [
+      "RKS CHANCHAL PRODUCT",
       "RKS CHANCHAL PRODUCT I"
     ],
     "rljajee11@gmail.com": [
@@ -9899,6 +9919,9 @@
     ],
     "rm.proxy@iconhotelsindia.com": [
       "Bhagini Group"
+    ],
+    "rm@herbeno.in": [
+      "Kimikai"
     ],
     "rmkp@effingut.com": [
       "Effingut"
@@ -10150,6 +10173,9 @@
     ],
     "s.vaidya@honeyanddough.in": [
       "Honey and Dough"
+    ],
+    "s.vivekananda@phoenixmills.com": [
+      "Bell Coins"
     ],
     "saahilkarmally98@gmail.com": [
       "Venn"
@@ -11089,6 +11115,9 @@
     "shormos.info@gmail.com": [
       "Shormos"
     ],
+    "shounaklife@gmail.com": [
+      "Knockout Sports Bar"
+    ],
     "shraddha.zarekar@gmail.com": [
       "Terra Dine and Wine"
     ],
@@ -11734,6 +11763,9 @@
     "sumitsngchaudhary@gmail.com": [
       "Tealand"
     ],
+    "sumransingh591@gmail.com": [
+      "MOBA Korean Restro Hennur"
+    ],
     "sumukhsweets@gmail.com": [
       "House Of Sumukh"
     ],
@@ -12118,7 +12150,8 @@
       "The Chocolate Room"
     ],
     "tealogyclub@gmail.com": [
-      "Tealogy Cafe Ahmedabad"
+      "Tealogy Cafe Ahmedabad",
+      "Tealogy Cafe Sola Ahbd"
     ],
     "tealogysurat1@gmail.com": [
       "Tealogy Cafe Adajan"
@@ -12340,6 +12373,9 @@
       "The House of Makeba"
     ],
     "thehouseofmakeba.gandhinagar@gmail.com": [
+      "The House of Makeba"
+    ],
+    "thehouseofmakeba.surat@gmail.com": [
       "The House of Makeba"
     ],
     "thehouseofmakeba.vadodara@gmail.com": [
@@ -13499,5 +13535,5 @@
       "Zorko Gwalior"
     ]
   },
-  "generated_at": "2026-11-27T07:54:45+05:30"
+  "generated_at": "2026-11-28T07:40:52+05:30"
 }

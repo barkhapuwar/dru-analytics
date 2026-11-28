@@ -1,7 +1,7 @@
 {
   "date": "2026-11-24",
-  "fetched_at": "2026-11-27T07:51:12+05:30",
-  "stable": false,
+  "fetched_at": "2026-11-28T07:35:31+05:30",
+  "stable": true,
   "notifications": [
     {
       "id": "daf37569-0c11-49bf-a525-7ee6f051343b",
@@ -9764,7 +9764,7 @@
       "tone": "v2",
       "external_id": "68662bcbdb565d698d5589a8",
       "successful": 1,
-      "received": 9,
+      "received": 13,
       "converted": 0,
       "clicked": false
     },
@@ -10259,7 +10259,7 @@
       "tone": "v2",
       "external_id": "6a636aa6b510c90b97d3ce90",
       "successful": 1,
-      "received": 0,
+      "received": 1,
       "converted": 0,
       "clicked": false
     },
